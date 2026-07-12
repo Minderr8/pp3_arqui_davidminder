@@ -1,0 +1,172 @@
+ayer aprendi a hacer los experimentos y como monitorearlos
+hoy voy a terminar de hacer el experimento 1 y a interpretar que me direcciones
+son 3 con GPU y 3 con CPU
+
+con watch -n 1 rocm-smi , puedo monitorear el uso real de la gpu en %
+
+empezamos con GPU
+sudo turbostat --interval 1 --out ~/Escritorio/pp3_arqui_davidminder/Informe/Screenshots/exp1_gpu_run1_oficial_turbostat.log
+ollama run gemma3:4b --verbose
+Escribe un ensayo detallado de al menos 500 palabras explicando cómo funciona la jerarquía de memoria en un computador
+moderno, desde los registros del procesador hasta el almacenamiento en disco. Incluye ejemplos concretos de latencias típicas en
+cada nivel
+
+i) 
+total duration:       19.560397035s
+load duration:        384.028792ms
+prompt eval count:    65 token(s)
+prompt eval duration: 89.014ms
+prompt eval rate:     730.22 tokens/s
+eval count:           1218 token(s)
+eval duration:        19.085083s
+eval rate:            63.82 tokens/s
+
+lo maximo que alcanzo fue 99% pero duro un instante, lo que mas duro fue 93 aprox GPU
+
+ii) sudo turbostat --interval 1 --out ~/Escritorio/pp3_arqui_davidminder/Informe/Screenshots/exp1_gpu_run2_oficial_turbostat.log
+total duration:       22.347298575s
+load duration:        374.123605ms
+prompt eval count:    65 token(s)
+prompt eval duration: 44.295ms
+prompt eval rate:     1467.43 tokens/s
+eval count:           1392 token(s)
+eval duration:        21.83004s
+eval rate:            63.77 tokens/s
+
+lo maximo que alcanzo fue 97% pero un instante, lo que mas duro fue 95
+
+iii) sudo turbostat --interval 1 --out ~/Escritorio/pp3_arqui_davidminder/Informe/Screenshots/exp1_gpu_run3_oficial_turbostat.log
+total duration:       20.299868269s
+load duration:        374.639118ms
+prompt eval count:    65 token(s)
+prompt eval duration: 92.966ms
+prompt eval rate:     699.18 tokens/s
+eval count:           1275 token(s)
+eval duration:        19.830283s
+eval rate:            64.30 tokens/s
+
+lo max 100, lo que mas duro 93-94
+
+ahora sin GPU
+Concepto rápido: Ollama por defecto usa la variable de entorno para detectar GPUs. 
+Si se la "escondes" seteándola vacía, Ollama no la ve y corre todo en CPU.
+con: CUDA_VISIBLE_DEVICES="" ollama run gemma3:4b --verbose
+en mi caso ROCR_VISIBLE_DEVICES="" ollama run gemma3:4b --verbose porque uso AMD
+ninguna me funciono para desactivar GPU usare HIP_VISIBLE_DEVICES=""
+en otra terminal, mientras corre, puedes chequear que efectivamente NO está usando GPU: ollama ps
+
+
+davidminder@MINDER-PC:~/Escritorio/pp3_arqui_davidminder$ systemctl status ollama
+● ollama.service - Ollama Service
+     Loaded: loaded (/etc/systemd/system/ollama.service; enabled; preset: enabled)
+     Active: active (running) since Sat 2026-07-11 08:14:18 -04; 42min ago
+   Main PID: 2288 (ollama)
+      Tasks: 43 (limit: 38190)
+     Memory: 3.6G (peak: 3.7G)
+        CPU: 2min 9.428s
+     CGroup: /system.slice/ollama.service
+             ├─ 2288 /usr/local/bin/ollama serve
+             └─18380 /usr/local/lib/ollama/llama-server --model /usr/share/ollama/.ollama/models/blobs/sha256-aeda25e63ebd698fab86>
+
+jul 11 08:55:05 MINDER-PC ollama[2288]: [GIN] 2026/07/11 - 08:55:05 | 200 |       20.76µs |       127.0.0.1 | HEAD     "/"
+jul 11 08:55:05 MINDER-PC ollama[2288]: [GIN] 2026/07/11 - 08:55:05 | 200 |      45.536µs |       127.0.0.1 | GET      "/api/ps"
+jul 11 08:55:05 MINDER-PC ollama[2288]: [GIN] 2026/07/11 - 08:55:05 | 200 |      21.861µs |       127.0.0.1 | HEAD     "/"
+jul 11 08:55:05 MINDER-PC ollama[2288]: [GIN] 2026/07/11 - 08:55:05 | 200 |      40.276µs |       127.0.0.1 | GET      "/api/ps"
+jul 11 08:55:06 MINDER-PC ollama[2288]: [GIN] 2026/07/11 - 08:55:06 | 200 |      22.522µs |       127.0.0.1 | HEAD     "/"
+jul 11 08:55:06 MINDER-PC ollama[2288]: [GIN] 2026/07/11 - 08:55:06 | 200 |      32.181µs |       127.0.0.1 | GET      "/api/ps"
+jul 11 08:55:12 MINDER-PC ollama[2288]: [GIN] 2026/07/11 - 08:55:12 | 200 |      22.392µs |       127.0.0.1 | HEAD     "/"
+jul 11 08:55:12 MINDER-PC ollama[2288]: [GIN] 2026/07/11 - 08:55:12 | 200 |      30.257µs |       127.0.0.1 | GET      "/api/ps"
+jul 11 08:55:51 MINDER-PC ollama[2288]: [GIN] 2026/07/11 - 08:55:51 | 200 |      23.604µs |       127.0.0.1 | HEAD     "/"
+jul 11 08:55:51 MINDER-PC ollama[2288]: [GIN] 2026/07/11 - 08:55:51 | 200 |      30.748µs |       127.0.0.1 | GET      "/api/ps"
+lines 1-21/21 (END)
+
+
+● ollama.service - Ollama Service
+     Loaded: loaded (/etc/systemd/system/ollama.service; enabled; preset: enabled)
+     Active: active (running) since Sat 2026-07-11 08:14:18 -04; 42min ago
+   Main PID: 2288 (ollama)
+      Tasks: 43 (limit: 38190)
+     Memory: 3.6G (peak: 3.7G)
+        CPU: 2min 9.428s
+     CGroup: /system.slice/ollama.service
+             ├─ 2288 /usr/local/bin/ollama serve
+             └─18380 /usr/local/lib/ollama/llama-server --model /usr/share/ollama/.ollama/models/blobs/sha256-aeda25e63ebd698fab86>
+
+jul 11 08:55:05 MINDER-PC ollama[2288]: [GIN] 2026/07/11 - 08:55:05 | 200 |       20.76µs |       127.0.0.1 | HEAD     "/"
+jul 11 08:55:05 MINDER-PC ollama[2288]: [GIN] 2026/07/11 - 08:55:05 | 200 |      45.536µs |       127.0.0.1 | GET      "/api/ps"
+jul 11 08:55:05 MINDER-PC ollama[2288]: [GIN] 2026/07/11 - 08:55:05 | 200 |      21.861µs |       127.0.0.1 | HEAD     "/"
+jul 11 08:55:05 MINDER-PC ollama[2288]: [GIN] 2026/07/11 - 08:55:05 | 200 |      40.276µs |       127.0.0.1 | GET      "/api/ps"
+jul 11 08:55:06 MINDER-PC ollama[2288]: [GIN] 2026/07/11 - 08:55:06 | 200 |      22.522µs |       127.0.0.1 | HEAD     "/"
+jul 11 08:55:06 MINDER-PC ollama[2288]: [GIN] 2026/07/11 - 08:55:06 | 200 |      32.181µs |       127.0.0.1 | GET      "/api/ps"
+jul 11 08:55:12 MINDER-PC ollama[2288]: [GIN] 2026/07/11 - 08:55:12 | 200 |      22.392µs |       127.0.0.1 | HEAD     "/"
+jul 11 08:55:12 MINDER-PC ollama[2288]: [GIN] 2026/07/11 - 08:55:12 | 200 |      30.257µs |       127.0.0.1 | GET      "/api/ps"
+jul 11 08:55:51 MINDER-PC ollama[2288]: [GIN] 2026/07/11 - 08:55:51 | 200 |      23.604µs |       127.0.0.1 | HEAD     "/"
+jul 11 08:55:51 MINDER-PC ollama[2288]: [GIN] 2026/07/11 - 08:55:51 | 200 |      30.748µs |       127.0.0.1 | GET      "/api/ps"
+~
+lines 1-21/21 (END)
+
+
+esto confirma que corre como servicio systemd (ollama serve con PID 2288, activo desde antes de que probaras las variables).
+ Esa es la causa: las variables que pusiste en tu terminal nunca llegaron a ese proceso.
+
+davidminder@MINDER-PC:~/Escritorio/pp3_arqui_davidminder/Modelfile$ cd ..
+davidminder@MINDER-PC:~/Escritorio/pp3_arqui_davidminder$ ls
+Avances  Informe  material  Modelfile  README.md
+davidminder@MINDER-PC:~/Escritorio/pp3_arqui_davidminder$ cd Modelfile/
+davidminder@MINDER-PC:~/Escritorio/pp3_arqui_davidminder/Modelfile$ ls
+Modelfile-cpu
+davidminder@MINDER-PC:~/Escritorio/pp3_arqui_davidminder/Modelfile$ cat Modelfile-cpu 
+'FROM gemma3:4b
+PARAMETER num_gpu 0' > Modelfile-cpu
+davidminder@MINDER-PC:~/Escritorio/pp3_arqui_davidminder/Modelfile$ cat Modelfile-cpu 
+FROM gemma3:4b
+PARAMETER num_gpu 0
+davidminder@MINDER-PC:~/Escritorio/pp3_arqui_davidminder/Modelfile$ ollama create gemma3-cpu -f Modelfile-cpu
+gathering model components 
+using existing layer sha256:aeda25e63ebd698fab8638ffb778e68bed908b960d39d0becc650fa981609d25 
+using existing layer sha256:e0a42594d802e5d31cdc786deb4823edb8adff66094d49de8fffe976d753e348 
+using existing layer sha256:dd084c7d92a3c1c14cc09ae77153b903fd2024b64a100a0cc8ec9316063d2dbc 
+creating new layer sha256:e443d5d78700597bfa41762c74476bb50c8cbc161e8dffc4227e7bedaf76acff 
+writing manifest 
+success 
+davidminder@MINDER-PC:~/Escritorio/pp3_arqui_davidminder/Modelfile$ 
+
+cree el modelo
+ollama run gemma3-cpu --verbose
+davidminder@MINDER-PC:~/Escritorio/pp3_arqui_davidminder$ ollama ps
+NAME                 ID              SIZE      PROCESSOR    CONTEXT    UNTIL              
+gemma3-cpu:latest    bfd5b1417bb8    2.9 GB    100% CPU     4096       4 minutes from now    
+
+ahora solo estamos usando la cpu
+i) sudo turbostat --interval 1 --out ~/Escritorio/pp3_arqui_davidminder/Informe/Screenshots/exp1_cpu_run1_oficial_turbostat.log
+total duration:       1m49.579222284s
+load duration:        370.782109ms
+prompt eval count:    65 token(s)
+prompt eval duration: 615.49ms
+prompt eval rate:     105.61 tokens/s
+eval count:           1241 token(s)
+eval duration:        1m48.590836s
+eval rate:            11.43 tokens/s
+
+nada de gpu
+
+
+ii) sudo turbostat --interval 1 --out ~/Escritorio/pp3_arqui_davidminder/Informe/Screenshots/exp1_cpu_run2_oficial_turbostat.log
+total duration:       1m59.697820733s
+load duration:        371.413076ms
+prompt eval count:    65 token(s)
+prompt eval duration: 617.42ms
+prompt eval rate:     105.28 tokens/s
+eval count:           1351 token(s)
+eval duration:        1m58.706976s
+eval rate:            11.38 tokens/s
+
+iii) sudo turbostat --interval 1 --out ~/Escritorio/pp3_arqui_davidminder/Informe/Screenshots/exp1_cpu_run3_oficial_turbostat.log
+total duration:       1m48.871962661s
+load duration:        381.530794ms
+prompt eval count:    65 token(s)
+prompt eval duration: 158.943ms
+prompt eval rate:     408.95 tokens/s
+eval count:           1230 token(s)
+eval duration:        1m48.257534s
+eval rate:            11.36 tokens/s

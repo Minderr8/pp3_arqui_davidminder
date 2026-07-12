@@ -1,0 +1,61 @@
+confirmar instalacion de rocm-smi: rocm-smi
+========================= ROCm System Management Interface =========================
+=================================== Concise Info ===================================
+GPU  Temp (DieEdge)  AvgPwr  SCLK    MCLK   Fan  Perf  PwrCap  VRAM%  GPU%  
+0    25.0c           5.0W    691Mhz  96Mhz  0%   auto  145.0W   12%   2%    
+====================================================================================
+=============================== End of ROCm SMI Log ================================
+
+#Organizar proyecto
+crear carpeta screenshots
+y metrics.json, informe.Md
+
+#EXP. 1 generacion de texto
+IDEA:  Correr prompt fijos en GPU, y en paralelo capturar tokens/segundo + watts + temperatura
+require de 2 terminales abiertas
+
+como hacer que Ollama me muestre las metricas de tokes/s automaticamente
+ollama run gemma3:4b --verbose
+este comando me deja en modo iterativo con gemma3:4b, aqui le pegare el promt fijo
+¨Escribe un ensayo detallado de al menos 500 palabras explicando cómo funciona la jerarquía de memoria en un computador
+moderno, desde los registros del procesador hasta el almacenamiento en disco. Incluye ejemplos concretos de latencias típicas en
+cada nivel¨.
+
+primero para probar (sin segunda terminal):
+
+total duration:       22.486713335s
+load duration:        2.597196552s
+prompt eval count:    66 token(s)
+prompt eval duration: 87.433ms
+prompt eval rate:     754.86 tokens/s
+eval count:           1244 token(s)
+eval duration:        19.799554s
+eval rate:            62.83 tokens/s
+
+
+#patron para hacer el experimento 1
+
+Terminal_2 -- monitoreo
+sudo turbostat --interval 1 --out ~/Escritorio/pp3_arqui_davidminder/Informe/Screenshots/exp1_gpu_run1_turbostat.log
+(--interval 1 = una muestra por segundo, más granular que el --interval 2 de ayer, útil porque tu inferencia dura ~22s, así capturas más puntos)
+
+Terminal 1 — Ollama
+ollama run gemma3:4b --verbose
+
+¿Notaste que el prompt eval count saltó de 66 a 1376 tokens? Eso es porque en modo interactivo (ollama run sin salir), 
+el historial de la conversación anterior se mantiene como contexto — el modelo "recuerda" tu prompt anterior y su propia respuesta, 
+y eso se vuelve a evaluar como parte del prompt. Para tus corridas oficiales del experimento,
+ vas a querer salir y volver a entrar (o usar /clear) entre cada corrida, así cada una parte de un prompt limpio y comparable. 
+ uen hallazgo para anotar en tu metodología.
+#OBS
+al seguir en el mismo chat, el historial de conversación, el modelo recuerda, haciendo que gaste mas tokens, para asique volvere a hacer el run 1
+para los siguientes, voy a tener que empezar una nueva por cada experimento
+
+total duration:       22.200069973s
+load duration:        2.570131142s
+prompt eval count:    1376 token(s)
+prompt eval duration: 849.223ms
+prompt eval rate:     1620.30 tokens/s
+eval count:           1126 token(s)
+eval duration:        18.766693s
+eval rate:            60.00 tokens/s

@@ -1,0 +1,99 @@
+vamos a empezar con el experimento dos, mi hipotesis inicial que el promt:
+Tres servidores procesan tareas independientemente. 
+El servidor A procesa una tarea en 6 minutos, el servidor B en 10 minutos y el servidor C en 15 minutos. 
+Si los tres trabajan en paralelo sobre un lote de 100 tareas, donde cada tarea se asigna a exactamente un servidor, 
+¿cómo deben distribuirse las 100 tareas entre los tres servidores para minimizar el tiempo total de procesamiento? 
+Muestra todo el desarrollo matemático paso a paso.
+
+va a gastar menos tokens, ya que los tokens se gastan mas cuando le pides que te genere texto,
+y en este caso su principal problema es mas matematico que redactar
+
+vamos con los de GPU primero
+en una terminal veo en vivo cuanto se gasta de gpu con: watch -n 2 rocm-smi
+en otra voy a medir con: 
+sudo turbostat --interval 2 --out ~/Escritorio/pp3_arqui_davidminder/Informe/Screenshot/exp2_gpu_runi_oficial_turbostat.log
+y la ultima terminal tendra a gemma con:
+ollama run gemma3:4b --verbose "Tres servidores procesan tareas independientemente. 
+El servidor A procesa una tarea en 6 minutos, el servidor B en 10 minutos y el servidor C en 15 minutos.
+ Si los tres trabajan en paralelo sobre un lote de 100 tareas, donde cada tarea se asigna a exactamente un servidor,
+  ¿cómo deben distribuirse las 100 tareas entre los tres servidores para minimizar el tiempo total de procesamiento?
+ Muestra todo el desarrollo matemático paso a paso."
+
+i) sudo turbostat --interval 2 --out /home/davidminder/Escritorio/pp3_arqui_davidminder/Informe/Screenshots/EXP2/exp2_gpu_run1_oficial_turbostat.log
+
+total duration:       25.985312691s
+load duration:        433.427401ms
+prompt eval count:    108 token(s)
+prompt eval duration: 51.936ms
+prompt eval rate:     2079.48 tokens/s
+eval count:           1607 token(s)
+eval duration:        25.398183s
+eval rate:            63.27 tokens/s
+
+llego a 100 GPU y se mantuvo por 94
+
+ii) sudo turbostat --interval 2 --out /home/davidminder/Escritorio/pp3_arqui_davidminder/Informe/Screenshots/EXP2/exp2_gpu_run2_oficial_turbostat.log
+
+total duration:       18.872411346s
+load duration:        426.266721ms
+prompt eval count:    108 token(s)
+prompt eval duration: 51.762ms
+prompt eval rate:     2086.47 tokens/s
+eval count:           1169 token(s)
+eval duration:        18.288756s
+eval rate:            63.92 tokens/s
+
+iii) sudo turbostat --interval 2 --out /home/davidminder/Escritorio/pp3_arqui_davidminder/Informe/Screenshots/EXP2/exp2_gpu_run3_oficial_turbostat.log
+total duration:       15.505915813s
+load duration:        418.263979ms
+prompt eval count:    108 token(s)
+prompt eval duration: 45.809ms
+prompt eval rate:     2357.62 tokens/s
+eval count:           958 token(s)
+eval duration:        14.944476s
+eval rate:            64.10 tokens/s
+llego a 100 GPU y se mantuvo por 94
+
+
+
+Ahora sin GPU
+
+i) sudo turbostat --interval 2 --out /home/davidminder/Escritorio/pp3_arqui_davidminder/Informe/Screenshots/EXP2/exp2_cpu_run1_oficial_turbostat.log
+total duration:       1m54.928970343s
+load duration:        4.294603089s
+prompt eval count:    108 token(s)
+prompt eval duration: 941.22ms
+prompt eval rate:     114.74 tokens/s
+eval count:           1253 token(s)
+eval duration:        1m49.69109s
+eval rate:            11.42 tokens/s
+
+ii) sudo turbostat --interval 2 --out /home/davidminder/Escritorio/pp3_arqui_davidminder/Informe/Screenshots/EXP2/exp2_cpu_run2_oficial_turbostat.log
+total duration:       1m22.659485904s
+load duration:        428.057501ms
+prompt eval count:    108 token(s)
+prompt eval duration: 162.42ms
+prompt eval rate:     664.94 tokens/s
+eval count:           935 token(s)
+eval duration:        1m21.997631s
+eval rate:            11.40 tokens/s
+
+iii)sudo turbostat --interval 2 --out /home/davidminder/Escritorio/pp3_arqui_davidminder/Informe/Screenshots/EXP2/exp2_cpu_run3_oficial_turbostat.log
+nose porque esta vez me respondio en ingles y por lo que tengo entendido esto gasta menos tokens voy a hacer ese denuevo
+total duration:       1m34.53875702s
+load duration:        428.419116ms
+prompt eval count:    108 token(s)
+prompt eval duration: 155.189ms
+prompt eval rate:     695.93 tokens/s
+eval count:           1053 token(s)
+eval duration:        1m33.88397s
+eval rate:            11.22 tokens/s
+
+iv) sudo turbostat --interval 2 --out /home/davidminder/Escritorio/pp3_arqui_davidminder/Informe/Screenshots/EXP2/exp2_cpu_run3_oficial_turbostat.logtotal duration:       1m18.065957238s
+load duration:        440.425366ms
+prompt eval count:    108 token(s)
+prompt eval duration: 154.193ms
+prompt eval rate:     700.42 tokens/s
+eval count:           887 token(s)
+eval duration:        1m17.39543s
+eval rate:            11.46 tokens/s
