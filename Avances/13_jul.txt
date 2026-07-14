@@ -1,0 +1,102 @@
+empezaremos ocn el experimento 3, y cerrare los anteriores sin aver medidos los watts, temp_min_c, temp_maz, temp_avg_C
+o talvez depues lo rehaga para ver que onda, ma;na ire a ver a los profe y si esta el profe critobal le consultare
+
+antes de empezar con el experimento 3, que espero que sea distinto?, creo que si se va a notar la duracion, ya que procesar un imagen e 
+interpretarla, debe ser mas costoso que unas palabras,
+
+# Terminal 1
+sudo turbostat --interval 2 --out ~/Escritorio/pp3_arqui_davidminder/Informe/Screenshots/EXP3/exp3_gpu_run1_oficial_turbostat.log
+
+# Terminal 2
+while true; do date +%s; sensors; sleep 2; done > ~/Escritorio/pp3_arqui_davidminder/Informe/Screenshots/EXP3/exp3_gpu_run1_sensors.log
+
+# Terminal 3 (opcional, en vivo)
+watch -n 2 rocm-smi
+
+# Terminal 4 — el comando de inferencia:
+ollama run gemma3:4b --verbose "Describe detalladamente lo que observas en esta imagen. 
+Identifica todos los elementos visibles, incluyendo cualquier ser vivo que pueda estar presente. 
+Explica cómo se relacionan los elementos entre sí en la escena. "
+
+#PRIMERA tirada GPU
+sudo turbostat --interval 2 --out ~/Escritorio/pp3_arqui_davidminder/Informe/Screenshots/EXP3/exp3_gpu_run1_oficial_turbostat.log
+while true; do date +%s; sensors; sleep 2; done > ~/Escritorio/pp3_arqui_davidminder/Informe/Screenshots/EXP3/exp3_gpu_run1_sensors.log
+
+
+total duration:       16.053617252s
+load duration:        4.13847388s
+prompt eval count:    321 token(s)
+prompt eval duration: 1.36506s
+prompt eval rate:     235.15 tokens/s
+eval count:           663 token(s)
+eval duration:        10.381303s
+eval rate:            63.86 tokens/s
+
+#segunda GPU
+sudo turbostat --interval 2 --out ~/Escritorio/pp3_arqui_davidminder/Informe/Screenshots/EXP3/exp3_gpu_run2_oficial_turbostat.log
+while true; do date +%s; sensors; sleep 2; done > ~/Escritorio/pp3_arqui_davidminder/Informe/Screenshots/EXP3/exp3_gpu_run2_sensors.log
+total duration:       11.207419427s
+load duration:        497.608622ms
+prompt eval count:    321 token(s)
+prompt eval duration: 57.939ms
+prompt eval rate:     5540.31 tokens/s
+eval count:           662 token(s)
+eval duration:        10.375153s
+eval rate:            63.81 tokens/s
+
+#tecera GPU
+sudo turbostat --interval 2 --out ~/Escritorio/pp3_arqui_davidminder/Informe/Screenshots/EXP3/exp3_gpu_run3_oficial_turbostat.log
+while true; do date +%s; sensors; sleep 2; done > ~/Escritorio/pp3_arqui_davidminder/Informe/Screenshots/EXP3/exp3_gpu_run3_sensors.log
+total duration:       10.052376202s
+load duration:        508.912118ms
+prompt eval count:    321 token(s)
+prompt eval duration: 49.082ms
+prompt eval rate:     6540.08 tokens/s
+eval count:           581 token(s)
+eval duration:        9.233069s
+eval rate:            62.93 tokens/s
+
+
+ahora con CPU
+# Terminal 1
+sudo turbostat --interval 2 --out ~/Escritorio/pp3_arqui_davidminder/Informe/Screenshots/EXP3/exp3_cpu_run1_oficial_turbostat.log
+
+# Terminal 2
+while true; do date +%s; sensors; sleep 2; done > ~/Escritorio/pp3_arqui_davidminder/Informe/Screenshots/EXP3/exp3_cpu_run1_sensors.log
+
+# Terminal 3 — inferencia
+ollama run gemma3-cpu --verbose "Describe detalladamente lo que observas en esta imagen. Identifica todos los elementos visibles, 
+incluyendo cualquier ser vivo que pueda estar presente. 
+Explica cómo se relacionan los elementos entre sí en la escena. /home/davidminder/Escritorio/pp3_arqui_davidminder/material/imagen_test.png"
+
+#primera CPU
+total duration:       1m33.060553067s
+load duration:        4.416732585s
+prompt eval count:    326 token(s)
+prompt eval duration: 21.655024s
+prompt eval rate:     15.05 tokens/s
+eval count:           740 token(s)
+eval duration:        1m6.821734s
+eval rate:            11.07 tokens/s
+
+#segunda
+sudo turbostat --interval 2 --out ~/Escritorio/pp3_arqui_davidminder/Informe/Screenshots/EXP3/exp3_cpu_run2_oficial_turbostat.log
+while true; do date +%s; sensors; sleep 2; done > ~/Escritorio/pp3_arqui_davidminder/Informe/Screenshots/EXP3/exp3_cpu_run2_sensors.log
+total duration:       1m4.24188759s
+load duration:        525.342094ms
+prompt eval count:    326 token(s)
+prompt eval duration: 169.653ms
+prompt eval rate:     1921.57 tokens/s
+eval count:           699 token(s)
+eval duration:        1m3.292551s
+eval rate:            11.04 tokens/s
+
+#tercera
+total duration:       1m12.382697538s
+load duration:        512.73706ms
+prompt eval count:    326 token(s)
+prompt eval duration: 171.885ms
+prompt eval rate:     1896.62 tokens/s
+eval count:           783 token(s)
+eval duration:        1m11.446714s
+eval rate:            10.96 tokens/s
