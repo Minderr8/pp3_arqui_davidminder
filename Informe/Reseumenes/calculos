@@ -1,0 +1,38 @@
+#TFLOPS
+FLOPs por token generado ≈ 2 × N_parámetros
+
+ Para gemma3:4b, N ≈ 4×10⁹ params
+
+GPU: 2 × 4e9 × 63.5 = ? FLOP/s → pásalo a TFLOP/s (÷ 1e12)
+CPU: 2 × 4e9 × 11.0 = ? FLOP/s → a TFLOP/s
+
+GPU: 
+508000000000 FLOP/s 
+0.508 TFLOP/s
+
+CPU:
+88000000000 FLOP/s
+0.088 TFLOP/s
+
+#PEAK HISTORICO
+
+TFLOPS teorico
+El pico teórico (peak) de rendimiento en FP16 de la AMD Radeon RX 7700S varía según
+ el tipo de cálculo:
+ Precisión media (vectorial/FP16): hasta 20.5 TFLOPs.
+ Precisión media (matricial/FP16): hasta 41 TFLOPs.
+
+En GPU:
+vectorial: 2.47804878049%
+matricial: 1.23902439024%
+
+#eficiencia energetica (tokens/watts)
+GPU:
+0.6902173913
+CPU:
+0.15714285714
+
+
+#enerfia total (watts x tiempo)
+GPU: 1932
+CPU: 7700

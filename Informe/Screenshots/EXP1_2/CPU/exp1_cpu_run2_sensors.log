@@ -1,0 +1,1500 @@
+1784079851
+amdgpu-pci-0700
+Adapter: PCI adapter
+vddgfx:      325.00 mV 
+fan1:           0 RPM  (min =    0 RPM, max = 3600 RPM)
+edge:         +47.0°C  (crit = +110.0°C, hyst = -273.1°C)
+                       (emerg = +115.0°C)
+junction:     +48.0°C  (crit = +110.0°C, hyst = -273.1°C)
+                       (emerg = +115.0°C)
+mem:          +54.0°C  (crit = +105.0°C, hyst = -273.1°C)
+                       (emerg = +110.0°C)
+PPT:           5.00 W  (cap = 145.00 W)
+
+nvme-pci-0100
+Adapter: PCI adapter
+Composite:    +31.9°C  (low  = -273.1°C, high = +89.8°C)
+                       (crit = +94.8°C)
+Sensor 1:     +32.9°C  (low  = -273.1°C, high = +65261.8°C)
+Sensor 2:     +31.9°C  (low  = -273.1°C, high = +65261.8°C)
+
+k10temp-pci-00c3
+Adapter: PCI adapter
+Tctl:         +64.1°C  
+Tccd1:        +72.0°C  
+
+1784079853
+amdgpu-pci-0700
+Adapter: PCI adapter
+vddgfx:      601.00 mV 
+fan1:           0 RPM  (min =    0 RPM, max = 3600 RPM)
+edge:         +47.0°C  (crit = +110.0°C, hyst = -273.1°C)
+                       (emerg = +115.0°C)
+junction:     +48.0°C  (crit = +110.0°C, hyst = -273.1°C)
+                       (emerg = +115.0°C)
+mem:          +56.0°C  (crit = +105.0°C, hyst = -273.1°C)
+                       (emerg = +110.0°C)
+PPT:          10.00 W  (cap = 145.00 W)
+
+nvme-pci-0100
+Adapter: PCI adapter
+Composite:    +33.9°C  (low  = -273.1°C, high = +89.8°C)
+                       (crit = +94.8°C)
+Sensor 1:     +33.9°C  (low  = -273.1°C, high = +65261.8°C)
+Sensor 2:     +31.9°C  (low  = -273.1°C, high = +65261.8°C)
+
+k10temp-pci-00c3
+Adapter: PCI adapter
+Tctl:         +68.2°C  
+Tccd1:        +78.0°C  
+
+1784079855
+amdgpu-pci-0700
+Adapter: PCI adapter
+vddgfx:      466.00 mV 
+fan1:           0 RPM  (min =    0 RPM, max = 3600 RPM)
+edge:         +47.0°C  (crit = +110.0°C, hyst = -273.1°C)
+                       (emerg = +115.0°C)
+junction:     +48.0°C  (crit = +110.0°C, hyst = -273.1°C)
+                       (emerg = +115.0°C)
+mem:          +54.0°C  (crit = +105.0°C, hyst = -273.1°C)
+                       (emerg = +110.0°C)
+PPT:           5.00 W  (cap = 145.00 W)
+
+nvme-pci-0100
+Adapter: PCI adapter
+Composite:    +32.9°C  (low  = -273.1°C, high = +89.8°C)
+                       (crit = +94.8°C)
+Sensor 1:     +34.9°C  (low  = -273.1°C, high = +65261.8°C)
+Sensor 2:     +31.9°C  (low  = -273.1°C, high = +65261.8°C)
+
+k10temp-pci-00c3
+Adapter: PCI adapter
+Tctl:         +69.9°C  
+Tccd1:        +67.0°C  
+
+1784079857
+amdgpu-pci-0700
+Adapter: PCI adapter
+vddgfx:      427.00 mV 
+fan1:           0 RPM  (min =    0 RPM, max = 3600 RPM)
+edge:         +47.0°C  (crit = +110.0°C, hyst = -273.1°C)
+                       (emerg = +115.0°C)
+junction:     +48.0°C  (crit = +110.0°C, hyst = -273.1°C)
+                       (emerg = +115.0°C)
+mem:          +54.0°C  (crit = +105.0°C, hyst = -273.1°C)
+                       (emerg = +110.0°C)
+PPT:           5.00 W  (cap = 145.00 W)
+
+nvme-pci-0100
+Adapter: PCI adapter
+Composite:    +32.9°C  (low  = -273.1°C, high = +89.8°C)
+                       (crit = +94.8°C)
+Sensor 1:     +33.9°C  (low  = -273.1°C, high = +65261.8°C)
+Sensor 2:     +31.9°C  (low  = -273.1°C, high = +65261.8°C)
+
+k10temp-pci-00c3
+Adapter: PCI adapter
+Tctl:         +69.0°C  
+Tccd1:        +66.5°C  
+
+1784079859
+amdgpu-pci-0700
+Adapter: PCI adapter
+vddgfx:      430.00 mV 
+fan1:           0 RPM  (min =    0 RPM, max = 3600 RPM)
+edge:         +47.0°C  (crit = +110.0°C, hyst = -273.1°C)
+                       (emerg = +115.0°C)
+junction:     +48.0°C  (crit = +110.0°C, hyst = -273.1°C)
+                       (emerg = +115.0°C)
+mem:          +54.0°C  (crit = +105.0°C, hyst = -273.1°C)
+                       (emerg = +110.0°C)
+PPT:           5.00 W  (cap = 145.00 W)
+
+nvme-pci-0100
+Adapter: PCI adapter
+Composite:    +33.9°C  (low  = -273.1°C, high = +89.8°C)
+                       (crit = +94.8°C)
+Sensor 1:     +33.9°C  (low  = -273.1°C, high = +65261.8°C)
+Sensor 2:     +31.9°C  (low  = -273.1°C, high = +65261.8°C)
+
+k10temp-pci-00c3
+Adapter: PCI adapter
+Tctl:         +68.6°C  
+Tccd1:        +69.0°C  
+
+1784079861
+amdgpu-pci-0700
+Adapter: PCI adapter
+vddgfx:      431.00 mV 
+fan1:           0 RPM  (min =    0 RPM, max = 3600 RPM)
+edge:         +47.0°C  (crit = +110.0°C, hyst = -273.1°C)
+                       (emerg = +115.0°C)
+junction:     +48.0°C  (crit = +110.0°C, hyst = -273.1°C)
+                       (emerg = +115.0°C)
+mem:          +54.0°C  (crit = +105.0°C, hyst = -273.1°C)
+                       (emerg = +110.0°C)
+PPT:           5.00 W  (cap = 145.00 W)
+
+nvme-pci-0100
+Adapter: PCI adapter
+Composite:    +32.9°C  (low  = -273.1°C, high = +89.8°C)
+                       (crit = +94.8°C)
+Sensor 1:     +33.9°C  (low  = -273.1°C, high = +65261.8°C)
+Sensor 2:     +31.9°C  (low  = -273.1°C, high = +65261.8°C)
+
+k10temp-pci-00c3
+Adapter: PCI adapter
+Tctl:         +68.2°C  
+Tccd1:        +67.5°C  
+
+1784079863
+amdgpu-pci-0700
+Adapter: PCI adapter
+vddgfx:      418.00 mV 
+fan1:           0 RPM  (min =    0 RPM, max = 3600 RPM)
+edge:         +47.0°C  (crit = +110.0°C, hyst = -273.1°C)
+                       (emerg = +115.0°C)
+junction:     +48.0°C  (crit = +110.0°C, hyst = -273.1°C)
+                       (emerg = +115.0°C)
+mem:          +54.0°C  (crit = +105.0°C, hyst = -273.1°C)
+                       (emerg = +110.0°C)
+PPT:           5.00 W  (cap = 145.00 W)
+
+nvme-pci-0100
+Adapter: PCI adapter
+Composite:    +33.9°C  (low  = -273.1°C, high = +89.8°C)
+                       (crit = +94.8°C)
+Sensor 1:     +34.9°C  (low  = -273.1°C, high = +65261.8°C)
+Sensor 2:     +31.9°C  (low  = -273.1°C, high = +65261.8°C)
+
+k10temp-pci-00c3
+Adapter: PCI adapter
+Tctl:         +68.1°C  
+Tccd1:        +77.8°C  
+
+1784079865
+amdgpu-pci-0700
+Adapter: PCI adapter
+vddgfx:      396.00 mV 
+fan1:           0 RPM  (min =    0 RPM, max = 3600 RPM)
+edge:         +47.0°C  (crit = +110.0°C, hyst = -273.1°C)
+                       (emerg = +115.0°C)
+junction:     +48.0°C  (crit = +110.0°C, hyst = -273.1°C)
+                       (emerg = +115.0°C)
+mem:          +54.0°C  (crit = +105.0°C, hyst = -273.1°C)
+                       (emerg = +110.0°C)
+PPT:           5.00 W  (cap = 145.00 W)
+
+nvme-pci-0100
+Adapter: PCI adapter
+Composite:    +34.9°C  (low  = -273.1°C, high = +89.8°C)
+                       (crit = +94.8°C)
+Sensor 1:     +34.9°C  (low  = -273.1°C, high = +65261.8°C)
+Sensor 2:     +31.9°C  (low  = -273.1°C, high = +65261.8°C)
+
+k10temp-pci-00c3
+Adapter: PCI adapter
+Tctl:         +67.9°C  
+Tccd1:        +66.0°C  
+
+1784079867
+amdgpu-pci-0700
+Adapter: PCI adapter
+vddgfx:      402.00 mV 
+fan1:           0 RPM  (min =    0 RPM, max = 3600 RPM)
+edge:         +47.0°C  (crit = +110.0°C, hyst = -273.1°C)
+                       (emerg = +115.0°C)
+junction:     +48.0°C  (crit = +110.0°C, hyst = -273.1°C)
+                       (emerg = +115.0°C)
+mem:          +54.0°C  (crit = +105.0°C, hyst = -273.1°C)
+                       (emerg = +110.0°C)
+PPT:           5.00 W  (cap = 145.00 W)
+
+nvme-pci-0100
+Adapter: PCI adapter
+Composite:    +33.9°C  (low  = -273.1°C, high = +89.8°C)
+                       (crit = +94.8°C)
+Sensor 1:     +33.9°C  (low  = -273.1°C, high = +65261.8°C)
+Sensor 2:     +31.9°C  (low  = -273.1°C, high = +65261.8°C)
+
+k10temp-pci-00c3
+Adapter: PCI adapter
+Tctl:         +67.9°C  
+Tccd1:        +67.8°C  
+
+1784079869
+amdgpu-pci-0700
+Adapter: PCI adapter
+vddgfx:      431.00 mV 
+fan1:           0 RPM  (min =    0 RPM, max = 3600 RPM)
+edge:         +47.0°C  (crit = +110.0°C, hyst = -273.1°C)
+                       (emerg = +115.0°C)
+junction:     +48.0°C  (crit = +110.0°C, hyst = -273.1°C)
+                       (emerg = +115.0°C)
+mem:          +54.0°C  (crit = +105.0°C, hyst = -273.1°C)
+                       (emerg = +110.0°C)
+PPT:           5.00 W  (cap = 145.00 W)
+
+nvme-pci-0100
+Adapter: PCI adapter
+Composite:    +32.9°C  (low  = -273.1°C, high = +89.8°C)
+                       (crit = +94.8°C)
+Sensor 1:     +33.9°C  (low  = -273.1°C, high = +65261.8°C)
+Sensor 2:     +31.9°C  (low  = -273.1°C, high = +65261.8°C)
+
+k10temp-pci-00c3
+Adapter: PCI adapter
+Tctl:         +67.8°C  
+Tccd1:        +67.2°C  
+
+1784079871
+amdgpu-pci-0700
+Adapter: PCI adapter
+vddgfx:      402.00 mV 
+fan1:           0 RPM  (min =    0 RPM, max = 3600 RPM)
+edge:         +47.0°C  (crit = +110.0°C, hyst = -273.1°C)
+                       (emerg = +115.0°C)
+junction:     +48.0°C  (crit = +110.0°C, hyst = -273.1°C)
+                       (emerg = +115.0°C)
+mem:          +54.0°C  (crit = +105.0°C, hyst = -273.1°C)
+                       (emerg = +110.0°C)
+PPT:           5.00 W  (cap = 145.00 W)
+
+nvme-pci-0100
+Adapter: PCI adapter
+Composite:    +34.9°C  (low  = -273.1°C, high = +89.8°C)
+                       (crit = +94.8°C)
+Sensor 1:     +34.9°C  (low  = -273.1°C, high = +65261.8°C)
+Sensor 2:     +31.9°C  (low  = -273.1°C, high = +65261.8°C)
+
+k10temp-pci-00c3
+Adapter: PCI adapter
+Tctl:         +67.9°C  
+Tccd1:        +66.5°C  
+
+1784079873
+amdgpu-pci-0700
+Adapter: PCI adapter
+vddgfx:      400.00 mV 
+fan1:           0 RPM  (min =    0 RPM, max = 3600 RPM)
+edge:         +47.0°C  (crit = +110.0°C, hyst = -273.1°C)
+                       (emerg = +115.0°C)
+junction:     +48.0°C  (crit = +110.0°C, hyst = -273.1°C)
+                       (emerg = +115.0°C)
+mem:          +54.0°C  (crit = +105.0°C, hyst = -273.1°C)
+                       (emerg = +110.0°C)
+PPT:           5.00 W  (cap = 145.00 W)
+
+nvme-pci-0100
+Adapter: PCI adapter
+Composite:    +33.9°C  (low  = -273.1°C, high = +89.8°C)
+                       (crit = +94.8°C)
+Sensor 1:     +33.9°C  (low  = -273.1°C, high = +65261.8°C)
+Sensor 2:     +31.9°C  (low  = -273.1°C, high = +65261.8°C)
+
+k10temp-pci-00c3
+Adapter: PCI adapter
+Tctl:         +67.6°C  
+Tccd1:        +66.8°C  
+
+1784079875
+amdgpu-pci-0700
+Adapter: PCI adapter
+vddgfx:      404.00 mV 
+fan1:           0 RPM  (min =    0 RPM, max = 3600 RPM)
+edge:         +47.0°C  (crit = +110.0°C, hyst = -273.1°C)
+                       (emerg = +115.0°C)
+junction:     +47.0°C  (crit = +110.0°C, hyst = -273.1°C)
+                       (emerg = +115.0°C)
+mem:          +54.0°C  (crit = +105.0°C, hyst = -273.1°C)
+                       (emerg = +110.0°C)
+PPT:           5.00 W  (cap = 145.00 W)
+
+nvme-pci-0100
+Adapter: PCI adapter
+Composite:    +32.9°C  (low  = -273.1°C, high = +89.8°C)
+                       (crit = +94.8°C)
+Sensor 1:     +32.9°C  (low  = -273.1°C, high = +65261.8°C)
+Sensor 2:     +31.9°C  (low  = -273.1°C, high = +65261.8°C)
+
+k10temp-pci-00c3
+Adapter: PCI adapter
+Tctl:         +68.0°C  
+Tccd1:        +68.5°C  
+
+1784079877
+amdgpu-pci-0700
+Adapter: PCI adapter
+vddgfx:      405.00 mV 
+fan1:           0 RPM  (min =    0 RPM, max = 3600 RPM)
+edge:         +47.0°C  (crit = +110.0°C, hyst = -273.1°C)
+                       (emerg = +115.0°C)
+junction:     +47.0°C  (crit = +110.0°C, hyst = -273.1°C)
+                       (emerg = +115.0°C)
+mem:          +54.0°C  (crit = +105.0°C, hyst = -273.1°C)
+                       (emerg = +110.0°C)
+PPT:           5.00 W  (cap = 145.00 W)
+
+nvme-pci-0100
+Adapter: PCI adapter
+Composite:    +33.9°C  (low  = -273.1°C, high = +89.8°C)
+                       (crit = +94.8°C)
+Sensor 1:     +34.9°C  (low  = -273.1°C, high = +65261.8°C)
+Sensor 2:     +31.9°C  (low  = -273.1°C, high = +65261.8°C)
+
+k10temp-pci-00c3
+Adapter: PCI adapter
+Tctl:         +67.9°C  
+Tccd1:        +66.0°C  
+
+1784079879
+amdgpu-pci-0700
+Adapter: PCI adapter
+vddgfx:      430.00 mV 
+fan1:           0 RPM  (min =    0 RPM, max = 3600 RPM)
+edge:         +47.0°C  (crit = +110.0°C, hyst = -273.1°C)
+                       (emerg = +115.0°C)
+junction:     +47.0°C  (crit = +110.0°C, hyst = -273.1°C)
+                       (emerg = +115.0°C)
+mem:          +54.0°C  (crit = +105.0°C, hyst = -273.1°C)
+                       (emerg = +110.0°C)
+PPT:           5.00 W  (cap = 145.00 W)
+
+nvme-pci-0100
+Adapter: PCI adapter
+Composite:    +34.9°C  (low  = -273.1°C, high = +89.8°C)
+                       (crit = +94.8°C)
+Sensor 1:     +35.9°C  (low  = -273.1°C, high = +65261.8°C)
+Sensor 2:     +31.9°C  (low  = -273.1°C, high = +65261.8°C)
+
+k10temp-pci-00c3
+Adapter: PCI adapter
+Tctl:         +67.9°C  
+Tccd1:        +67.2°C  
+
+1784079881
+amdgpu-pci-0700
+Adapter: PCI adapter
+vddgfx:      394.00 mV 
+fan1:           0 RPM  (min =    0 RPM, max = 3600 RPM)
+edge:         +47.0°C  (crit = +110.0°C, hyst = -273.1°C)
+                       (emerg = +115.0°C)
+junction:     +47.0°C  (crit = +110.0°C, hyst = -273.1°C)
+                       (emerg = +115.0°C)
+mem:          +54.0°C  (crit = +105.0°C, hyst = -273.1°C)
+                       (emerg = +110.0°C)
+PPT:           5.00 W  (cap = 145.00 W)
+
+nvme-pci-0100
+Adapter: PCI adapter
+Composite:    +32.9°C  (low  = -273.1°C, high = +89.8°C)
+                       (crit = +94.8°C)
+Sensor 1:     +33.9°C  (low  = -273.1°C, high = +65261.8°C)
+Sensor 2:     +31.9°C  (low  = -273.1°C, high = +65261.8°C)
+
+k10temp-pci-00c3
+Adapter: PCI adapter
+Tctl:         +67.9°C  
+Tccd1:        +66.2°C  
+
+1784079883
+amdgpu-pci-0700
+Adapter: PCI adapter
+vddgfx:      412.00 mV 
+fan1:           0 RPM  (min =    0 RPM, max = 3600 RPM)
+edge:         +47.0°C  (crit = +110.0°C, hyst = -273.1°C)
+                       (emerg = +115.0°C)
+junction:     +47.0°C  (crit = +110.0°C, hyst = -273.1°C)
+                       (emerg = +115.0°C)
+mem:          +54.0°C  (crit = +105.0°C, hyst = -273.1°C)
+                       (emerg = +110.0°C)
+PPT:           5.00 W  (cap = 145.00 W)
+
+nvme-pci-0100
+Adapter: PCI adapter
+Composite:    +33.9°C  (low  = -273.1°C, high = +89.8°C)
+                       (crit = +94.8°C)
+Sensor 1:     +33.9°C  (low  = -273.1°C, high = +65261.8°C)
+Sensor 2:     +31.9°C  (low  = -273.1°C, high = +65261.8°C)
+
+k10temp-pci-00c3
+Adapter: PCI adapter
+Tctl:         +68.0°C  
+Tccd1:        +66.2°C  
+
+1784079885
+amdgpu-pci-0700
+Adapter: PCI adapter
+vddgfx:      397.00 mV 
+fan1:           0 RPM  (min =    0 RPM, max = 3600 RPM)
+edge:         +47.0°C  (crit = +110.0°C, hyst = -273.1°C)
+                       (emerg = +115.0°C)
+junction:     +47.0°C  (crit = +110.0°C, hyst = -273.1°C)
+                       (emerg = +115.0°C)
+mem:          +54.0°C  (crit = +105.0°C, hyst = -273.1°C)
+                       (emerg = +110.0°C)
+PPT:           5.00 W  (cap = 145.00 W)
+
+nvme-pci-0100
+Adapter: PCI adapter
+Composite:    +33.9°C  (low  = -273.1°C, high = +89.8°C)
+                       (crit = +94.8°C)
+Sensor 1:     +34.9°C  (low  = -273.1°C, high = +65261.8°C)
+Sensor 2:     +31.9°C  (low  = -273.1°C, high = +65261.8°C)
+
+k10temp-pci-00c3
+Adapter: PCI adapter
+Tctl:         +68.0°C  
+Tccd1:        +66.2°C  
+
+1784079887
+amdgpu-pci-0700
+Adapter: PCI adapter
+vddgfx:      398.00 mV 
+fan1:           0 RPM  (min =    0 RPM, max = 3600 RPM)
+edge:         +47.0°C  (crit = +110.0°C, hyst = -273.1°C)
+                       (emerg = +115.0°C)
+junction:     +47.0°C  (crit = +110.0°C, hyst = -273.1°C)
+                       (emerg = +115.0°C)
+mem:          +54.0°C  (crit = +105.0°C, hyst = -273.1°C)
+                       (emerg = +110.0°C)
+PPT:           5.00 W  (cap = 145.00 W)
+
+nvme-pci-0100
+Adapter: PCI adapter
+Composite:    +33.9°C  (low  = -273.1°C, high = +89.8°C)
+                       (crit = +94.8°C)
+Sensor 1:     +33.9°C  (low  = -273.1°C, high = +65261.8°C)
+Sensor 2:     +31.9°C  (low  = -273.1°C, high = +65261.8°C)
+
+k10temp-pci-00c3
+Adapter: PCI adapter
+Tctl:         +68.4°C  
+Tccd1:        +67.5°C  
+
+1784079889
+amdgpu-pci-0700
+Adapter: PCI adapter
+vddgfx:      410.00 mV 
+fan1:           0 RPM  (min =    0 RPM, max = 3600 RPM)
+edge:         +47.0°C  (crit = +110.0°C, hyst = -273.1°C)
+                       (emerg = +115.0°C)
+junction:     +47.0°C  (crit = +110.0°C, hyst = -273.1°C)
+                       (emerg = +115.0°C)
+mem:          +54.0°C  (crit = +105.0°C, hyst = -273.1°C)
+                       (emerg = +110.0°C)
+PPT:           5.00 W  (cap = 145.00 W)
+
+nvme-pci-0100
+Adapter: PCI adapter
+Composite:    +34.9°C  (low  = -273.1°C, high = +89.8°C)
+                       (crit = +94.8°C)
+Sensor 1:     +34.9°C  (low  = -273.1°C, high = +65261.8°C)
+Sensor 2:     +31.9°C  (low  = -273.1°C, high = +65261.8°C)
+
+k10temp-pci-00c3
+Adapter: PCI adapter
+Tctl:         +68.5°C  
+Tccd1:        +67.2°C  
+
+1784079891
+amdgpu-pci-0700
+Adapter: PCI adapter
+vddgfx:      423.00 mV 
+fan1:           0 RPM  (min =    0 RPM, max = 3600 RPM)
+edge:         +47.0°C  (crit = +110.0°C, hyst = -273.1°C)
+                       (emerg = +115.0°C)
+junction:     +47.0°C  (crit = +110.0°C, hyst = -273.1°C)
+                       (emerg = +115.0°C)
+mem:          +54.0°C  (crit = +105.0°C, hyst = -273.1°C)
+                       (emerg = +110.0°C)
+PPT:           5.00 W  (cap = 145.00 W)
+
+nvme-pci-0100
+Adapter: PCI adapter
+Composite:    +32.9°C  (low  = -273.1°C, high = +89.8°C)
+                       (crit = +94.8°C)
+Sensor 1:     +33.9°C  (low  = -273.1°C, high = +65261.8°C)
+Sensor 2:     +31.9°C  (low  = -273.1°C, high = +65261.8°C)
+
+k10temp-pci-00c3
+Adapter: PCI adapter
+Tctl:         +68.9°C  
+Tccd1:        +68.0°C  
+
+1784079894
+amdgpu-pci-0700
+Adapter: PCI adapter
+vddgfx:      392.00 mV 
+fan1:           0 RPM  (min =    0 RPM, max = 3600 RPM)
+edge:         +47.0°C  (crit = +110.0°C, hyst = -273.1°C)
+                       (emerg = +115.0°C)
+junction:     +47.0°C  (crit = +110.0°C, hyst = -273.1°C)
+                       (emerg = +115.0°C)
+mem:          +54.0°C  (crit = +105.0°C, hyst = -273.1°C)
+                       (emerg = +110.0°C)
+PPT:           5.00 W  (cap = 145.00 W)
+
+nvme-pci-0100
+Adapter: PCI adapter
+Composite:    +33.9°C  (low  = -273.1°C, high = +89.8°C)
+                       (crit = +94.8°C)
+Sensor 1:     +33.9°C  (low  = -273.1°C, high = +65261.8°C)
+Sensor 2:     +31.9°C  (low  = -273.1°C, high = +65261.8°C)
+
+k10temp-pci-00c3
+Adapter: PCI adapter
+Tctl:         +69.2°C  
+Tccd1:        +67.2°C  
+
+1784079896
+amdgpu-pci-0700
+Adapter: PCI adapter
+vddgfx:      417.00 mV 
+fan1:           0 RPM  (min =    0 RPM, max = 3600 RPM)
+edge:         +47.0°C  (crit = +110.0°C, hyst = -273.1°C)
+                       (emerg = +115.0°C)
+junction:     +47.0°C  (crit = +110.0°C, hyst = -273.1°C)
+                       (emerg = +115.0°C)
+mem:          +54.0°C  (crit = +105.0°C, hyst = -273.1°C)
+                       (emerg = +110.0°C)
+PPT:           5.00 W  (cap = 145.00 W)
+
+nvme-pci-0100
+Adapter: PCI adapter
+Composite:    +34.9°C  (low  = -273.1°C, high = +89.8°C)
+                       (crit = +94.8°C)
+Sensor 1:     +35.9°C  (low  = -273.1°C, high = +65261.8°C)
+Sensor 2:     +31.9°C  (low  = -273.1°C, high = +65261.8°C)
+
+k10temp-pci-00c3
+Adapter: PCI adapter
+Tctl:         +69.2°C  
+Tccd1:        +71.2°C  
+
+1784079898
+amdgpu-pci-0700
+Adapter: PCI adapter
+vddgfx:      409.00 mV 
+fan1:           0 RPM  (min =    0 RPM, max = 3600 RPM)
+edge:         +47.0°C  (crit = +110.0°C, hyst = -273.1°C)
+                       (emerg = +115.0°C)
+junction:     +47.0°C  (crit = +110.0°C, hyst = -273.1°C)
+                       (emerg = +115.0°C)
+mem:          +54.0°C  (crit = +105.0°C, hyst = -273.1°C)
+                       (emerg = +110.0°C)
+PPT:           5.00 W  (cap = 145.00 W)
+
+nvme-pci-0100
+Adapter: PCI adapter
+Composite:    +32.9°C  (low  = -273.1°C, high = +89.8°C)
+                       (crit = +94.8°C)
+Sensor 1:     +33.9°C  (low  = -273.1°C, high = +65261.8°C)
+Sensor 2:     +31.9°C  (low  = -273.1°C, high = +65261.8°C)
+
+k10temp-pci-00c3
+Adapter: PCI adapter
+Tctl:         +69.4°C  
+Tccd1:        +68.2°C  
+
+1784079900
+amdgpu-pci-0700
+Adapter: PCI adapter
+vddgfx:      396.00 mV 
+fan1:           0 RPM  (min =    0 RPM, max = 3600 RPM)
+edge:         +47.0°C  (crit = +110.0°C, hyst = -273.1°C)
+                       (emerg = +115.0°C)
+junction:     +47.0°C  (crit = +110.0°C, hyst = -273.1°C)
+                       (emerg = +115.0°C)
+mem:          +54.0°C  (crit = +105.0°C, hyst = -273.1°C)
+                       (emerg = +110.0°C)
+PPT:           5.00 W  (cap = 145.00 W)
+
+nvme-pci-0100
+Adapter: PCI adapter
+Composite:    +33.9°C  (low  = -273.1°C, high = +89.8°C)
+                       (crit = +94.8°C)
+Sensor 1:     +33.9°C  (low  = -273.1°C, high = +65261.8°C)
+Sensor 2:     +31.9°C  (low  = -273.1°C, high = +65261.8°C)
+
+k10temp-pci-00c3
+Adapter: PCI adapter
+Tctl:         +69.5°C  
+Tccd1:        +69.2°C  
+
+1784079902
+amdgpu-pci-0700
+Adapter: PCI adapter
+vddgfx:      395.00 mV 
+fan1:           0 RPM  (min =    0 RPM, max = 3600 RPM)
+edge:         +47.0°C  (crit = +110.0°C, hyst = -273.1°C)
+                       (emerg = +115.0°C)
+junction:     +47.0°C  (crit = +110.0°C, hyst = -273.1°C)
+                       (emerg = +115.0°C)
+mem:          +54.0°C  (crit = +105.0°C, hyst = -273.1°C)
+                       (emerg = +110.0°C)
+PPT:           5.00 W  (cap = 145.00 W)
+
+nvme-pci-0100
+Adapter: PCI adapter
+Composite:    +34.9°C  (low  = -273.1°C, high = +89.8°C)
+                       (crit = +94.8°C)
+Sensor 1:     +34.9°C  (low  = -273.1°C, high = +65261.8°C)
+Sensor 2:     +31.9°C  (low  = -273.1°C, high = +65261.8°C)
+
+k10temp-pci-00c3
+Adapter: PCI adapter
+Tctl:         +69.6°C  
+Tccd1:        +67.2°C  
+
+1784079904
+amdgpu-pci-0700
+Adapter: PCI adapter
+vddgfx:      392.00 mV 
+fan1:           0 RPM  (min =    0 RPM, max = 3600 RPM)
+edge:         +46.0°C  (crit = +110.0°C, hyst = -273.1°C)
+                       (emerg = +115.0°C)
+junction:     +47.0°C  (crit = +110.0°C, hyst = -273.1°C)
+                       (emerg = +115.0°C)
+mem:          +54.0°C  (crit = +105.0°C, hyst = -273.1°C)
+                       (emerg = +110.0°C)
+PPT:           5.00 W  (cap = 145.00 W)
+
+nvme-pci-0100
+Adapter: PCI adapter
+Composite:    +33.9°C  (low  = -273.1°C, high = +89.8°C)
+                       (crit = +94.8°C)
+Sensor 1:     +34.9°C  (low  = -273.1°C, high = +65261.8°C)
+Sensor 2:     +31.9°C  (low  = -273.1°C, high = +65261.8°C)
+
+k10temp-pci-00c3
+Adapter: PCI adapter
+Tctl:         +69.5°C  
+Tccd1:        +67.5°C  
+
+1784079906
+amdgpu-pci-0700
+Adapter: PCI adapter
+vddgfx:      404.00 mV 
+fan1:           0 RPM  (min =    0 RPM, max = 3600 RPM)
+edge:         +46.0°C  (crit = +110.0°C, hyst = -273.1°C)
+                       (emerg = +115.0°C)
+junction:     +47.0°C  (crit = +110.0°C, hyst = -273.1°C)
+                       (emerg = +115.0°C)
+mem:          +54.0°C  (crit = +105.0°C, hyst = -273.1°C)
+                       (emerg = +110.0°C)
+PPT:           5.00 W  (cap = 145.00 W)
+
+nvme-pci-0100
+Adapter: PCI adapter
+Composite:    +33.9°C  (low  = -273.1°C, high = +89.8°C)
+                       (crit = +94.8°C)
+Sensor 1:     +34.9°C  (low  = -273.1°C, high = +65261.8°C)
+Sensor 2:     +31.9°C  (low  = -273.1°C, high = +65261.8°C)
+
+k10temp-pci-00c3
+Adapter: PCI adapter
+Tctl:         +69.2°C  
+Tccd1:        +67.5°C  
+
+1784079908
+amdgpu-pci-0700
+Adapter: PCI adapter
+vddgfx:      411.00 mV 
+fan1:           0 RPM  (min =    0 RPM, max = 3600 RPM)
+edge:         +46.0°C  (crit = +110.0°C, hyst = -273.1°C)
+                       (emerg = +115.0°C)
+junction:     +47.0°C  (crit = +110.0°C, hyst = -273.1°C)
+                       (emerg = +115.0°C)
+mem:          +54.0°C  (crit = +105.0°C, hyst = -273.1°C)
+                       (emerg = +110.0°C)
+PPT:           5.00 W  (cap = 145.00 W)
+
+nvme-pci-0100
+Adapter: PCI adapter
+Composite:    +33.9°C  (low  = -273.1°C, high = +89.8°C)
+                       (crit = +94.8°C)
+Sensor 1:     +33.9°C  (low  = -273.1°C, high = +65261.8°C)
+Sensor 2:     +31.9°C  (low  = -273.1°C, high = +65261.8°C)
+
+k10temp-pci-00c3
+Adapter: PCI adapter
+Tctl:         +69.5°C  
+Tccd1:        +67.5°C  
+
+1784079910
+amdgpu-pci-0700
+Adapter: PCI adapter
+vddgfx:      408.00 mV 
+fan1:           0 RPM  (min =    0 RPM, max = 3600 RPM)
+edge:         +46.0°C  (crit = +110.0°C, hyst = -273.1°C)
+                       (emerg = +115.0°C)
+junction:     +47.0°C  (crit = +110.0°C, hyst = -273.1°C)
+                       (emerg = +115.0°C)
+mem:          +54.0°C  (crit = +105.0°C, hyst = -273.1°C)
+                       (emerg = +110.0°C)
+PPT:           5.00 W  (cap = 145.00 W)
+
+nvme-pci-0100
+Adapter: PCI adapter
+Composite:    +34.9°C  (low  = -273.1°C, high = +89.8°C)
+                       (crit = +94.8°C)
+Sensor 1:     +34.9°C  (low  = -273.1°C, high = +65261.8°C)
+Sensor 2:     +31.9°C  (low  = -273.1°C, high = +65261.8°C)
+
+k10temp-pci-00c3
+Adapter: PCI adapter
+Tctl:         +69.4°C  
+Tccd1:        +68.5°C  
+
+1784079912
+amdgpu-pci-0700
+Adapter: PCI adapter
+vddgfx:      405.00 mV 
+fan1:           0 RPM  (min =    0 RPM, max = 3600 RPM)
+edge:         +46.0°C  (crit = +110.0°C, hyst = -273.1°C)
+                       (emerg = +115.0°C)
+junction:     +47.0°C  (crit = +110.0°C, hyst = -273.1°C)
+                       (emerg = +115.0°C)
+mem:          +54.0°C  (crit = +105.0°C, hyst = -273.1°C)
+                       (emerg = +110.0°C)
+PPT:           5.00 W  (cap = 145.00 W)
+
+nvme-pci-0100
+Adapter: PCI adapter
+Composite:    +32.9°C  (low  = -273.1°C, high = +89.8°C)
+                       (crit = +94.8°C)
+Sensor 1:     +33.9°C  (low  = -273.1°C, high = +65261.8°C)
+Sensor 2:     +31.9°C  (low  = -273.1°C, high = +65261.8°C)
+
+k10temp-pci-00c3
+Adapter: PCI adapter
+Tctl:         +69.5°C  
+Tccd1:        +66.5°C  
+
+1784079914
+amdgpu-pci-0700
+Adapter: PCI adapter
+vddgfx:      394.00 mV 
+fan1:           0 RPM  (min =    0 RPM, max = 3600 RPM)
+edge:         +46.0°C  (crit = +110.0°C, hyst = -273.1°C)
+                       (emerg = +115.0°C)
+junction:     +47.0°C  (crit = +110.0°C, hyst = -273.1°C)
+                       (emerg = +115.0°C)
+mem:          +54.0°C  (crit = +105.0°C, hyst = -273.1°C)
+                       (emerg = +110.0°C)
+PPT:           5.00 W  (cap = 145.00 W)
+
+nvme-pci-0100
+Adapter: PCI adapter
+Composite:    +34.9°C  (low  = -273.1°C, high = +89.8°C)
+                       (crit = +94.8°C)
+Sensor 1:     +34.9°C  (low  = -273.1°C, high = +65261.8°C)
+Sensor 2:     +31.9°C  (low  = -273.1°C, high = +65261.8°C)
+
+k10temp-pci-00c3
+Adapter: PCI adapter
+Tctl:         +69.4°C  
+Tccd1:        +71.0°C  
+
+1784079916
+amdgpu-pci-0700
+Adapter: PCI adapter
+vddgfx:      383.00 mV 
+fan1:           0 RPM  (min =    0 RPM, max = 3600 RPM)
+edge:         +46.0°C  (crit = +110.0°C, hyst = -273.1°C)
+                       (emerg = +115.0°C)
+junction:     +47.0°C  (crit = +110.0°C, hyst = -273.1°C)
+                       (emerg = +115.0°C)
+mem:          +54.0°C  (crit = +105.0°C, hyst = -273.1°C)
+                       (emerg = +110.0°C)
+PPT:           5.00 W  (cap = 145.00 W)
+
+nvme-pci-0100
+Adapter: PCI adapter
+Composite:    +33.9°C  (low  = -273.1°C, high = +89.8°C)
+                       (crit = +94.8°C)
+Sensor 1:     +33.9°C  (low  = -273.1°C, high = +65261.8°C)
+Sensor 2:     +31.9°C  (low  = -273.1°C, high = +65261.8°C)
+
+k10temp-pci-00c3
+Adapter: PCI adapter
+Tctl:         +69.4°C  
+Tccd1:        +68.5°C  
+
+1784079918
+amdgpu-pci-0700
+Adapter: PCI adapter
+vddgfx:      384.00 mV 
+fan1:           0 RPM  (min =    0 RPM, max = 3600 RPM)
+edge:         +46.0°C  (crit = +110.0°C, hyst = -273.1°C)
+                       (emerg = +115.0°C)
+junction:     +47.0°C  (crit = +110.0°C, hyst = -273.1°C)
+                       (emerg = +115.0°C)
+mem:          +54.0°C  (crit = +105.0°C, hyst = -273.1°C)
+                       (emerg = +110.0°C)
+PPT:           5.00 W  (cap = 145.00 W)
+
+nvme-pci-0100
+Adapter: PCI adapter
+Composite:    +34.9°C  (low  = -273.1°C, high = +89.8°C)
+                       (crit = +94.8°C)
+Sensor 1:     +34.9°C  (low  = -273.1°C, high = +65261.8°C)
+Sensor 2:     +31.9°C  (low  = -273.1°C, high = +65261.8°C)
+
+k10temp-pci-00c3
+Adapter: PCI adapter
+Tctl:         +69.2°C  
+Tccd1:        +69.5°C  
+
+1784079920
+amdgpu-pci-0700
+Adapter: PCI adapter
+vddgfx:      394.00 mV 
+fan1:           0 RPM  (min =    0 RPM, max = 3600 RPM)
+edge:         +46.0°C  (crit = +110.0°C, hyst = -273.1°C)
+                       (emerg = +115.0°C)
+junction:     +47.0°C  (crit = +110.0°C, hyst = -273.1°C)
+                       (emerg = +115.0°C)
+mem:          +54.0°C  (crit = +105.0°C, hyst = -273.1°C)
+                       (emerg = +110.0°C)
+PPT:           5.00 W  (cap = 145.00 W)
+
+nvme-pci-0100
+Adapter: PCI adapter
+Composite:    +34.9°C  (low  = -273.1°C, high = +89.8°C)
+                       (crit = +94.8°C)
+Sensor 1:     +34.9°C  (low  = -273.1°C, high = +65261.8°C)
+Sensor 2:     +31.9°C  (low  = -273.1°C, high = +65261.8°C)
+
+k10temp-pci-00c3
+Adapter: PCI adapter
+Tctl:         +69.2°C  
+Tccd1:        +68.0°C  
+
+1784079922
+amdgpu-pci-0700
+Adapter: PCI adapter
+vddgfx:      391.00 mV 
+fan1:           0 RPM  (min =    0 RPM, max = 3600 RPM)
+edge:         +46.0°C  (crit = +110.0°C, hyst = -273.1°C)
+                       (emerg = +115.0°C)
+junction:     +47.0°C  (crit = +110.0°C, hyst = -273.1°C)
+                       (emerg = +115.0°C)
+mem:          +54.0°C  (crit = +105.0°C, hyst = -273.1°C)
+                       (emerg = +110.0°C)
+PPT:           5.00 W  (cap = 145.00 W)
+
+nvme-pci-0100
+Adapter: PCI adapter
+Composite:    +33.9°C  (low  = -273.1°C, high = +89.8°C)
+                       (crit = +94.8°C)
+Sensor 1:     +34.9°C  (low  = -273.1°C, high = +65261.8°C)
+Sensor 2:     +31.9°C  (low  = -273.1°C, high = +65261.8°C)
+
+k10temp-pci-00c3
+Adapter: PCI adapter
+Tctl:         +69.2°C  
+Tccd1:        +68.0°C  
+
+1784079924
+amdgpu-pci-0700
+Adapter: PCI adapter
+vddgfx:      498.00 mV 
+fan1:           0 RPM  (min =    0 RPM, max = 3600 RPM)
+edge:         +46.0°C  (crit = +110.0°C, hyst = -273.1°C)
+                       (emerg = +115.0°C)
+junction:     +47.0°C  (crit = +110.0°C, hyst = -273.1°C)
+                       (emerg = +115.0°C)
+mem:          +54.0°C  (crit = +105.0°C, hyst = -273.1°C)
+                       (emerg = +110.0°C)
+PPT:           6.00 W  (cap = 145.00 W)
+
+nvme-pci-0100
+Adapter: PCI adapter
+Composite:    +33.9°C  (low  = -273.1°C, high = +89.8°C)
+                       (crit = +94.8°C)
+Sensor 1:     +34.9°C  (low  = -273.1°C, high = +65261.8°C)
+Sensor 2:     +31.9°C  (low  = -273.1°C, high = +65261.8°C)
+
+k10temp-pci-00c3
+Adapter: PCI adapter
+Tctl:         +69.1°C  
+Tccd1:        +67.5°C  
+
+1784079926
+amdgpu-pci-0700
+Adapter: PCI adapter
+vddgfx:      643.00 mV 
+fan1:           0 RPM  (min =    0 RPM, max = 3600 RPM)
+edge:         +47.0°C  (crit = +110.0°C, hyst = -273.1°C)
+                       (emerg = +115.0°C)
+junction:     +48.0°C  (crit = +110.0°C, hyst = -273.1°C)
+                       (emerg = +115.0°C)
+mem:          +56.0°C  (crit = +105.0°C, hyst = -273.1°C)
+                       (emerg = +110.0°C)
+PPT:          12.00 W  (cap = 145.00 W)
+
+nvme-pci-0100
+Adapter: PCI adapter
+Composite:    +33.9°C  (low  = -273.1°C, high = +89.8°C)
+                       (crit = +94.8°C)
+Sensor 1:     +33.9°C  (low  = -273.1°C, high = +65261.8°C)
+Sensor 2:     +31.9°C  (low  = -273.1°C, high = +65261.8°C)
+
+k10temp-pci-00c3
+Adapter: PCI adapter
+Tctl:         +70.1°C  
+Tccd1:        +72.5°C  
+
+1784079928
+amdgpu-pci-0700
+Adapter: PCI adapter
+vddgfx:      525.00 mV 
+fan1:           0 RPM  (min =    0 RPM, max = 3600 RPM)
+edge:         +47.0°C  (crit = +110.0°C, hyst = -273.1°C)
+                       (emerg = +115.0°C)
+junction:     +47.0°C  (crit = +110.0°C, hyst = -273.1°C)
+                       (emerg = +115.0°C)
+mem:          +55.0°C  (crit = +105.0°C, hyst = -273.1°C)
+                       (emerg = +110.0°C)
+PPT:           8.00 W  (cap = 145.00 W)
+
+nvme-pci-0100
+Adapter: PCI adapter
+Composite:    +34.9°C  (low  = -273.1°C, high = +89.8°C)
+                       (crit = +94.8°C)
+Sensor 1:     +34.9°C  (low  = -273.1°C, high = +65261.8°C)
+Sensor 2:     +31.9°C  (low  = -273.1°C, high = +65261.8°C)
+
+k10temp-pci-00c3
+Adapter: PCI adapter
+Tctl:         +70.0°C  
+Tccd1:        +67.5°C  
+
+1784079930
+amdgpu-pci-0700
+Adapter: PCI adapter
+vddgfx:      517.00 mV 
+fan1:           0 RPM  (min =    0 RPM, max = 3600 RPM)
+edge:         +47.0°C  (crit = +110.0°C, hyst = -273.1°C)
+                       (emerg = +115.0°C)
+junction:     +48.0°C  (crit = +110.0°C, hyst = -273.1°C)
+                       (emerg = +115.0°C)
+mem:          +55.0°C  (crit = +105.0°C, hyst = -273.1°C)
+                       (emerg = +110.0°C)
+PPT:           8.00 W  (cap = 145.00 W)
+
+nvme-pci-0100
+Adapter: PCI adapter
+Composite:    +36.9°C  (low  = -273.1°C, high = +89.8°C)
+                       (crit = +94.8°C)
+Sensor 1:     +36.9°C  (low  = -273.1°C, high = +65261.8°C)
+Sensor 2:     +31.9°C  (low  = -273.1°C, high = +65261.8°C)
+
+k10temp-pci-00c3
+Adapter: PCI adapter
+Tctl:         +69.8°C  
+Tccd1:        +70.5°C  
+
+1784079932
+amdgpu-pci-0700
+Adapter: PCI adapter
+vddgfx:      675.00 mV 
+fan1:           0 RPM  (min =    0 RPM, max = 3600 RPM)
+edge:         +47.0°C  (crit = +110.0°C, hyst = -273.1°C)
+                       (emerg = +115.0°C)
+junction:     +49.0°C  (crit = +110.0°C, hyst = -273.1°C)
+                       (emerg = +115.0°C)
+mem:          +58.0°C  (crit = +105.0°C, hyst = -273.1°C)
+                       (emerg = +110.0°C)
+PPT:          12.00 W  (cap = 145.00 W)
+
+nvme-pci-0100
+Adapter: PCI adapter
+Composite:    +35.9°C  (low  = -273.1°C, high = +89.8°C)
+                       (crit = +94.8°C)
+Sensor 1:     +36.9°C  (low  = -273.1°C, high = +65261.8°C)
+Sensor 2:     +31.9°C  (low  = -273.1°C, high = +65261.8°C)
+
+k10temp-pci-00c3
+Adapter: PCI adapter
+Tctl:         +70.2°C  
+Tccd1:        +68.8°C  
+
+1784079934
+amdgpu-pci-0700
+Adapter: PCI adapter
+vddgfx:      614.00 mV 
+fan1:           0 RPM  (min =    0 RPM, max = 3600 RPM)
+edge:         +47.0°C  (crit = +110.0°C, hyst = -273.1°C)
+                       (emerg = +115.0°C)
+junction:     +48.0°C  (crit = +110.0°C, hyst = -273.1°C)
+                       (emerg = +115.0°C)
+mem:          +54.0°C  (crit = +105.0°C, hyst = -273.1°C)
+                       (emerg = +110.0°C)
+PPT:           8.00 W  (cap = 145.00 W)
+
+nvme-pci-0100
+Adapter: PCI adapter
+Composite:    +34.9°C  (low  = -273.1°C, high = +89.8°C)
+                       (crit = +94.8°C)
+Sensor 1:     +34.9°C  (low  = -273.1°C, high = +65261.8°C)
+Sensor 2:     +31.9°C  (low  = -273.1°C, high = +65261.8°C)
+
+k10temp-pci-00c3
+Adapter: PCI adapter
+Tctl:         +71.4°C  
+Tccd1:        +70.8°C  
+
+1784079936
+amdgpu-pci-0700
+Adapter: PCI adapter
+vddgfx:      444.00 mV 
+fan1:           0 RPM  (min =    0 RPM, max = 3600 RPM)
+edge:         +47.0°C  (crit = +110.0°C, hyst = -273.1°C)
+                       (emerg = +115.0°C)
+junction:     +47.0°C  (crit = +110.0°C, hyst = -273.1°C)
+                       (emerg = +115.0°C)
+mem:          +55.0°C  (crit = +105.0°C, hyst = -273.1°C)
+                       (emerg = +110.0°C)
+PPT:           6.00 W  (cap = 145.00 W)
+
+nvme-pci-0100
+Adapter: PCI adapter
+Composite:    +34.9°C  (low  = -273.1°C, high = +89.8°C)
+                       (crit = +94.8°C)
+Sensor 1:     +35.9°C  (low  = -273.1°C, high = +65261.8°C)
+Sensor 2:     +31.9°C  (low  = -273.1°C, high = +65261.8°C)
+
+k10temp-pci-00c3
+Adapter: PCI adapter
+Tctl:         +71.9°C  
+Tccd1:        +69.8°C  
+
+1784079938
+amdgpu-pci-0700
+Adapter: PCI adapter
+vddgfx:      477.00 mV 
+fan1:           0 RPM  (min =    0 RPM, max = 3600 RPM)
+edge:         +47.0°C  (crit = +110.0°C, hyst = -273.1°C)
+                       (emerg = +115.0°C)
+junction:     +47.0°C  (crit = +110.0°C, hyst = -273.1°C)
+                       (emerg = +115.0°C)
+mem:          +54.0°C  (crit = +105.0°C, hyst = -273.1°C)
+                       (emerg = +110.0°C)
+PPT:           6.00 W  (cap = 145.00 W)
+
+nvme-pci-0100
+Adapter: PCI adapter
+Composite:    +34.9°C  (low  = -273.1°C, high = +89.8°C)
+                       (crit = +94.8°C)
+Sensor 1:     +34.9°C  (low  = -273.1°C, high = +65261.8°C)
+Sensor 2:     +31.9°C  (low  = -273.1°C, high = +65261.8°C)
+
+k10temp-pci-00c3
+Adapter: PCI adapter
+Tctl:         +72.4°C  
+Tccd1:        +70.8°C  
+
+1784079940
+amdgpu-pci-0700
+Adapter: PCI adapter
+vddgfx:      635.00 mV 
+fan1:           0 RPM  (min =    0 RPM, max = 3600 RPM)
+edge:         +47.0°C  (crit = +110.0°C, hyst = -273.1°C)
+                       (emerg = +115.0°C)
+junction:     +47.0°C  (crit = +110.0°C, hyst = -273.1°C)
+                       (emerg = +115.0°C)
+mem:          +54.0°C  (crit = +105.0°C, hyst = -273.1°C)
+                       (emerg = +110.0°C)
+PPT:           7.00 W  (cap = 145.00 W)
+
+nvme-pci-0100
+Adapter: PCI adapter
+Composite:    +34.9°C  (low  = -273.1°C, high = +89.8°C)
+                       (crit = +94.8°C)
+Sensor 1:     +35.9°C  (low  = -273.1°C, high = +65261.8°C)
+Sensor 2:     +31.9°C  (low  = -273.1°C, high = +65261.8°C)
+
+k10temp-pci-00c3
+Adapter: PCI adapter
+Tctl:         +72.4°C  
+Tccd1:        +69.5°C  
+
+1784079942
+amdgpu-pci-0700
+Adapter: PCI adapter
+vddgfx:      466.00 mV 
+fan1:           0 RPM  (min =    0 RPM, max = 3600 RPM)
+edge:         +47.0°C  (crit = +110.0°C, hyst = -273.1°C)
+                       (emerg = +115.0°C)
+junction:     +47.0°C  (crit = +110.0°C, hyst = -273.1°C)
+                       (emerg = +115.0°C)
+mem:          +54.0°C  (crit = +105.0°C, hyst = -273.1°C)
+                       (emerg = +110.0°C)
+PPT:           5.00 W  (cap = 145.00 W)
+
+nvme-pci-0100
+Adapter: PCI adapter
+Composite:    +34.9°C  (low  = -273.1°C, high = +89.8°C)
+                       (crit = +94.8°C)
+Sensor 1:     +34.9°C  (low  = -273.1°C, high = +65261.8°C)
+Sensor 2:     +31.9°C  (low  = -273.1°C, high = +65261.8°C)
+
+k10temp-pci-00c3
+Adapter: PCI adapter
+Tctl:         +72.9°C  
+Tccd1:        +71.8°C  
+
+1784079944
+amdgpu-pci-0700
+Adapter: PCI adapter
+vddgfx:      503.00 mV 
+fan1:           0 RPM  (min =    0 RPM, max = 3600 RPM)
+edge:         +47.0°C  (crit = +110.0°C, hyst = -273.1°C)
+                       (emerg = +115.0°C)
+junction:     +48.0°C  (crit = +110.0°C, hyst = -273.1°C)
+                       (emerg = +115.0°C)
+mem:          +55.0°C  (crit = +105.0°C, hyst = -273.1°C)
+                       (emerg = +110.0°C)
+PPT:           7.00 W  (cap = 145.00 W)
+
+nvme-pci-0100
+Adapter: PCI adapter
+Composite:    +34.9°C  (low  = -273.1°C, high = +89.8°C)
+                       (crit = +94.8°C)
+Sensor 1:     +34.9°C  (low  = -273.1°C, high = +65261.8°C)
+Sensor 2:     +31.9°C  (low  = -273.1°C, high = +65261.8°C)
+
+k10temp-pci-00c3
+Adapter: PCI adapter
+Tctl:         +73.1°C  
+Tccd1:        +70.5°C  
+
+1784079946
+amdgpu-pci-0700
+Adapter: PCI adapter
+vddgfx:      682.00 mV 
+fan1:           0 RPM  (min =    0 RPM, max = 3600 RPM)
+edge:         +48.0°C  (crit = +110.0°C, hyst = -273.1°C)
+                       (emerg = +115.0°C)
+junction:     +49.0°C  (crit = +110.0°C, hyst = -273.1°C)
+                       (emerg = +115.0°C)
+mem:          +58.0°C  (crit = +105.0°C, hyst = -273.1°C)
+                       (emerg = +110.0°C)
+PPT:          14.00 W  (cap = 145.00 W)
+
+nvme-pci-0100
+Adapter: PCI adapter
+Composite:    +34.9°C  (low  = -273.1°C, high = +89.8°C)
+                       (crit = +94.8°C)
+Sensor 1:     +35.9°C  (low  = -273.1°C, high = +65261.8°C)
+Sensor 2:     +31.9°C  (low  = -273.1°C, high = +65261.8°C)
+
+k10temp-pci-00c3
+Adapter: PCI adapter
+Tctl:         +72.2°C  
+Tccd1:        +68.8°C  
+
+1784079948
+amdgpu-pci-0700
+Adapter: PCI adapter
+vddgfx:      485.00 mV 
+fan1:           0 RPM  (min =    0 RPM, max = 3600 RPM)
+edge:         +47.0°C  (crit = +110.0°C, hyst = -273.1°C)
+                       (emerg = +115.0°C)
+junction:     +48.0°C  (crit = +110.0°C, hyst = -273.1°C)
+                       (emerg = +115.0°C)
+mem:          +55.0°C  (crit = +105.0°C, hyst = -273.1°C)
+                       (emerg = +110.0°C)
+PPT:           7.00 W  (cap = 145.00 W)
+
+nvme-pci-0100
+Adapter: PCI adapter
+Composite:    +34.9°C  (low  = -273.1°C, high = +89.8°C)
+                       (crit = +94.8°C)
+Sensor 1:     +34.9°C  (low  = -273.1°C, high = +65261.8°C)
+Sensor 2:     +31.9°C  (low  = -273.1°C, high = +65261.8°C)
+
+k10temp-pci-00c3
+Adapter: PCI adapter
+Tctl:         +71.5°C  
+Tccd1:        +69.0°C  
+
+1784079950
+amdgpu-pci-0700
+Adapter: PCI adapter
+vddgfx:      530.00 mV 
+fan1:           0 RPM  (min =    0 RPM, max = 3600 RPM)
+edge:         +47.0°C  (crit = +110.0°C, hyst = -273.1°C)
+                       (emerg = +115.0°C)
+junction:     +47.0°C  (crit = +110.0°C, hyst = -273.1°C)
+                       (emerg = +115.0°C)
+mem:          +54.0°C  (crit = +105.0°C, hyst = -273.1°C)
+                       (emerg = +110.0°C)
+PPT:           6.00 W  (cap = 145.00 W)
+
+nvme-pci-0100
+Adapter: PCI adapter
+Composite:    +36.9°C  (low  = -273.1°C, high = +89.8°C)
+                       (crit = +94.8°C)
+Sensor 1:     +35.9°C  (low  = -273.1°C, high = +65261.8°C)
+Sensor 2:     +31.9°C  (low  = -273.1°C, high = +65261.8°C)
+
+k10temp-pci-00c3
+Adapter: PCI adapter
+Tctl:         +71.1°C  
+Tccd1:        +68.5°C  
+
+1784079952
+amdgpu-pci-0700
+Adapter: PCI adapter
+vddgfx:      601.00 mV 
+fan1:           0 RPM  (min =    0 RPM, max = 3600 RPM)
+edge:         +47.0°C  (crit = +110.0°C, hyst = -273.1°C)
+                       (emerg = +115.0°C)
+junction:     +48.0°C  (crit = +110.0°C, hyst = -273.1°C)
+                       (emerg = +115.0°C)
+mem:          +55.0°C  (crit = +105.0°C, hyst = -273.1°C)
+                       (emerg = +110.0°C)
+PPT:           7.00 W  (cap = 145.00 W)
+
+nvme-pci-0100
+Adapter: PCI adapter
+Composite:    +34.9°C  (low  = -273.1°C, high = +89.8°C)
+                       (crit = +94.8°C)
+Sensor 1:     +34.9°C  (low  = -273.1°C, high = +65261.8°C)
+Sensor 2:     +31.9°C  (low  = -273.1°C, high = +65261.8°C)
+
+k10temp-pci-00c3
+Adapter: PCI adapter
+Tctl:         +70.6°C  
+Tccd1:        +68.0°C  
+
+1784079954
+amdgpu-pci-0700
+Adapter: PCI adapter
+vddgfx:      460.00 mV 
+fan1:           0 RPM  (min =    0 RPM, max = 3600 RPM)
+edge:         +47.0°C  (crit = +110.0°C, hyst = -273.1°C)
+                       (emerg = +115.0°C)
+junction:     +48.0°C  (crit = +110.0°C, hyst = -273.1°C)
+                       (emerg = +115.0°C)
+mem:          +54.0°C  (crit = +105.0°C, hyst = -273.1°C)
+                       (emerg = +110.0°C)
+PPT:           7.00 W  (cap = 145.00 W)
+
+nvme-pci-0100
+Adapter: PCI adapter
+Composite:    +34.9°C  (low  = -273.1°C, high = +89.8°C)
+                       (crit = +94.8°C)
+Sensor 1:     +34.9°C  (low  = -273.1°C, high = +65261.8°C)
+Sensor 2:     +31.9°C  (low  = -273.1°C, high = +65261.8°C)
+
+k10temp-pci-00c3
+Adapter: PCI adapter
+Tctl:         +70.2°C  
+Tccd1:        +69.2°C  
+
+1784079956
+amdgpu-pci-0700
+Adapter: PCI adapter
+vddgfx:      434.00 mV 
+fan1:           0 RPM  (min =    0 RPM, max = 3600 RPM)
+edge:         +47.0°C  (crit = +110.0°C, hyst = -273.1°C)
+                       (emerg = +115.0°C)
+junction:     +47.0°C  (crit = +110.0°C, hyst = -273.1°C)
+                       (emerg = +115.0°C)
+mem:          +54.0°C  (crit = +105.0°C, hyst = -273.1°C)
+                       (emerg = +110.0°C)
+PPT:           6.00 W  (cap = 145.00 W)
+
+nvme-pci-0100
+Adapter: PCI adapter
+Composite:    +35.9°C  (low  = -273.1°C, high = +89.8°C)
+                       (crit = +94.8°C)
+Sensor 1:     +35.9°C  (low  = -273.1°C, high = +65261.8°C)
+Sensor 2:     +31.9°C  (low  = -273.1°C, high = +65261.8°C)
+
+k10temp-pci-00c3
+Adapter: PCI adapter
+Tctl:         +70.4°C  
+Tccd1:        +68.5°C  
+
+1784079959
+amdgpu-pci-0700
+Adapter: PCI adapter
+vddgfx:      588.00 mV 
+fan1:           0 RPM  (min =    0 RPM, max = 3600 RPM)
+edge:         +47.0°C  (crit = +110.0°C, hyst = -273.1°C)
+                       (emerg = +115.0°C)
+junction:     +48.0°C  (crit = +110.0°C, hyst = -273.1°C)
+                       (emerg = +115.0°C)
+mem:          +54.0°C  (crit = +105.0°C, hyst = -273.1°C)
+                       (emerg = +110.0°C)
+PPT:           7.00 W  (cap = 145.00 W)
+
+nvme-pci-0100
+Adapter: PCI adapter
+Composite:    +34.9°C  (low  = -273.1°C, high = +89.8°C)
+                       (crit = +94.8°C)
+Sensor 1:     +34.9°C  (low  = -273.1°C, high = +65261.8°C)
+Sensor 2:     +31.9°C  (low  = -273.1°C, high = +65261.8°C)
+
+k10temp-pci-00c3
+Adapter: PCI adapter
+Tctl:         +70.1°C  
+Tccd1:        +69.2°C  
+
+1784079961
+amdgpu-pci-0700
+Adapter: PCI adapter
+vddgfx:      687.00 mV 
+fan1:           0 RPM  (min =    0 RPM, max = 3600 RPM)
+edge:         +48.0°C  (crit = +110.0°C, hyst = -273.1°C)
+                       (emerg = +115.0°C)
+junction:     +50.0°C  (crit = +110.0°C, hyst = -273.1°C)
+                       (emerg = +115.0°C)
+mem:          +59.0°C  (crit = +105.0°C, hyst = -273.1°C)
+                       (emerg = +110.0°C)
+PPT:          15.00 W  (cap = 145.00 W)
+
+nvme-pci-0100
+Adapter: PCI adapter
+Composite:    +35.9°C  (low  = -273.1°C, high = +89.8°C)
+                       (crit = +94.8°C)
+Sensor 1:     +36.9°C  (low  = -273.1°C, high = +65261.8°C)
+Sensor 2:     +31.9°C  (low  = -273.1°C, high = +65261.8°C)
+
+k10temp-pci-00c3
+Adapter: PCI adapter
+Tctl:         +69.9°C  
+Tccd1:        +70.5°C  
+
+1784079963
+amdgpu-pci-0700
+Adapter: PCI adapter
+vddgfx:      438.00 mV 
+fan1:           0 RPM  (min =    0 RPM, max = 3600 RPM)
+edge:         +47.0°C  (crit = +110.0°C, hyst = -273.1°C)
+                       (emerg = +115.0°C)
+junction:     +48.0°C  (crit = +110.0°C, hyst = -273.1°C)
+                       (emerg = +115.0°C)
+mem:          +55.0°C  (crit = +105.0°C, hyst = -273.1°C)
+                       (emerg = +110.0°C)
+PPT:           6.00 W  (cap = 145.00 W)
+
+nvme-pci-0100
+Adapter: PCI adapter
+Composite:    +34.9°C  (low  = -273.1°C, high = +89.8°C)
+                       (crit = +94.8°C)
+Sensor 1:     +34.9°C  (low  = -273.1°C, high = +65261.8°C)
+Sensor 2:     +31.9°C  (low  = -273.1°C, high = +65261.8°C)
+
+k10temp-pci-00c3
+Adapter: PCI adapter
+Tctl:         +69.9°C  
+Tccd1:        +69.0°C  
+
+1784079965
+amdgpu-pci-0700
+Adapter: PCI adapter
+vddgfx:      365.00 mV 
+fan1:           0 RPM  (min =    0 RPM, max = 3600 RPM)
+edge:         +47.0°C  (crit = +110.0°C, hyst = -273.1°C)
+                       (emerg = +115.0°C)
+junction:     +48.0°C  (crit = +110.0°C, hyst = -273.1°C)
+                       (emerg = +115.0°C)
+mem:          +54.0°C  (crit = +105.0°C, hyst = -273.1°C)
+                       (emerg = +110.0°C)
+PPT:           6.00 W  (cap = 145.00 W)
+
+nvme-pci-0100
+Adapter: PCI adapter
+Composite:    +34.9°C  (low  = -273.1°C, high = +89.8°C)
+                       (crit = +94.8°C)
+Sensor 1:     +34.9°C  (low  = -273.1°C, high = +65261.8°C)
+Sensor 2:     +31.9°C  (low  = -273.1°C, high = +65261.8°C)
+
+k10temp-pci-00c3
+Adapter: PCI adapter
+Tctl:         +70.1°C  
+Tccd1:        +70.2°C  
+
+1784079967
+amdgpu-pci-0700
+Adapter: PCI adapter
+vddgfx:      441.00 mV 
+fan1:           0 RPM  (min =    0 RPM, max = 3600 RPM)
+edge:         +47.0°C  (crit = +110.0°C, hyst = -273.1°C)
+                       (emerg = +115.0°C)
+junction:     +48.0°C  (crit = +110.0°C, hyst = -273.1°C)
+                       (emerg = +115.0°C)
+mem:          +54.0°C  (crit = +105.0°C, hyst = -273.1°C)
+                       (emerg = +110.0°C)
+PPT:           6.00 W  (cap = 145.00 W)
+
+nvme-pci-0100
+Adapter: PCI adapter
+Composite:    +35.9°C  (low  = -273.1°C, high = +89.8°C)
+                       (crit = +94.8°C)
+Sensor 1:     +35.9°C  (low  = -273.1°C, high = +65261.8°C)
+Sensor 2:     +31.9°C  (low  = -273.1°C, high = +65261.8°C)
+
+k10temp-pci-00c3
+Adapter: PCI adapter
+Tctl:         +69.9°C  
+Tccd1:        +68.2°C  
+
+1784079969
+amdgpu-pci-0700
+Adapter: PCI adapter
+vddgfx:      378.00 mV 
+fan1:           0 RPM  (min =    0 RPM, max = 3600 RPM)
+edge:         +47.0°C  (crit = +110.0°C, hyst = -273.1°C)
+                       (emerg = +115.0°C)
+junction:     +47.0°C  (crit = +110.0°C, hyst = -273.1°C)
+                       (emerg = +115.0°C)
+mem:          +54.0°C  (crit = +105.0°C, hyst = -273.1°C)
+                       (emerg = +110.0°C)
+PPT:           5.00 W  (cap = 145.00 W)
+
+nvme-pci-0100
+Adapter: PCI adapter
+Composite:    +36.9°C  (low  = -273.1°C, high = +89.8°C)
+                       (crit = +94.8°C)
+Sensor 1:     +36.9°C  (low  = -273.1°C, high = +65261.8°C)
+Sensor 2:     +31.9°C  (low  = -273.1°C, high = +65261.8°C)
+
+k10temp-pci-00c3
+Adapter: PCI adapter
+Tctl:         +69.8°C  
+Tccd1:        +68.2°C  
+
+1784079971
+amdgpu-pci-0700
+Adapter: PCI adapter
+vddgfx:      389.00 mV 
+fan1:           0 RPM  (min =    0 RPM, max = 3600 RPM)
+edge:         +47.0°C  (crit = +110.0°C, hyst = -273.1°C)
+                       (emerg = +115.0°C)
+junction:     +47.0°C  (crit = +110.0°C, hyst = -273.1°C)
+                       (emerg = +115.0°C)
+mem:          +54.0°C  (crit = +105.0°C, hyst = -273.1°C)
+                       (emerg = +110.0°C)
+PPT:           5.00 W  (cap = 145.00 W)
+
+nvme-pci-0100
+Adapter: PCI adapter
+Composite:    +34.9°C  (low  = -273.1°C, high = +89.8°C)
+                       (crit = +94.8°C)
+Sensor 1:     +34.9°C  (low  = -273.1°C, high = +65261.8°C)
+Sensor 2:     +31.9°C  (low  = -273.1°C, high = +65261.8°C)
+
+k10temp-pci-00c3
+Adapter: PCI adapter
+Tctl:         +69.8°C  
+Tccd1:        +69.2°C  
+

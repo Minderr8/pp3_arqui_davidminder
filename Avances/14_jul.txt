@@ -1,0 +1,145 @@
+voy a reahacer los exp 1 y dos pero midiendo bien
+
+
+
+# Terminal 1 — CPU package watts + Busy%
+sudo turbostat --interval 2 --out ~/Escritorio/pp3_arqui_davidminder/Informe/Screenshots/EXP1_2/exp1_gpu_run1_turbostat.log
+
+# Terminal 2 — GPU watts (PPT) + temps
+while true; do date +%s; sensors; sleep 2; done > ~/Escritorio/pp3_arqui_davidminder/Informe/Screenshots/EXP1_2/exp1_gpu_run1_sensors.log
+
+# Terminal 3 — inferencia (el prompt EXACTO del Exp1)
+ollama run gemma3:4b --verbose "Escribe un ensayo detallado de al menos 500 palabras 
+explicando cómo funciona la jerarquía de memoria en un 
+computador moderno, desde los registros del procesador hasta 
+el almacenamiento en disco. Incluye ejemplos concretos de latencias 
+típicas en cada nivel."
+
+GPU
+#1 
+total duration:       23.332629545s
+load duration:        4.117371144s
+prompt eval count:    63 token(s)
+prompt eval duration: 88.881ms
+prompt eval rate:     708.81 tokens/s
+eval count:           1210 token(s)
+eval duration:        19.121081s
+eval rate:            63.28 tokens/s
+#2
+total duration:       21.118964294s
+load duration:        454.248245ms
+prompt eval count:    63 token(s)
+prompt eval duration: 46.009ms
+prompt eval rate:     1369.30 tokens/s
+eval count:           1302 token(s)
+eval duration:        20.514418s
+eval rate:            63.47 tokens/s
+#3
+total duration:       20.112409642s
+load duration:        463.643866ms
+prompt eval count:    63 token(s)
+prompt eval duration: 48.678ms
+prompt eval rate:     1294.22 tokens/s
+eval count:           1226 token(s)
+eval duration:        19.495695s
+eval rate:            62.89 tokens/s
+
+CPU
+#1
+total duration:       1m53.547110074s
+load duration:        4.616789288s
+prompt eval count:    63 token(s)
+prompt eval duration: 720.658ms
+prompt eval rate:     87.42 tokens/s
+eval count:           1197 token(s)
+eval duration:        1m48.207628s
+eval rate:            11.06 tokens/s
+#2
+total duration:       1m58.185485016s
+load duration:        475.808612ms
+prompt eval count:    63 token(s)
+prompt eval duration: 157.905ms
+prompt eval rate:     398.97 tokens/s
+eval count:           1280 token(s)
+eval duration:        1m57.475607s
+eval rate:            10.90 tokens/s
+#3
+total duration:       1m37.287303872s
+load duration:        493.016405ms
+prompt eval count:    63 token(s)
+prompt eval duration: 161.329ms
+prompt eval rate:     390.51 tokens/s
+eval count:           1049 token(s)
+eval duration:        1m36.554616s
+eval rate:            10.86 tokens/s
+
+
+
+EXP2
+# --- GPU (repite run1 / run2 / run3) ---
+# Terminal 1
+sudo turbostat --interval 2 --out ~/Escritorio/pp3_arqui_davidminder/Informe/Screenshots/EXP2/exp2_gpu_run1_sensors_turbostat.log
+
+# Terminal 2
+while true; do date +%s; sensors; sleep 2; done > ~/Escritorio/pp3_arqui_davidminder/Informe/Screenshots/EXP2/exp2_gpu_run1_sensors.log
+
+# Terminal 3
+ollama run gemma3:4b --verbose "Tres servidores procesan tareas independientemente. El servidor A procesa una tarea en 6 minutos, el servidor B en 10 minutos y el servidor C en 15 minutos. Si los tres trabajan en paralelo sobre un lote de 100 tareas, donde cada tarea se asigna a exactamente un servidor, ¿cómo deben distribuirse las 100 tareas entre los tres servidores para minimizar el tiempo total de procesamiento? Muestra todo el desarrollo matemático paso a paso."
+
+#1
+total duration:       23.396846142s
+load duration:        2.636656185s
+prompt eval count:    108 token(s)
+prompt eval duration: 110.01ms
+prompt eval rate:     981.73 tokens/s
+eval count:           1312 token(s)
+eval duration:        20.648204s
+eval rate:            63.54 tokens/s
+#2
+total duration:       19.771375576s
+load duration:        438.385095ms
+prompt eval count:    108 token(s)
+prompt eval duration: 54.451ms
+prompt eval rate:     1983.43 tokens/s
+eval count:           1218 token(s)
+eval duration:        19.139945s
+eval rate:            63.64 tokens/s
+#3
+total duration:       20.94503186s
+load duration:        2.587894032s
+prompt eval count:    108 token(s)
+prompt eval duration: 109.718ms
+prompt eval rate:     984.34 tokens/s
+eval count:           1163 token(s)
+eval duration:        18.245366s
+eval rate:            63.74 tokens/s
+
+CPU
+#1
+total duration:       2m9.130616s
+load duration:        3.877273828s
+prompt eval count:    108 token(s)
+prompt eval duration: 974.519ms
+prompt eval rate:     110.82 tokens/s
+eval count:           1406 token(s)
+eval duration:        2m4.276585s
+eval rate:            11.31 tokens/s
+#2
+total duration:       2m13.83736917s
+load duration:        447.363378ms
+prompt eval count:    108 token(s)
+prompt eval duration: 153.957ms
+prompt eval rate:     701.49 tokens/s
+eval count:           1506 token(s)
+eval duration:        2m13.159206s
+eval rate:            11.31 tokens/s
+#3
+total duration:       1m43.476925774s
+load duration:        447.558626ms
+prompt eval count:    108 token(s)
+prompt eval duration: 153.952ms
+prompt eval rate:     701.52 tokens/s
+eval count:           1175 token(s)
+eval duration:        1m42.799998s
+eval rate:            11.43 tokens/s
+

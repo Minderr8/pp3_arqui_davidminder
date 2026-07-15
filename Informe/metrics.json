@@ -1,0 +1,376 @@
+{
+  "student": "Minder, David",
+  "hardware": {
+    "cpu": {
+      "model": "AMD Ryzen 7 5700X",
+      "cores": 8,
+      "threads": 16,
+      "freq_ghz": 3.4
+    },
+    "gpu": {
+      "model": "AMD Radeon RX 7700S",
+      "vram_gb": 8.0
+    },
+    "ram_gb": 31,
+    "os": "Ubuntu (kernel 6.17)"
+  },
+  "model": {
+    "name": "gemma3:4b",
+    "quantization": "Q4_K_M",
+    "size_gb": 2.9
+  },
+  "experiments": {
+    "exp1_text": {
+      "cpu": {
+        "runs": [
+          {
+            "tokens_per_sec": 11.06,
+            "total_time_sec": 113.55,
+            "ram_mb": 3500,
+            "cpu_load_pct": 61.1,
+            "tflops": 0.0885,
+            "watts_avg": 71.44,
+            "gflops_per_watt": 1.2388,
+            "energy_joules": 8112.0,
+            "temp_min_c": 62.0,
+            "temp_max_c": 72.0,
+            "temp_avg_c": 68.0
+          },
+          {
+            "tokens_per_sec": 10.9,
+            "total_time_sec": 118.19,
+            "ram_mb": 3500,
+            "cpu_load_pct": 64.7,
+            "tflops": 0.0872,
+            "watts_avg": 72.65,
+            "gflops_per_watt": 1.2003,
+            "energy_joules": 8586.5,
+            "temp_min_c": 64.0,
+            "temp_max_c": 73.0,
+            "temp_avg_c": 69.5
+          },
+          {
+            "tokens_per_sec": 10.86,
+            "total_time_sec": 97.29,
+            "ram_mb": 3500,
+            "cpu_load_pct": 63.8,
+            "tflops": 0.0869,
+            "watts_avg": 71.96,
+            "gflops_per_watt": 1.2076,
+            "energy_joules": 7001.0,
+            "temp_min_c": 65.0,
+            "temp_max_c": 70.0,
+            "temp_avg_c": 69.2
+          }
+        ],
+        "average": {
+          "tokens_per_sec": 10.94,
+          "total_time_sec": 109.6767,
+          "ram_mb": 3500,
+          "cpu_load_pct": 63.2,
+          "tflops": 0.0875,
+          "watts_avg": 72.0167,
+          "gflops_per_watt": 1.2156,
+          "energy_joules": 7899.8333,
+          "temp_min_c": 63.6667,
+          "temp_max_c": 71.6667,
+          "temp_avg_c": 68.9
+        }
+      },
+      "gpu": {
+        "runs": [
+          {
+            "tokens_per_sec": 63.28,
+            "total_time_sec": 23.33,
+            "ram_mb": 2900,
+            "cpu_load_pct": 24.7,
+            "tflops": 0.5062,
+            "watts_avg": 92.47,
+            "gflops_per_watt": 5.4742,
+            "energy_joules": 2157.3,
+            "temp_min_c": 33.0,
+            "temp_max_c": 92.0,
+            "temp_avg_c": 70.3
+          },
+          {
+            "tokens_per_sec": 63.47,
+            "total_time_sec": 21.12,
+            "ram_mb": 2900,
+            "cpu_load_pct": 24.2,
+            "tflops": 0.5078,
+            "watts_avg": 97.6,
+            "gflops_per_watt": 5.2029,
+            "energy_joules": 2061.3,
+            "temp_min_c": 47.0,
+            "temp_max_c": 97.0,
+            "temp_avg_c": 79.5
+          },
+          {
+            "tokens_per_sec": 62.89,
+            "total_time_sec": 20.11,
+            "ram_mb": 2900,
+            "cpu_load_pct": 24.8,
+            "tflops": 0.5031,
+            "watts_avg": 99.5,
+            "gflops_per_watt": 5.0563,
+            "energy_joules": 2000.9,
+            "temp_min_c": 49.0,
+            "temp_max_c": 98.0,
+            "temp_avg_c": 81.4
+          }
+        ],
+        "average": {
+          "tokens_per_sec": 63.2133,
+          "total_time_sec": 21.52,
+          "ram_mb": 2900,
+          "cpu_load_pct": 24.5667,
+          "tflops": 0.5057,
+          "watts_avg": 96.5233,
+          "gflops_per_watt": 5.2445,
+          "energy_joules": 2073.1667,
+          "temp_min_c": 43.0,
+          "temp_max_c": 95.6667,
+          "temp_avg_c": 77.0667
+        }
+      }
+    },
+    "exp2_reasoning": {
+      "cpu": {
+        "runs": [
+          {
+            "tokens_per_sec": 11.31,
+            "total_time_sec": 129.13,
+            "ram_mb": 3500,
+            "cpu_load_pct": 48.7,
+            "tflops": 0.0905,
+            "watts_avg": 65.14,
+            "gflops_per_watt": 1.3893,
+            "energy_joules": 8411.5,
+            "temp_min_c": 43.0,
+            "temp_max_c": 65.0,
+            "temp_avg_c": 61.4
+          },
+          {
+            "tokens_per_sec": 11.31,
+            "total_time_sec": 133.84,
+            "ram_mb": 3500,
+            "cpu_load_pct": 49.6,
+            "tflops": 0.0905,
+            "watts_avg": 66.32,
+            "gflops_per_watt": 1.3646,
+            "energy_joules": 8876.3,
+            "temp_min_c": 48.0,
+            "temp_max_c": 66.0,
+            "temp_avg_c": 63.7
+          },
+          {
+            "tokens_per_sec": 11.43,
+            "total_time_sec": 103.48,
+            "ram_mb": 3500,
+            "cpu_load_pct": 48.0,
+            "tflops": 0.0914,
+            "watts_avg": 64.99,
+            "gflops_per_watt": 1.4064,
+            "energy_joules": 6725.2,
+            "temp_min_c": 47.0,
+            "temp_max_c": 66.0,
+            "temp_avg_c": 64.0
+          }
+        ],
+        "average": {
+          "tokens_per_sec": 11.35,
+          "total_time_sec": 122.15,
+          "ram_mb": 3500,
+          "cpu_load_pct": 48.7667,
+          "tflops": 0.0908,
+          "watts_avg": 65.4833,
+          "gflops_per_watt": 1.3868,
+          "energy_joules": 8004.3333,
+          "temp_min_c": 46.0,
+          "temp_max_c": 65.6667,
+          "temp_avg_c": 63.0333
+        }
+      },
+      "gpu": {
+        "runs": [
+          {
+            "tokens_per_sec": 63.54,
+            "total_time_sec": 23.4,
+            "ram_mb": 2900,
+            "cpu_load_pct": 11.5,
+            "tflops": 0.5083,
+            "watts_avg": 99.67,
+            "gflops_per_watt": 5.0998,
+            "energy_joules": 2332.3,
+            "temp_min_c": 45.0,
+            "temp_max_c": 97.0,
+            "temp_avg_c": 78.7
+          },
+          {
+            "tokens_per_sec": 63.64,
+            "total_time_sec": 19.77,
+            "ram_mb": 2900,
+            "cpu_load_pct": 12.6,
+            "tflops": 0.5091,
+            "watts_avg": 104.77,
+            "gflops_per_watt": 4.8592,
+            "energy_joules": 2071.3,
+            "temp_min_c": 48.0,
+            "temp_max_c": 98.0,
+            "temp_avg_c": 82.4
+          },
+          {
+            "tokens_per_sec": 63.74,
+            "total_time_sec": 20.95,
+            "ram_mb": 2900,
+            "cpu_load_pct": 8.0,
+            "tflops": 0.5099,
+            "watts_avg": 57.33,
+            "gflops_per_watt": 8.8941,
+            "energy_joules": 1201.1,
+            "temp_min_c": 40.0,
+            "temp_max_c": 93.0,
+            "temp_avg_c": 59.3
+          }
+        ],
+        "average": {
+          "tokens_per_sec": 63.64,
+          "total_time_sec": 21.3733,
+          "ram_mb": 2900,
+          "cpu_load_pct": 10.7,
+          "tflops": 0.5091,
+          "watts_avg": 87.2567,
+          "gflops_per_watt": 6.2844,
+          "energy_joules": 1868.2333,
+          "temp_min_c": 44.3333,
+          "temp_max_c": 96.0,
+          "temp_avg_c": 73.4667
+        }
+      }
+    },
+    "exp3_multimodal": {
+      "cpu": {
+        "runs": [
+          {
+            "tokens_per_sec": 11.07,
+            "total_time_sec": 93.06,
+            "ram_mb": 3500,
+            "cpu_load_pct": 60.5,
+            "tflops": 0.0886,
+            "watts_avg": 72.36,
+            "gflops_per_watt": 1.2244,
+            "energy_joules": 6733.8,
+            "temp_min_c": 67.0,
+            "temp_max_c": 74.0,
+            "temp_avg_c": 71.6
+          },
+          {
+            "tokens_per_sec": 11.04,
+            "total_time_sec": 64.24,
+            "ram_mb": 3500,
+            "cpu_load_pct": 59.9,
+            "tflops": 0.0883,
+            "watts_avg": 71.03,
+            "gflops_per_watt": 1.2431,
+            "energy_joules": 4563.0,
+            "temp_min_c": 67.0,
+            "temp_max_c": 72.0,
+            "temp_avg_c": 70.3
+          },
+          {
+            "tokens_per_sec": 10.96,
+            "total_time_sec": 72.38,
+            "ram_mb": 3500,
+            "cpu_load_pct": 60.1,
+            "tflops": 0.0877,
+            "watts_avg": 71.25,
+            "gflops_per_watt": 1.2309,
+            "energy_joules": 5157.1,
+            "temp_min_c": 67.0,
+            "temp_max_c": 72.0,
+            "temp_avg_c": 70.6
+          }
+        ],
+        "average": {
+          "tokens_per_sec": 11.0233,
+          "total_time_sec": 76.56,
+          "ram_mb": 3500,
+          "cpu_load_pct": 60.1667,
+          "tflops": 0.0882,
+          "watts_avg": 71.5467,
+          "gflops_per_watt": 1.2328,
+          "energy_joules": 5484.6333,
+          "temp_min_c": 67.0,
+          "temp_max_c": 72.6667,
+          "temp_avg_c": 70.8333
+        }
+      },
+      "gpu": {
+        "runs": [
+          {
+            "tokens_per_sec": 63.86,
+            "total_time_sec": 16.05,
+            "ram_mb": 2900,
+            "cpu_load_pct": 20.7,
+            "tflops": 0.5109,
+            "watts_avg": 43.45,
+            "gflops_per_watt": 11.7583,
+            "energy_joules": 697.4,
+            "temp_min_c": 45.0,
+            "temp_max_c": 94.0,
+            "temp_avg_c": 60.4
+          },
+          {
+            "tokens_per_sec": 63.81,
+            "total_time_sec": 11.21,
+            "ram_mb": 2900,
+            "cpu_load_pct": 23.2,
+            "tflops": 0.5105,
+            "watts_avg": 74.0,
+            "gflops_per_watt": 6.8986,
+            "energy_joules": 829.5,
+            "temp_min_c": 50.0,
+            "temp_max_c": 96.0,
+            "temp_avg_c": 72.1
+          },
+          {
+            "tokens_per_sec": 62.93,
+            "total_time_sec": 10.05,
+            "ram_mb": 2900,
+            "cpu_load_pct": 23.1,
+            "tflops": 0.5034,
+            "watts_avg": 66.2,
+            "gflops_per_watt": 7.6042,
+            "energy_joules": 665.3,
+            "temp_min_c": 50.0,
+            "temp_max_c": 95.0,
+            "temp_avg_c": 70.3
+          }
+        ],
+        "average": {
+          "tokens_per_sec": 63.5333,
+          "total_time_sec": 12.4367,
+          "ram_mb": 2900,
+          "cpu_load_pct": 22.3333,
+          "tflops": 0.5083,
+          "watts_avg": 61.2167,
+          "gflops_per_watt": 8.7537,
+          "energy_joules": 730.7333,
+          "temp_min_c": 48.3333,
+          "temp_max_c": 95.0,
+          "temp_avg_c": 67.6
+        }
+      }
+    }
+  },
+  "notes": {
+    "gpu_utilization_vs_peak_fp16": {
+      "vectorial_20.5_tflops_pct": 2.48,
+      "matricial_41_tflops_pct": 1.24
+    },
+    "vram_model_gb": 2.9,
+    "vram_total_in_use_gb": 4.97,
+    "ram_model_gb": 3.5,
+    "disclaimers": "TFLOPS y energía son estimaciones de orden de magnitud (N=4e9, watts promedio, tiempos aprox). Watts GPU=PPT amdgpu; watts CPU=PkgWatt turbostat. temp GPU=junction; temp CPU=Tctl k10temp."
+  }
+}
