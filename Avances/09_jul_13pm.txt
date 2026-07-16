@@ -1,0 +1,1998 @@
+Cree el repo, y subi el material.
+siguientes obj:
+- descargar: Ollama, gemma3:4b, algo para monitorear
+- estender que hace cada cosa en mi computador, para que sirve?, porque lo necesito?, como lo hace?, como lo tengo que usar?....
+
+1. para descargar Ollama, comando: curl -fsSL https://ollama.com/install.sh | sh
+revisar mi GPU: lspci | grep -i vga
+output: 07:00.0 VGA compatible controller: Advanced Micro Devices, Inc. [AMD/ATI] Navi 33 [Radeon RX 7700S/7600/7600S/7600M XT/PRO W7600] (rev cf)
+
+RAM: free -h
+               total       usado       libre  compartido   búf/caché  disponible
+Mem:            31Gi       3,5Gi        21Gi       171Mi       7,2Gi        27Gi
+Inter:         8,0Gi          0B       8,0Gi
+
+CPU: lscpu
+Arquitectura:                            x86_64
+  modo(s) de operación de las CPUs:      32-bit, 64-bit
+  Tamaños de las direcciones:            48 bits physical, 48 bits virtual
+  Orden de los bytes:                    Little Endian
+CPU(s):                                  16
+  Lista de la(s) CPU(s) en línea:        0-15
+ID de fabricante:                        AuthenticAMD
+  Nombre del modelo:                     AMD Ryzen 7 5700X 8-Core Processor
+    Familia de CPU:                      25
+    Modelo:                              33
+    Hilo(s) de procesamiento por núcleo: 2
+    Núcleo(s) por «socket»:              8
+    «Socket(s)»:                         1
+    Revisión:                            2
+    Aumento de frecuencia:               activada
+    CPU(s) factor de escala MHz:         58%
+    CPU MHz máx.:                        4665,8350
+    CPU MHz mín.:                        562,1490
+    BogoMIPS:                            6787,66
+    Indicadores:                         fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush m
+                                         mx fxsr sse sse2 ht syscall nx mmxext fxsr_opt pdpe1gb rdtscp lm constant_tsc rep
+                                         _good nopl xtopology nonstop_tsc cpuid extd_apicid aperfmperf rapl pni pclmulqdq 
+                                         monitor ssse3 fma cx16 sse4_1 sse4_2 x2apic movbe popcnt aes xsave avx f16c rdran
+                                         d lahf_lm cmp_legacy svm extapic cr8_legacy abm sse4a misalignsse 3dnowprefetch o
+                                         svw ibs skinit wdt tce topoext perfctr_core perfctr_nb bpext perfctr_llc mwaitx c
+                                         pb cat_l3 cdp_l3 hw_pstate ssbd mba ibrs ibpb stibp vmmcall fsgsbase bmi1 avx2 sm
+                                         ep bmi2 invpcid cqm rdt_a rdseed adx smap clflushopt clwb sha_ni xsaveopt xsavec 
+                                         xgetbv1 xsaves cqm_llc cqm_occup_llc cqm_mbm_total cqm_mbm_local user_shstk clzer
+                                         o irperf xsaveerptr rdpru wbnoinvd arat npt lbrv svm_lock nrip_save tsc_scale vmc
+                                         b_clean flushbyasid decodeassists pausefilter pfthreshold avic v_vmsave_vmload vg
+                                         if v_spec_ctrl umip pku ospke vaes vpclmulqdq rdpid overflow_recov succor smca de
+                                         bug_swap
+Características de virtualización:       
+  Virtualización:                        AMD-V
+Cachés (suma de todas):                  
+  L1d:                                   256 KiB (8 instancias)
+  L1i:                                   256 KiB (8 instancias)
+  L2:                                    4 MiB (8 instancias)
+  L3:                                    32 MiB (1 instancia)
+NUMA:                                    
+  Modo(s) NUMA:                          1
+  CPU(s) del nodo NUMA 0:                0-15
+Vulnerabilidades:                        
+  Gather data sampling:                  Not affected
+  Ghostwrite:                            Not affected
+  Indirect target selection:             Not affected
+  Itlb multihit:                         Not affected
+  L1tf:                                  Not affected
+  Mds:                                   Not affected
+  Meltdown:                              Not affected
+  Mmio stale data:                       Not affected
+  Old microcode:                         Not affected
+  Reg file data sampling:                Not affected
+  Retbleed:                              Not affected
+  Spec rstack overflow:                  Mitigation; Safe RET
+  Spec store bypass:                     Mitigation; Speculative Store Bypass disabled via prctl
+  Spectre v1:                            Mitigation; usercopy/swapgs barriers and __user pointer sanitization
+  Spectre v2:                            Mitigation; Retpolines; IBPB conditional; IBRS_FW; STIBP always-on; RSB filling; 
+                                         PBRSB-eIBRS Not affected; BHI Not affected
+  Srbds:                                 Not affected
+  Tsa:                                   Vulnerable: No microcode
+  Tsx async abort:                       Not affected
+  Vmscape:                               Mitigation; IBPB before exit to userspace
+
+
+#descargar el modelo con Ollama
+ollama pull gemma3:4b
+- descarga los pesos del modelo (3-4GB)
+- los guarda -/.ollama/models
+- listo para correr
+
+Par de conceptos a saber:
+Cuantizacion: los modelos por lo general usan puntos flotantes de 16 o 32 bits, La Cuantizacion los comprime, sacrificando presicion 
+a cambio de usar menos RAM/VRAM y mayor velocidad.
+
+Q4_K_M significa 4bits por peso
+
+gemma3:4b ya viene pre-Cuantizado por Ollama por defecto (normalmente Q4_K_M), nada que hacer Arquitectura
+
+#para confirmar que se instalo: ollama list
+
+CPU: AMD Ryzen 7 5700X, 8 núcleos / 16 hilos, hasta 4.67 GHz
+RAM: ~31 GB total
+GPU: AMD Radeon RX 7700S (arquitectura Navi 33 / RDNA3)
+
+
+#ver si Ollama detecta mi GPU sin hacer nada : ollama run gemma3:4b "hola" 
+output: ¡Hola! ¿En qué puedo ayudarte hoy? 😊
+y en paralelo: ollama ps
+output: 
+NAME         ID              SIZE      PROCESSOR    CONTEXT    UNTIL              
+gemma3:4b    a2af6cc3eb7f    2.9 GB    100% GPU     4096       3 minutes from now  
+
+
+#herramientas de monitoreo
+sudo apt update
+sudo apt install lm-sensors linux-tools-common linux-tools-generic
+sudo sensors-detect
+
+davidminder@MINDER-PC:~/Escritorio/pp3_arqui_davidminder$ sudo apt update
+[sudo] contraseña para davidminder: 
+Des:1 https://dl.google.com/linux/chrome/deb stable InRelease [1.825 B]
+Des:2 https://dl.google.com/linux/chrome-stable/deb stable InRelease [1.825 B] 
+Des:3 https://dl.google.com/linux/chrome/deb stable/main amd64 Packages [1.217 B]
+Des:4 https://dl.google.com/linux/chrome-stable/deb stable/main amd64 Packages [1.217 B]
+Obj:5 http://archive.ubuntu.com/ubuntu noble InRelease     
+Des:6 http://archive.ubuntu.com/ubuntu noble-updates InRelease [126 kB]
+Des:7 http://security.ubuntu.com/ubuntu noble-security InRelease [126 kB]      
+Des:8 http://security.ubuntu.com/ubuntu noble-security/main amd64 Packages [827 kB]
+Des:9 http://archive.ubuntu.com/ubuntu noble-backports InRelease [126 kB]
+Des:10 http://archive.ubuntu.com/ubuntu noble-updates/main i386 Packages [517 kB]
+Des:11 http://security.ubuntu.com/ubuntu noble-security/main i386 Packages [325 kB]
+Des:12 http://archive.ubuntu.com/ubuntu noble-updates/main amd64 Packages [1.089 kB]
+Des:13 http://security.ubuntu.com/ubuntu noble-security/main Translation-en [187 kB]
+Des:14 http://security.ubuntu.com/ubuntu noble-security/main amd64 Components [44,9 kB]
+Des:15 http://security.ubuntu.com/ubuntu noble-security/main Icons (48x48) [16,1 kB]
+Des:16 http://security.ubuntu.com/ubuntu noble-security/main Icons (64x64) [22,9 kB]
+Des:17 http://security.ubuntu.com/ubuntu noble-security/main amd64 c-n-f Metadata [11,9 kB]
+Des:18 http://security.ubuntu.com/ubuntu noble-security/restricted amd64 Packages [1.133 kB]
+Des:19 http://security.ubuntu.com/ubuntu noble-security/restricted Translation-en [259 kB]
+Des:20 http://security.ubuntu.com/ubuntu noble-security/restricted amd64 c-n-f Metadata [444 B]
+Des:21 http://security.ubuntu.com/ubuntu noble-security/universe amd64 Packages [1.174 kB]
+Des:22 http://security.ubuntu.com/ubuntu noble-security/universe i386 Packages [815 kB]
+Des:23 http://archive.ubuntu.com/ubuntu noble-updates/main Translation-en [269 kB]
+Des:24 http://security.ubuntu.com/ubuntu noble-security/universe Translation-en [231 kB]
+Des:25 http://security.ubuntu.com/ubuntu noble-security/universe amd64 Components [76,3 kB]
+Des:26 http://security.ubuntu.com/ubuntu noble-security/universe Icons (48x48) [51,2 kB]
+Des:27 http://security.ubuntu.com/ubuntu noble-security/universe Icons (64x64) [80,0 kB]
+Des:28 http://security.ubuntu.com/ubuntu noble-security/universe amd64 c-n-f Metadata [24,2 kB]
+Des:29 http://security.ubuntu.com/ubuntu noble-security/multiverse i386 Packages [9.584 B]
+Des:30 http://security.ubuntu.com/ubuntu noble-security/multiverse amd64 Packages [35,3 kB]
+Des:31 http://security.ubuntu.com/ubuntu noble-security/multiverse Translation-en [10,1 kB]
+Des:32 http://archive.ubuntu.com/ubuntu noble-updates/main amd64 Components [180 kB]
+Des:33 http://security.ubuntu.com/ubuntu noble-security/multiverse amd64 c-n-f Metadata [468 B]
+Des:34 http://archive.ubuntu.com/ubuntu noble-updates/main Icons (48x48) [37,3 kB]
+Des:35 http://archive.ubuntu.com/ubuntu noble-updates/main Icons (64x64) [52,7 kB]
+Des:36 http://archive.ubuntu.com/ubuntu noble-updates/main amd64 c-n-f Metadata [17,7 kB]
+Des:37 http://archive.ubuntu.com/ubuntu noble-updates/restricted i386 Packages [28,8 kB]
+Des:38 http://archive.ubuntu.com/ubuntu noble-updates/restricted amd64 Packages [1.215 kB]
+Des:39 http://archive.ubuntu.com/ubuntu noble-updates/restricted Translation-en [274 kB]
+Des:40 http://archive.ubuntu.com/ubuntu noble-updates/restricted amd64 c-n-f Metadata [456 B]
+Des:41 http://archive.ubuntu.com/ubuntu noble-updates/universe amd64 Packages [1.660 kB]
+Des:42 http://archive.ubuntu.com/ubuntu noble-updates/universe i386 Packages [1.131 kB]
+Des:43 http://archive.ubuntu.com/ubuntu noble-updates/universe Translation-en [327 kB]
+Des:44 http://archive.ubuntu.com/ubuntu noble-updates/universe amd64 Components [388 kB]
+Des:45 http://archive.ubuntu.com/ubuntu noble-updates/universe Icons (48x48) [238 kB]
+Des:46 http://archive.ubuntu.com/ubuntu noble-updates/universe Icons (64x64) [375 kB]
+Des:47 http://archive.ubuntu.com/ubuntu noble-updates/universe amd64 c-n-f Metadata [34,9 kB]
+Des:48 http://archive.ubuntu.com/ubuntu noble-updates/multiverse i386 Packages [11,4 kB]
+Des:49 http://archive.ubuntu.com/ubuntu noble-updates/multiverse amd64 Packages [40,4 kB]
+Des:50 http://archive.ubuntu.com/ubuntu noble-updates/multiverse Translation-en [11,8 kB]
+Des:51 http://archive.ubuntu.com/ubuntu noble-updates/multiverse amd64 Components [940 B]
+Des:52 http://archive.ubuntu.com/ubuntu noble-updates/multiverse amd64 c-n-f Metadata [656 B]
+Des:53 http://archive.ubuntu.com/ubuntu noble-backports/main amd64 Packages [40,6 kB]
+Des:54 http://archive.ubuntu.com/ubuntu noble-backports/main i386 Packages [33,1 kB]
+Des:55 http://archive.ubuntu.com/ubuntu noble-backports/main amd64 Components [5.768 B]
+Des:56 http://archive.ubuntu.com/ubuntu noble-backports/main amd64 c-n-f Metadata [368 B]
+Des:57 http://archive.ubuntu.com/ubuntu noble-backports/universe amd64 Packages [31,0 kB]
+Des:58 http://archive.ubuntu.com/ubuntu noble-backports/universe i386 Packages [17,0 kB]
+Des:59 http://archive.ubuntu.com/ubuntu noble-backports/universe amd64 Components [10,5 kB]
+Des:60 http://archive.ubuntu.com/ubuntu noble-backports/universe Icons (48x48) [23,3 kB]
+Des:61 http://archive.ubuntu.com/ubuntu noble-backports/universe Icons (64x64) [32,3 kB]
+Des:62 http://archive.ubuntu.com/ubuntu noble-backports/universe amd64 c-n-f Metadata [1.588 B]
+Descargados 13,8 MB en 10s (1.340 kB/s)                                        
+Leyendo lista de paquetes... Hecho
+Creando árbol de dependencias... Hecho
+Leyendo la información de estado... Hecho
+Se pueden actualizar 214 paquetes. Ejecute «apt list --upgradable» para verlos.
+N: Omitiendo el uso del fichero configurado «main/binary-i386/Packages» ya que el repositorio «https://dl.google.com/linux/chrome-stable/deb stable InRelease» no admite la arquitectura «i386»
+davidminder@MINDER-PC:~/Escritorio/pp3_arqui_davidminder$ sudo apt install lm-sensors linux-tools-common linux-tools-generic
+Leyendo lista de paquetes... Hecho
+Creando árbol de dependencias... Hecho
+Leyendo la información de estado... Hecho
+Los paquetes indicados a continuación se instalaron de forma automática y ya no son necesarios.
+  eslint gyp handlebars javascript-common libjs-async libjs-events
+  libjs-inherits libjs-is-typedarray libjs-prettify libjs-regenerate
+  libjs-source-map libjs-sprintf-js libjs-typedarray-to-buffer libjs-util
+  libllvm19 libnode-dev libnode109 libre2-10 libssl-dev libuv1-dev node-abbrev
+  node-acorn node-agent-base node-ajv node-ajv-keywords
+  node-ampproject-remapping node-ansi-escapes node-ansi-regex node-ansi-styles
+  node-anymatch node-aproba node-archy node-are-we-there-yet node-argparse
+  node-arrify node-assert node-async node-async-each node-auto-bind
+  node-babel-helper-define-polyfill-provider
+  node-babel-plugin-add-module-exports node-babel-plugin-lodash
+  node-babel-plugin-polyfill-corejs2 node-babel-plugin-polyfill-corejs3
+  node-babel-plugin-polyfill-regenerator node-babel7 node-babel7-runtime
+  node-balanced-match node-base node-base64-js node-binary-extensions
+  node-brace-expansion node-braces node-browserslist node-builtins node-busboy
+  node-cacache node-cache-base node-camelcase node-caniuse-lite node-chalk
+  node-chokidar node-chownr node-chrome-trace-event node-ci-info
+  node-cjs-module-lexer node-cli-boxes node-cli-cursor node-cli-table
+  node-cli-truncate node-cliui node-clone node-clone-deep
+  node-collection-visit node-color-convert node-color-name node-colors
+  node-columnify node-commander node-commondir node-concat-stream
+  node-console-control-strings node-convert-source-map node-copy-concurrently
+  node-core-js node-core-js-compat node-core-js-pure node-core-util-is
+  node-coveralls node-css-selector-tokenizer node-data-uri-to-buffer
+  node-debbundle-es-to-primitive node-debug node-decamelize
+  node-decompress-response node-deep-equal node-deep-is node-defaults
+  node-define-properties node-define-property node-defined node-del
+  node-delegates node-depd node-diff node-doctrine node-electron-to-chromium
+  node-encoding node-end-of-stream node-enhanced-resolve node-err-code
+  node-errno node-error-ex node-es-abstract node-es-module-lexer
+  node-es6-error node-escape-string-regexp node-escodegen node-eslint-scope
+  node-eslint-utils node-eslint-visitor-keys node-espree node-esprima
+  node-esquery node-esrecurse node-estraverse node-esutils node-events
+  node-fancy-log node-fast-deep-equal node-fast-levenshtein node-fetch
+  node-file-entry-cache node-fill-range node-find-cache-dir node-find-up
+  node-flat-cache node-flatted node-for-in node-for-own node-foreground-child
+  node-fs-readdir-recursive node-fs-write-stream-atomic node-fs.realpath
+  node-function-bind node-functional-red-black-tree node-gauge
+  node-get-caller-file node-get-stream node-get-value node-glob
+  node-glob-parent node-globals node-globby node-got node-graceful-fs
+  node-growl node-gyp node-has-flag node-has-unicode node-has-value
+  node-has-values node-hosted-git-info node-http-proxy-agent
+  node-https-proxy-agent node-iconv-lite node-icss-utils node-ieee754
+  node-iferr node-ignore node-imurmurhash node-indent-string node-inflight
+  node-inherits node-ini node-interpret node-ip node-ip-regex node-is-arrayish
+  node-is-binary-path node-is-buffer node-is-descriptor node-is-extendable
+  node-is-extglob node-is-glob node-is-number node-is-path-cwd
+  node-is-path-inside node-is-plain-obj node-is-plain-object node-is-primitive
+  node-is-stream node-is-typedarray node-is-windows node-isarray node-isexe
+  node-isobject node-istanbul node-jest-debbundle node-jest-worker
+  node-js-tokens node-js-yaml node-jsesc node-json-buffer
+  node-json-parse-better-errors node-json-schema node-json-schema-traverse
+  node-json-stable-stringify node-json5 node-jsonify node-jsonparse
+  node-kind-of node-lcov-parse node-levn node-loader-runner node-locate-path
+  node-lodash node-lodash-packages node-log-driver node-lowercase-keys
+  node-lru-cache node-make-dir node-map-visit node-memfs node-memory-fs
+  node-merge-stream node-micromatch node-mime node-mime-types
+  node-mimic-response node-minimatch node-minimist node-minipass
+  node-mixin-deep node-mkdirp node-move-concurrently node-ms node-mute-stream
+  node-n3 node-negotiator node-neo-async node-nopt node-normalize-package-data
+  node-normalize-path node-npm-bundled node-npm-package-arg node-npm-run-path
+  node-npmlog node-object-assign node-object-inspect node-object-visit
+  node-once node-opener node-optimist node-optionator node-osenv
+  node-p-cancelable node-p-limit node-p-locate node-p-map node-parse-json
+  node-pascalcase node-path-dirname node-path-exists node-path-is-absolute
+  node-path-is-inside node-path-type node-picocolors node-pify node-pkg-dir
+  node-postcss node-postcss-value-parser node-prelude-ls
+  node-process-nextick-args node-progress node-promise-inflight
+  node-promise-retry node-promzard node-prr node-pump node-punycode
+  node-quick-lru node-randombytes node-re2 node-read node-read-package-json
+  node-read-pkg node-readable-stream node-readdirp node-rechoir
+  node-regenerate node-regenerate-unicode-properties node-regenerator-runtime
+  node-regenerator-transform node-regexpp node-regexpu-core node-regjsgen
+  node-regjsparser node-repeat-string node-require-directory
+  node-require-from-string node-resolve node-resolve-cwd node-resolve-from
+  node-restore-cursor node-resumer node-retry node-rimraf node-run-queue
+  node-safe-buffer node-schema-utils node-sellside-emitter node-semver
+  node-serialize-javascript node-set-blocking node-set-immediate-shim
+  node-set-value node-shebang-command node-shebang-regex node-shell-quote
+  node-signal-exit node-slash node-slice-ansi node-source-list-map
+  node-source-map node-source-map-support node-spdx-correct
+  node-spdx-exceptions node-spdx-expression-parse node-spdx-license-ids
+  node-sprintf-js node-ssri node-stack-utils node-string-decoder
+  node-string-width node-strip-ansi node-strip-bom node-strip-json-comments
+  node-supports-color node-tap node-tap-mocha-reporter node-tap-parser
+  node-tapable node-tape node-tar node-terser node-text-table node-through
+  node-time-stamp node-to-fast-properties node-to-regex-range node-tslib
+  node-type-check node-typedarray node-typedarray-to-buffer node-undici
+  node-unicode-canonical-property-names-ecmascript
+  node-unicode-match-property-ecmascript
+  node-unicode-match-property-value-ecmascript
+  node-unicode-property-aliases-ecmascript node-union-value
+  node-unique-filename node-unset-value node-uri-js node-util
+  node-util-deprecate node-uuid node-v8-compile-cache node-v8flags
+  node-validate-npm-package-license node-validate-npm-package-name
+  node-watchpack node-wcwidth.js node-webassemblyjs node-webpack-sources
+  node-which node-wide-align node-widest-line node-wordwrap node-wrap-ansi
+  node-wrappy node-write node-write-file-atomic node-ws node-xtend node-y18n
+  node-yallist node-yaml node-yargs node-yargs-parser nodejs nodejs-doc terser
+  webpack
+Utilice «sudo apt autoremove» para eliminarlos.
+Se instalarán los siguientes paquetes adicionales:
+  linux-libc-dev linux-tools-6.8.0-134 linux-tools-6.8.0-134-generic
+Paquetes sugeridos:
+  fancontrol read-edid i2c-tools
+Se instalarán los siguientes paquetes NUEVOS:
+  linux-tools-6.8.0-134 linux-tools-6.8.0-134-generic linux-tools-generic
+  lm-sensors
+Se actualizarán los siguientes paquetes:
+  linux-libc-dev linux-tools-common
+2 actualizados, 4 nuevos se instalarán, 0 para eliminar y 212 no actualizados.
+Se necesita descargar 6.909 kB de archivos.
+Se utilizarán 20,4 MB de espacio de disco adicional después de esta operación.
+¿Desea continuar? [S/n] S 
+Des:1 http://archive.ubuntu.com/ubuntu noble-updates/main amd64 linux-libc-dev amd64 6.8.0-134.134 [1.464 kB]
+Des:2 http://archive.ubuntu.com/ubuntu noble-updates/main amd64 linux-tools-common all 6.8.0-134.134 [304 kB]
+Des:3 http://archive.ubuntu.com/ubuntu noble-updates/main amd64 linux-tools-6.8.0-134 amd64 6.8.0-134.134 [5.037 kB]
+Des:4 http://archive.ubuntu.com/ubuntu noble-updates/main amd64 linux-tools-6.8.0-134-generic amd64 6.8.0-134.134 [1.810 B]
+Des:5 http://archive.ubuntu.com/ubuntu noble-updates/main amd64 linux-tools-generic amd64 6.8.0-134.134 [11,3 kB]
+Des:6 http://archive.ubuntu.com/ubuntu noble/universe amd64 lm-sensors amd64 1:3.6.0-9build1 [90,1 kB]
+Descargados 6.909 kB en 16s (440 kB/s)                                         
+(Leyendo la base de datos ... 245507 ficheros o directorios instalados actualmen
+te.)
+Preparando para desempaquetar .../0-linux-libc-dev_6.8.0-134.134_amd64.deb ...
+Desempaquetando linux-libc-dev:amd64 (6.8.0-134.134) sobre (6.8.0-117.117) ...
+Preparando para desempaquetar .../1-linux-tools-common_6.8.0-134.134_all.deb ...
+Desempaquetando linux-tools-common (6.8.0-134.134) sobre (6.8.0-117.117) ...
+Seleccionando el paquete linux-tools-6.8.0-134 previamente no seleccionado.
+Preparando para desempaquetar .../2-linux-tools-6.8.0-134_6.8.0-134.134_amd64.de
+b ...
+Desempaquetando linux-tools-6.8.0-134 (6.8.0-134.134) ...
+Seleccionando el paquete linux-tools-6.8.0-134-generic previamente no selecciona
+do.
+Preparando para desempaquetar .../3-linux-tools-6.8.0-134-generic_6.8.0-134.134_
+amd64.deb ...
+Desempaquetando linux-tools-6.8.0-134-generic (6.8.0-134.134) ...
+Seleccionando el paquete linux-tools-generic previamente no seleccionado.
+Preparando para desempaquetar .../4-linux-tools-generic_6.8.0-134.134_amd64.deb 
+...
+Desempaquetando linux-tools-generic (6.8.0-134.134) ...
+Seleccionando el paquete lm-sensors previamente no seleccionado.
+Preparando para desempaquetar .../5-lm-sensors_1%3a3.6.0-9build1_amd64.deb ...
+Desempaquetando lm-sensors (1:3.6.0-9build1) ...
+Configurando linux-libc-dev:amd64 (6.8.0-134.134) ...
+Configurando lm-sensors (1:3.6.0-9build1) ...
+Created symlink /etc/systemd/system/multi-user.target.wants/lm-sensors.service →
+ /usr/lib/systemd/system/lm-sensors.service.
+Configurando linux-tools-common (6.8.0-134.134) ...
+Configurando linux-tools-6.8.0-134 (6.8.0-134.134) ...
+Configurando linux-tools-6.8.0-134-generic (6.8.0-134.134) ...
+Configurando linux-tools-generic (6.8.0-134.134) ...
+Procesando disparadores para man-db (2.12.0-4build2) ...
+davidminder@MINDER-PC:~/Escritorio/pp3_arqui_davidminder$ sudo sensors-detect
+# sensors-detect version 3.6.0
+# Board: ASRock B550 Phantom Gaming 4
+# Kernel: 6.17.0-29-generic x86_64
+# Processor: AMD Ryzen 7 5700X 8-Core Processor (25/33/2)
+
+This program will help you determine which kernel modules you need
+to load to use lm_sensors most effectively. It is generally safe
+and recommended to accept the default answers to all questions,
+unless you know what you're doing.
+
+Some south bridges, CPUs or memory controllers contain embedded sensors.
+Do you want to scan for them? This is totally safe. (YES/no): YES 
+Module cpuid loaded successfully.
+Silicon Integrated Systems SIS5595...                       No
+VIA VT82C686 Integrated Sensors...                          No
+VIA VT8231 Integrated Sensors...                            No
+AMD K8 thermal sensors...                                   No
+AMD Family 10h thermal sensors...                           No
+AMD Family 11h thermal sensors...                           No
+AMD Family 12h and 14h thermal sensors...                   No
+AMD Family 15h thermal sensors...                           No
+AMD Family 16h thermal sensors...                           No
+AMD Family 17h thermal sensors...                           Success!
+    (driver `k10temp')
+AMD Family 15h power sensors...                             No
+AMD Family 16h power sensors...                             No
+Hygon Family 18h thermal sensors...                         No
+Intel digital thermal sensor...                             No
+Intel AMB FB-DIMM thermal sensor...                         No
+Intel 5500/5520/X58 thermal sensor...                       No
+VIA C7 thermal sensor...                                    No
+VIA Nano thermal sensor...                                  No
+
+Some Super I/O chips contain embedded sensors. We have to write to
+standard I/O ports to probe them. This is usually safe.
+Do you want to scan for Super I/O sensors? (YES/no): YES
+Probing for Super-I/O at 0x2e/0x2f
+Trying family `National Semiconductor/ITE'...               No
+Trying family `SMSC'...                                     No
+Trying family `VIA/Winbond/Nuvoton/Fintek'...               Yes
+Found `Nuvoton NCT6798D Super IO Sensors'                   Success!
+    (address 0x290, driver `nct6775')
+Probing for Super-I/O at 0x4e/0x4f
+Trying family `National Semiconductor/ITE'...               No
+Trying family `SMSC'...                                     No
+Trying family `VIA/Winbond/Nuvoton/Fintek'...               No
+Trying family `ITE'...                                      No
+
+Some systems (mainly servers) implement IPMI, a set of common interfaces
+through which system health data may be retrieved, amongst other things.
+We first try to get the information from SMBIOS. If we don't find it
+there, we have to read from arbitrary I/O ports to probe for such
+interfaces. This is normally safe. Do you want to scan for IPMI
+interfaces? (YES/no): YES 
+Probing for `IPMI BMC KCS' at 0xca0...                      No
+Probing for `IPMI BMC SMIC' at 0xca8...                     No
+
+Some hardware monitoring chips are accessible through the ISA I/O ports.
+We have to write to arbitrary I/O ports to probe them. This is usually
+safe though. Yes, you do have ISA I/O ports even if you do not have any
+ISA slots! Do you want to scan the ISA I/O ports? (yes/NO): YES
+Probing for `National Semiconductor LM78' at 0x290...       No
+Probing for `National Semiconductor LM79' at 0x290...       No
+Probing for `Winbond W83781D' at 0x290...                   No
+Probing for `Winbond W83782D' at 0x290...                   No
+
+Lastly, we can probe the I2C/SMBus adapters for connected hardware
+monitoring devices. This is the most risky part, and while it works
+reasonably well on most systems, it has been reported to cause trouble
+on some systems.
+Do you want to probe the I2C/SMBus adapters now? (YES/no):   
+Using driver `i2c-piix4' for device 0000:00:14.0: AMD KERNCZ SMBus
+
+Next adapter: SMBus PIIX4 adapter port 0 at 0b00 (i2c-0)
+Do you want to scan it? (yes/NO/selectively): 
+
+Next adapter: SMBus PIIX4 adapter port 2 at 0b00 (i2c-1)
+Do you want to scan it? (yes/NO/selectively): 
+
+Next adapter: SMBus PIIX4 adapter port 1 at 0b20 (i2c-2)
+Do you want to scan it? (yes/NO/selectively): 
+
+Next adapter: AMDGPU DM i2c hw bus 0 (i2c-3)
+Do you want to scan it? (yes/NO/selectively): 
+
+Next adapter: AMDGPU DM i2c hw bus 1 (i2c-4)
+Do you want to scan it? (yes/NO/selectively): 
+
+Next adapter: AMDGPU DM i2c hw bus 2 (i2c-5)
+Do you want to scan it? (yes/NO/selectively): 
+
+Next adapter: AMDGPU DM i2c hw bus 3 (i2c-6)
+Do you want to scan it? (yes/NO/selectively): 
+
+Next adapter: AMDGPU DM aux hw bus 0 (i2c-7)
+Do you want to scan it? (yes/NO/selectively): 
+
+Next adapter: AMDGPU DM aux hw bus 2 (i2c-8)
+Do you want to scan it? (yes/NO/selectively): 
+
+Next adapter: AMDGPU DM aux hw bus 3 (i2c-9)
+Do you want to scan it? (yes/NO/selectively): 
+
+
+Now follows a summary of the probes I have just done.
+Just press ENTER to continue: 
+
+Driver `nct6775':
+  * ISA bus, address 0x290
+    Chip `Nuvoton NCT6798D Super IO Sensors' (confidence: 9)
+
+Driver `k10temp' (autoloaded):
+  * Chip `AMD Family 17h thermal sensors' (confidence: 9)
+
+To load everything that is needed, add this to /etc/modules:
+#----cut here----
+# Chip drivers
+nct6775
+#----cut here----
+If you have some drivers built into your kernel, the list above will
+contain too many modules. Skip the appropriate ones!
+
+Do you want to add these lines automatically to /etc/modules? (yes/NO)
+
+Unloading cpuid... OK
+
+davidminder@MINDER-PC:~/Escritorio/pp3_arqui_davidminder$ sensors
+amdgpu-pci-0700
+Adapter: PCI adapter
+vddgfx:      430.00 mV 
+fan1:           1 RPM  (min =    0 RPM, max = 3600 RPM)
+edge:         +37.0°C  (crit = +110.0°C, hyst = -273.1°C)
+                       (emerg = +115.0°C)
+junction:     +37.0°C  (crit = +110.0°C, hyst = -273.1°C)
+                       (emerg = +115.0°C)
+mem:          +44.0°C  (crit = +105.0°C, hyst = -273.1°C)
+                       (emerg = +110.0°C)
+PPT:           6.00 W  (cap = 145.00 W)
+
+nvme-pci-0100
+Adapter: PCI adapter
+Composite:    +27.9°C  (low  = -273.1°C, high = +89.8°C)
+                       (crit = +94.8°C)
+Sensor 1:     +27.9°C  (low  = -273.1°C, high = +65261.8°C)
+Sensor 2:     +33.9°C  (low  = -273.1°C, high = +65261.8°C)
+
+k10temp-pci-00c3
+Adapter: PCI adapter
+Tctl:         +59.2°C  
+Tccd1:        +54.2°C  
+
+
+todo bien la GPU es detectada sin configurar
+salida del sensor
+amdgpu-pci-0700          → Tu GPU (Radeon)
+  edge: +37.0°C          → temperatura del núcleo del chip GPU
+  junction: +37.0°C      → temperatura del "punto más caliente" interno
+  mem: +44.0°C           → temperatura de la VRAM
+  PPT: 6.00 W (cap 145W) → Power Package Tracking = consumo ACTUAL en watts 
+                            (esto es oro para tu métrica de "Watts promedio")
+
+k10temp-pci-00c3         → Tu CPU (Ryzen)
+  Tctl: +59.2°C          → temperatura de control (la que ves en la BIOS/monitor)
+  Tccd1: +54.2°C         → temperatura de uno de los "chiplets" del CPU
+
+  #verificar si tengo rocm-smi
+  No se ha encontrado la orden «rocm-smi», pero se puede instalar con:
+sudo apt install rocm-smi
+
+
+Y verifica que turbostat (para métricas de CPU: watts y frecuencia real) esté disponible: sudo turbostat --interval 2
+
+davidminder@MINDER-PC:~/Escritorio/pp3_arqui_davidminder$ rocm-smi
+No se ha encontrado la orden «rocm-smi», pero se puede instalar con:
+sudo apt install rocm-smi
+davidminder@MINDER-PC:~/Escritorio/pp3_arqui_davidminder$ sudo turbostat --interval 2
+turbostat version 2025.09.09 - Len Brown <lenb@kernel.org>
+Kernel command line: BOOT_IMAGE=/boot/vmlinuz-6.17.0-29-generic root=UUID=37e0ef02-2557-4d29-8187-72bb5e6547ba ro quiet splash vt.handoff=7
+CPUID(0): AuthenticAMD 0x10 CPUID levels
+CPUID(1): family:model:stepping 0x19:21:2 (25:33:2) microcode 0x0
+CPUID(0x80000000): max_extended_levels: 0x80000023
+CPUID(1): SSE3 MONITOR - - - TSC MSR - HT -
+CPUID(6): APERF, No-TURBO, No-DTS, No-PTM, No-HWP, No-HWPnotify, No-HWPwindow, No-HWPepp, No-HWPpkg, No-EPB
+CPUID(7): No-SGX No-Hybrid
+cpu0: cpufreq driver: amd-pstate-epp
+cpu0: cpufreq governor: powersave
+cpufreq boost: 1
+/dev/cpu_dma_latency: 2000000000 usec (default)
+current_driver: acpi_idle
+current_governor: menu
+current_governor_ro: menu
+cpu0: POLL: CPUIDLE CORE POLL IDLE
+cpu0: C1: ACPI FFH MWAIT 0x0
+cpu0: C2: ACPI IOPORT 0x414
+RAPL: 234 sec. Joule Counter Range, at 280 Watts
+intel-rapl:0: package-0 disabled
+intel-rapl:0/intel-rapl:0:0: core disabled
+cpu0: MSR_RAPL_PWR_UNIT: 0x000a1003 (0.125000 Watts, 0.000015 Joules, 0.000977 sec.)
+Core	CPU	Avg_MHz	Busy%	Bzy_MHz	TSC_MHz	IPC	IRQ	NMI	SMI	POLL%	C1%	C2%	CorWatt	PkgWatt
+-	-	586	14.86	3947	3394	1.17	101564	1	0	0.02	6.90	78.49	29.16	47.25
+0	0	405	10.68	3791	3394	1.07	5844	0	0	0.01	4.39	85.14	3.52	47.25
+0	8	662	17.74	3731	3394	1.16	8094	0	0	0.02	7.94	74.63
+1	1	668	16.38	4079	3394	0.93	6754	0	0	0.02	8.39	75.52	4.99
+1	9	1565	37.13	4213	3394	1.06	12040	0	0	0.07	26.76	36.75
+2	2	192	5.18	3717	3394	0.97	2839	0	0	0.00	1.07	93.84	2.97
+2	10	515	13.69	3763	3394	1.04	6841	0	0	0.01	8.30	78.24
+3	3	280	7.41	3785	3394	1.09	4211	0	0	0.06	2.05	90.66	2.40
+3	11	154	4.16	3701	3394	0.99	2937	0	0	0.00	2.79	93.14
+4	4	791	20.80	3804	3394	1.15	10231	0	0	0.02	12.23	67.32	3.19
+4	12	130	3.25	3987	3394	0.93	1509	0	0	0.00	0.08	96.72
+5	5	1018	26.30	3872	3394	0.98	12871	0	0	0.03	12.16	62.01	3.93
+5	13	366	9.35	3912	3394	0.83	8073	0	0	0.01	1.77	89.15
+6	6	486	12.83	3785	3394	1.13	5655	0	0	0.00	6.03	81.34	2.79
+6	14	186	4.70	3954	3394	1.40	1021	0	0	0.00	0.07	95.26
+7	7	1614	39.41	4096	3394	1.72	10121	1	0	0.03	14.57	46.48	5.36
+7	15	349	8.70	4010	3394	1.17	2523	0	0	0.01	1.84	89.57
+Core	CPU	Avg_MHz	Busy%	Bzy_MHz	TSC_MHz	IPC	IRQ	NMI	SMI	POLL%	C1%	C2%	CorWatt	PkgWatt
+-	-	591	14.95	3956	3394	1.03	106399	1	0	0.02	7.80	77.51	28.59	46.28
+0	0	528	13.70	3855	3394	0.99	8188	0	0	0.01	7.76	78.84	4.01	46.28
+0	8	849	21.83	3889	3394	1.09	7296	0	0	0.01	9.87	68.60
+1	1	1041	24.57	4237	3394	0.99	7035	1	0	0.03	12.07	63.69	5.69
+1	9	1592	37.35	4262	3394	1.04	10412	0	0	0.04	23.18	40.07
+2	2	189	5.07	3732	3394	0.99	2719	0	0	0.00	2.43	92.59	2.52
+2	10	286	7.74	3699	3394	1.00	4062	0	0	0.01	3.37	89.02
+3	3	118	3.25	3634	3394	0.93	2700	0	0	0.04	2.28	94.54	1.74
+3	11	160	4.41	3623	3394	0.97	3014	0	0	0.00	2.78	92.91
+4	4	633	17.04	3715	3394	1.01	10416	0	0	0.02	10.91	72.43	3.30
+4	12	294	7.55	3900	3394	1.03	3181	0	0	0.01	3.91	88.65
+5	5	1030	26.24	3926	3394	1.02	11060	0	0	0.04	13.90	60.31	4.26
+5	13	523	13.37	3915	3394	0.79	6302	0	0	0.01	7.74	79.17
+6	6	412	11.23	3668	3394	1.00	8375	0	0	0.02	6.26	82.80	2.45
+6	14	84	2.32	3636	3394	1.05	1525	0	0	0.00	1.37	96.35
+7	7	1294	32.73	3953	3394	1.32	11230	0	0	0.03	13.31	54.41	4.62
+7	15	429	10.84	3962	3394	0.73	8884	0	0	0.02	3.68	85.81
+Core	CPU	Avg_MHz	Busy%	Bzy_MHz	TSC_MHz	IPC	IRQ	NMI	SMI	POLL%	C1%	C2%	CorWatt	PkgWatt
+-	-	566	14.04	4029	3394	1.09	100121	0	0	0.02	8.18	78.04	29.71	47.39
+0	0	73	1.98	3679	3394	1.00	2386	0	0	0.00	0.50	97.60	3.50	47.39
+0	8	803	21.34	3766	3394	1.16	11082	0	0	0.02	11.77	67.28
+1	1	863	20.01	4312	3394	0.92	6624	0	0	0.02	8.03	72.26	5.92
+1	9	1625	38.28	4245	3394	0.99	11978	0	0	0.04	21.48	40.85
+2	2	62	1.68	3688	3394	1.11	1059	0	0	0.00	1.10	97.26	1.98
+2	10	272	7.30	3721	3394	1.16	3777	0	0	0.01	2.83	90.00
+3	3	198	5.34	3708	3394	1.13	2903	0	0	0.05	2.24	92.49	1.95
+3	11	125	3.40	3681	3394	0.92	2797	0	0	0.00	2.54	94.17
+4	4	706	19.01	3712	3394	0.94	13486	0	0	0.03	8.47	72.95	3.30
+4	12	73	1.93	3768	3394	0.95	889	0	0	0.00	1.12	96.98
+5	5	1034	27.59	3747	3394	1.01	16273	0	0	0.04	23.14	49.90	3.94
+5	13	106	2.68	3936	3394	1.69	966	0	0	0.00	0.30	97.05
+6	6	575	15.50	3711	3394	0.99	12999	0	0	0.03	9.02	75.88	2.90
+6	14	12	0.32	3675	3394	1.31	368	0	0	0.00	0.09	99.60
+7	7	1082	26.37	4103	3394	0.95	8923	0	0	0.03	23.54	50.67	6.23
+7	15	1443	31.92	4520	3394	1.48	3611	0	0	0.04	14.71	53.64
+Core	CPU	Avg_MHz	Busy%	Bzy_MHz	TSC_MHz	IPC	IRQ	NMI	SMI	POLL%	C1%	C2%	CorWatt	PkgWatt
+-	-	575	14.05	4093	3394	1.08	102612	0	0	0.02	7.47	78.75	30.73	48.51
+0	0	784	21.13	3711	3394	1.01	14758	0	0	0.01	12.42	66.94	3.88	48.51
+0	8	234	6.20	3769	3394	1.14	2527	0	0	0.00	2.58	91.32
+1	1	1251	30.04	4165	3394	1.19	12089	0	0	0.01	13.56	56.91	6.00
+1	9	1119	27.38	4088	3394	0.85	16343	0	0	0.04	13.06	60.21
+2	2	287	7.70	3725	3394	1.00	6704	0	0	0.01	2.77	89.70	2.50
+2	10	166	4.45	3723	3394	0.91	4710	0	0	0.01	3.60	92.09
+3	3	125	3.36	3708	3394	1.04	2345	0	0	0.03	1.20	95.51	1.28
+3	11	6	0.17	3683	3394	0.55	147	0	0	0.00	0.00	99.83
+4	4	597	15.98	3733	3394	1.23	10169	0	0	0.02	6.56	77.80	3.14
+4	12	58	1.58	3697	3394	0.59	480	0	0	0.00	0.00	98.44
+5	5	996	26.56	3751	3394	0.87	17219	0	0	0.03	15.02	59.00	3.92
+5	13	3	0.09	3712	3394	0.73	50	0	0	0.00	0.00	99.91
+6	6	370	9.96	3710	3394	1.17	6866	0	0	0.01	4.98	85.26	2.50
+6	14	18	0.48	3681	3394	1.08	710	0	0	0.00	0.03	99.51
+7	7	662	14.83	4461	3394	1.18	4183	0	0	0.01	10.44	75.01	7.50
+7	15	2523	54.80	4603	3394	1.18	3312	0	0	0.07	33.26	12.53
+Core	CPU	Avg_MHz	Busy%	Bzy_MHz	TSC_MHz	IPC	IRQ	NMI	SMI	POLL%	C1%	C2%	CorWatt	PkgWatt
+-	-	577	14.50	3982	3394	1.09	108013	2	0	0.02	7.81	77.95	30.41	48.06
+0	0	946	24.78	3817	3394	0.98	14721	0	0	0.02	10.87	64.85	4.38	48.06
+0	8	481	12.53	3835	3394	0.88	5322	0	0	0.02	9.38	78.36
+1	1	855	21.37	4002	3394	0.96	11479	0	0	0.02	9.09	69.95	5.33
+1	9	1312	32.51	4036	3394	0.99	13247	0	0	0.05	27.33	40.85
+2	2	354	9.42	3760	3394	1.22	5365	0	0	0.00	2.17	88.57	3.15
+2	10	332	8.95	3710	3394	0.94	7035	0	0	0.01	8.70	82.61
+3	3	174	4.69	3705	3394	1.02	3505	0	0	0.03	2.98	92.44	1.62
+3	11	121	3.29	3679	3394	0.90	2328	0	0	0.00	2.27	94.52
+4	4	502	13.45	3734	3394	1.28	8736	0	0	0.02	3.63	83.17	2.92
+4	12	98	2.65	3679	3394	0.75	2797	0	0	0.00	0.33	97.10
+5	5	986	26.02	3789	3394	1.12	13943	1	0	0.03	12.49	61.99	4.33
+5	13	279	7.42	3761	3394	1.07	2771	0	0	0.01	3.39	89.30
+6	6	319	8.63	3693	3394	1.10	5781	0	0	0.00	2.41	89.13	2.35
+6	14	67	1.85	3656	3394	0.87	1456	0	0	0.00	1.05	97.15
+7	7	316	7.70	4107	3394	1.41	3332	0	0	0.01	2.37	90.06	6.31
+7	15	2097	46.75	4486	3394	1.24	6195	1	0	0.05	26.52	27.21
+Core	CPU	Avg_MHz	Busy%	Bzy_MHz	TSC_MHz	IPC	IRQ	NMI	SMI	POLL%	C1%	C2%	CorWatt	PkgWatt
+-	-	591	15.06	3925	3394	1.06	110807	1	0	0.02	7.83	77.37	29.39	47.33
+0	0	1117	28.20	3960	3394	1.07	10226	0	0	0.02	16.50	55.77	4.69	47.33
+0	8	662	16.42	4029	3394	1.09	4828	0	0	0.01	7.69	76.10
+1	1	860	20.99	4097	3394	1.10	9133	0	0	0.02	9.51	69.88	5.17
+1	9	1435	34.96	4104	3394	1.04	12148	1	0	0.03	27.29	38.39
+2	2	384	10.38	3700	3394	0.98	6850	0	0	0.01	6.33	83.53	3.02
+2	10	301	8.14	3697	3394	1.02	5078	0	0	0.01	4.44	87.58
+3	3	231	6.31	3655	3394	0.99	4580	0	0	0.03	2.55	91.28	2.22
+3	11	123	3.33	3692	3394	1.13	2135	0	0	0.00	0.91	95.82
+4	4	645	16.92	3810	3394	0.98	9052	0	0	0.02	6.58	76.80	3.70
+4	12	490	13.05	3758	3394	0.93	8016	0	0	0.02	8.65	78.57
+5	5	959	24.27	3953	3394	1.16	10370	0	0	0.03	9.88	66.24	4.34
+5	13	581	14.18	4098	3394	0.98	7648	0	0	0.02	6.77	79.35
+6	6	325	8.83	3681	3394	1.13	5826	0	0	0.01	3.73	87.63	2.48
+6	14	159	4.33	3668	3394	1.24	2638	0	0	0.00	1.33	94.43
+7	7	784	20.55	3813	3394	1.20	8722	0	0	0.02	6.48	73.27	3.76
+7	15	405	10.14	3990	3394	0.92	3557	0	0	0.00	6.64	83.35
+Core	CPU	Avg_MHz	Busy%	Bzy_MHz	TSC_MHz	IPC	IRQ	NMI	SMI	POLL%	C1%	C2%	CorWatt	PkgWatt
+-	-	559	14.05	3975	3394	1.44	85869	0	0	0.01	5.49	80.65	26.97	46.48
+0	0	657	16.93	3879	3394	1.10	7968	0	0	0.01	10.04	73.34	3.04	46.47
+0	8	351	9.04	3881	3394	0.96	4458	0	0	0.01	4.39	86.72
+1	1	932	22.62	4119	3394	1.15	6725	0	0	0.02	10.09	67.49	4.10
+1	9	831	21.27	3909	3394	0.95	10569	0	0	0.02	5.53	73.47
+2	2	341	9.11	3740	3394	1.04	6210	0	0	0.01	3.36	87.70	2.67
+2	10	318	8.64	3684	3394	1.21	2841	0	0	0.00	1.98	89.47
+3	3	326	8.62	3782	3394	1.06	5436	0	0	0.04	4.78	86.77	2.00
+3	11	84	2.33	3604	3394	0.79	1754	0	0	0.00	0.65	97.07
+4	4	625	16.19	3862	3394	1.19	5546	0	0	0.01	7.21	76.69	2.53
+4	12	134	3.34	4009	3394	0.98	748	0	0	0.00	0.33	96.34
+5	5	520	13.81	3769	3394	1.34	6568	0	0	0.01	3.27	83.13	2.96
+5	13	426	11.69	3648	3394	0.87	8311	0	0	0.02	11.55	77.10
+6	6	353	9.29	3802	3394	1.16	3826	0	0	0.01	3.15	87.68	2.41
+6	14	199	5.23	3803	3394	1.05	2381	0	0	0.00	2.80	92.06
+7	7	1303	30.68	4249	3394	2.13	5339	0	0	0.01	9.21	60.38	7.26
+7	15	1535	36.06	4257	3394	2.26	7189	0	0	0.02	9.47	54.91
+Core	CPU	Avg_MHz	Busy%	Bzy_MHz	TSC_MHz	IPC	IRQ	NMI	SMI	POLL%	C1%	C2%	CorWatt	PkgWatt
+-	-	585	14.56	4019	3394	1.07	104842	0	0	0.02	6.91	78.78	29.79	47.62
+0	0	177	4.77	3710	3394	0.95	4165	0	0	0.00	2.55	92.79	2.91	47.62
+0	8	389	10.48	3716	3394	1.04	5259	0	0	0.01	3.68	86.03
+1	1	1020	23.20	4397	3394	0.93	6467	0	0	0.02	10.92	66.22	6.32
+1	9	2046	46.54	4395	3394	1.03	8876	0	0	0.03	32.31	21.84
+2	2	173	4.67	3706	3394	0.97	3422	0	0	0.00	4.89	90.54	2.33
+2	10	278	7.45	3733	3394	1.08	4246	0	0	0.00	4.77	87.92
+3	3	189	5.11	3705	3394	1.07	2606	0	0	0.04	3.74	91.24	2.45
+3	11	177	4.81	3680	3394	0.89	6712	0	0	0.01	0.83	94.54
+4	4	523	14.17	3693	3394	1.04	8245	0	0	0.02	10.01	76.12	3.14
+4	12	267	7.21	3699	3394	1.04	6083	0	0	0.01	0.75	92.21
+5	5	927	24.61	3766	3394	0.89	14285	0	0	0.02	11.82	64.06	3.91
+5	13	345	9.04	3818	3394	0.79	8376	0	0	0.03	1.04	90.18
+6	6	657	17.79	3691	3394	1.00	10396	0	0	0.02	8.01	74.46	2.97
+6	14	4	0.11	3703	3394	0.62	172	0	0	0.00	0.03	99.87
+7	7	1347	32.14	4191	3394	1.30	8056	0	0	0.02	14.39	53.91	5.75
+7	15	845	20.92	4038	3394	1.50	7476	0	0	0.02	0.79	78.52
+Core	CPU	Avg_MHz	Busy%	Bzy_MHz	TSC_MHz	IPC	IRQ	NMI	SMI	POLL%	C1%	C2%	CorWatt	PkgWatt
+-	-	673	17.07	3943	3394	1.03	113818	0	0	0.02	8.17	75.04	32.80	50.37
+0	0	589	15.61	3775	3394	1.08	7320	0	0	0.00	5.55	79.08	3.97	50.37
+0	8	709	18.95	3744	3394	0.86	11409	0	0	0.01	15.92	65.59
+1	1	795	19.47	4084	3394	0.97	6602	0	0	0.02	8.09	72.72	5.32
+1	9	1399	33.18	4217	3394	1.02	8101	0	0	0.03	19.90	47.43
+2	2	259	7.03	3685	3394	0.92	3701	0	0	0.00	1.74	91.34	3.06
+2	10	414	11.15	3711	3394	0.91	7247	0	0	0.01	6.72	82.37
+3	3	293	7.97	3673	3394	0.96	3964	0	0	0.02	2.26	89.89	2.98
+3	11	285	7.78	3665	3394	0.88	5107	0	0	0.01	3.29	89.10
+4	4	718	19.04	3772	3394	1.17	7332	0	0	0.01	7.31	73.91	3.68
+4	12	327	8.79	3714	3394	0.85	5578	0	0	0.01	2.51	88.87
+5	5	885	23.44	3778	3394	1.08	10556	0	0	0.03	12.55	64.41	4.02
+5	13	419	11.15	3758	3394	0.71	9055	0	0	0.02	2.10	86.98
+6	6	643	17.34	3710	3394	1.00	10193	0	0	0.03	6.89	76.11	3.67
+6	14	425	11.40	3731	3394	0.97	4505	0	0	0.00	7.45	81.35
+7	7	922	21.85	4222	3394	1.07	5220	0	0	0.01	10.27	68.17	6.11
+7	15	1684	38.95	4324	3394	1.25	7928	0	0	0.04	18.22	43.30
+Core	CPU	Avg_MHz	Busy%	Bzy_MHz	TSC_MHz	IPC	IRQ	NMI	SMI	POLL%	C1%	C2%	CorWatt	PkgWatt
+-	-	634	15.94	3980	3394	1.06	109779	0	0	0.02	8.10	76.23	31.65	49.34
+0	0	417	10.95	3810	3394	0.99	7752	0	0	0.00	3.85	85.43	3.92	49.34
+0	8	862	22.75	3788	3394	1.05	11202	0	0	0.03	14.82	62.92
+1	1	985	23.11	4261	3394	0.98	6026	0	0	0.02	11.60	65.61	5.80
+1	9	1572	37.21	4224	3394	0.98	11877	0	0	0.04	19.97	43.43
+2	2	259	6.98	3718	3394	1.10	4596	0	0	0.01	3.27	89.87	2.99
+2	10	386	10.44	3694	3394	0.94	7335	0	0	0.01	6.09	83.69
+3	3	273	7.08	3856	3394	0.99	4635	0	0	0.03	2.59	90.46	2.72
+3	11	269	7.17	3747	3394	1.03	3803	0	0	0.00	2.83	90.12
+4	4	719	18.60	3865	3394	1.10	10447	0	0	0.03	6.13	75.58	3.71
+4	12	365	9.48	3850	3394	0.94	3602	0	0	0.01	7.69	83.00
+5	5	1112	28.15	3952	3394	1.16	10879	0	0	0.03	14.73	57.52	4.04
+5	13	81	2.14	3806	3394	0.72	1530	0	0	0.00	0.90	97.01
+6	6	474	12.79	3705	3394	1.20	5604	0	0	0.01	3.97	83.43	2.99
+6	14	231	6.07	3801	3394	0.90	3563	0	0	0.00	6.00	88.08
+7	7	1219	30.18	4040	3394	1.23	9697	0	0	0.03	13.17	57.07	5.47
+7	15	927	21.91	4228	3394	1.06	7231	0	0	0.01	11.96	66.48
+Core	CPU	Avg_MHz	Busy%	Bzy_MHz	TSC_MHz	IPC	IRQ	NMI	SMI	POLL%	C1%	C2%	CorWatt	PkgWatt
+-	-	609	15.15	4022	3394	1.19	101791	1	0	0.01	6.99	78.10	30.42	48.43
+0	0	608	16.07	3785	3394	0.95	11316	0	0	0.01	9.20	75.04	3.48	48.42
+0	8	456	12.08	3776	3394	0.99	7701	0	0	0.02	2.44	85.72
+1	1	1179	27.04	4362	3394	1.05	7055	0	0	0.02	8.51	64.74	5.94
+1	9	1642	37.52	4376	3394	0.99	9491	0	0	0.04	25.87	37.29
+2	2	302	7.98	3788	3394	1.03	3891	1	0	0.00	2.62	89.53	2.84
+2	10	286	7.61	3763	3394	0.96	4932	0	0	0.01	3.61	88.94
+3	3	304	7.91	3840	3394	1.09	4558	0	0	0.04	5.35	86.88	2.46
+3	11	164	4.37	3746	3394	0.88	4054	0	0	0.00	2.73	93.02
+4	4	572	15.17	3770	3394	1.13	7860	0	0	0.01	8.21	76.88	2.98
+4	12	127	3.10	4091	3394	1.13	916	0	0	0.00	0.45	96.49
+5	5	1056	27.10	3896	3394	1.18	11622	0	0	0.02	11.21	62.11	4.04
+5	13	287	7.35	3911	3394	0.87	3100	0	0	0.01	4.20	88.58
+6	6	495	13.23	3744	3394	1.15	6748	0	0	0.01	4.89	82.11	3.00
+6	14	228	5.93	3839	3394	1.11	2634	0	0	0.00	3.80	90.34
+7	7	1275	31.70	4023	3394	1.62	10103	0	0	0.03	12.29	56.42	5.67
+7	15	766	18.19	4211	3394	1.96	5810	0	0	0.01	6.53	75.52
+Core	CPU	Avg_MHz	Busy%	Bzy_MHz	TSC_MHz	IPC	IRQ	NMI	SMI	POLL%	C1%	C2%	CorWatt	PkgWatt
+-	-	616	15.41	3998	3394	1.10	106550	0	0	0.02	6.87	77.97	31.36	49.17
+0	0	500	12.74	3925	3394	1.06	6490	0	0	0.00	3.18	84.30	3.89	49.17
+0	8	757	19.95	3793	3394	0.90	10535	0	0	0.03	15.46	65.06
+1	1	712	16.89	4217	3394	1.34	5558	0	0	0.01	6.09	77.25	5.88
+1	9	1872	43.33	4320	3394	1.07	8915	0	0	0.05	29.39	27.91
+2	2	214	5.62	3809	3394	1.02	2961	0	0	0.00	2.16	92.31	2.88
+2	10	351	9.41	3725	3394	0.89	6830	0	0	0.01	3.93	86.86
+3	3	308	8.14	3784	3394	1.00	6162	0	0	0.05	1.25	90.78	2.78
+3	11	203	5.44	3728	3394	0.89	5117	0	0	0.01	1.89	92.82
+4	4	527	14.04	3756	3394	1.02	8924	0	0	0.01	3.41	82.81	3.62
+4	12	517	13.73	3765	3394	0.91	10683	0	0	0.01	6.94	79.65
+5	5	1248	30.44	4100	3394	1.31	8483	0	0	0.04	10.54	59.36	4.56
+5	13	275	6.68	4122	3394	0.87	2308	0	0	0.00	2.50	90.91
+6	6	602	16.18	3724	3394	1.13	8393	0	0	0.02	6.68	77.43	2.98
+6	14	110	2.78	3977	3394	1.19	945	0	0	0.00	0.43	96.82
+7	7	1395	35.01	3986	3394	1.22	12602	0	0	0.04	13.80	51.68	4.77
+7	15	263	6.15	4284	3394	1.00	1644	0	0	0.00	2.34	91.59
+Core	CPU	Avg_MHz	Busy%	Bzy_MHz	TSC_MHz	IPC	IRQ	NMI	SMI	POLL%	C1%	C2%	CorWatt	PkgWatt
+-	-	586	14.81	3954	3394	1.06	107559	0	0	0.02	7.67	77.79	29.49	47.02
+0	0	459	12.38	3704	3394	0.98	8744	0	0	0.01	3.78	84.11	3.59	47.02
+0	8	542	14.55	3722	3394	1.04	7256	0	0	0.01	3.02	82.68
+1	1	667	15.88	4198	3394	1.03	4969	0	0	0.01	4.73	79.58	5.19
+1	9	1655	40.44	4093	3394	0.97	16062	0	0	0.04	35.06	25.41
+2	2	160	4.36	3662	3394	0.77	3988	0	0	0.01	1.60	94.16	2.43
+2	10	344	9.36	3675	3394	0.97	6911	0	0	0.01	4.40	86.45
+3	3	157	4.31	3654	3394	1.06	2945	0	0	0.04	1.51	94.27	2.34
+3	11	228	6.17	3703	3394	1.04	4940	0	0	0.00	4.67	89.31
+4	4	489	13.13	3726	3394	1.07	7168	0	0	0.02	6.60	80.51	2.82
+4	12	111	3.01	3682	3394	0.78	1893	0	0	0.00	2.14	94.91
+5	5	791	19.57	4044	3394	1.17	6802	0	0	0.01	8.20	72.53	4.08
+5	13	587	15.44	3803	3394	0.76	10921	0	0	0.01	8.88	76.05
+6	6	814	21.22	3834	3394	1.21	6677	0	0	0.02	10.09	68.97	3.47
+6	14	91	2.46	3689	3394	0.95	1486	0	0	0.00	1.77	95.82
+7	7	1426	34.27	4161	3394	1.16	9714	0	0	0.03	16.45	49.81	5.56
+7	15	850	20.43	4159	3394	1.19	7083	0	0	0.01	9.86	70.06
+Core	CPU	Avg_MHz	Busy%	Bzy_MHz	TSC_MHz	IPC	IRQ	NMI	SMI	POLL%	C1%	C2%	CorWatt	PkgWatt
+-	-	585	14.74	3967	3394	1.10	106829	2	0	0.02	8.02	77.51	30.17	47.87
+0	0	340	9.01	3778	3394	1.00	6314	0	0	0.01	3.77	87.41	3.60	47.87
+0	8	655	17.30	3787	3394	1.04	11956	0	0	0.02	8.59	74.50
+1	1	1043	25.06	4162	3394	1.00	11815	0	0	0.04	10.94	64.48	5.49
+1	9	1446	35.66	4054	3394	1.12	15547	0	0	0.02	28.52	36.61
+2	2	175	4.72	3698	3394	0.95	3316	0	0	0.01	2.89	92.50	3.15
+2	10	470	12.76	3687	3394	1.10	7416	0	0	0.01	4.66	82.83
+3	3	100	2.74	3658	3394	0.91	1796	0	0	0.03	0.50	96.82	1.94
+3	11	169	4.63	3652	3394	1.12	2962	0	0	0.00	1.24	94.22
+4	4	822	20.93	3929	3394	1.26	6933	1	0	0.02	9.22	70.14	3.58
+4	12	91	2.35	3875	3394	1.74	962	0	0	0.00	0.01	97.66
+5	5	1094	27.77	3939	3394	1.16	9581	0	0	0.04	12.17	60.47	3.95
+5	13	70	1.82	3830	3394	0.56	529	1	0	0.00	0.15	98.05
+6	6	667	17.80	3749	3394	1.15	9211	0	0	0.02	12.16	70.38	3.08
+6	14	18	0.49	3751	3394	1.31	262	0	0	0.00	0.05	99.48
+7	7	1392	33.66	4135	3394	1.15	9510	0	0	0.03	14.61	52.18	5.36
+7	15	804	19.15	4200	3394	0.87	8719	0	0	0.02	18.78	62.54
+Core	CPU	Avg_MHz	Busy%	Bzy_MHz	TSC_MHz	IPC	IRQ	NMI	SMI	POLL%	C1%	C2%	CorWatt	PkgWatt
+-	-	587	14.77	3974	3394	1.07	109697	1	0	0.02	7.98	77.53	30.00	47.51
+0	0	324	8.63	3753	3394	0.96	5520	0	0	0.00	4.91	86.63	3.55	47.51
+0	8	653	17.36	3759	3394	1.03	12936	0	0	0.03	6.67	76.39
+1	1	997	24.07	4142	3394	1.06	8206	0	0	0.03	8.08	68.17	5.36
+1	9	1354	33.11	4089	3394	0.91	14513	0	0	0.04	29.19	38.49
+2	2	162	4.42	3675	3394	0.86	2212	0	0	0.01	0.92	94.71	2.89
+2	10	377	10.22	3689	3394	1.10	6171	0	0	0.01	4.62	85.35
+3	3	167	4.57	3662	3394	0.99	3854	0	0	0.05	2.71	92.84	2.05
+3	11	107	2.90	3682	3394	1.20	1820	0	0	0.01	0.99	96.17
+4	4	507	13.41	3781	3394	1.18	5836	0	0	0.02	7.74	79.06	2.89
+4	12	220	5.99	3666	3394	1.00	4007	0	0	0.01	3.19	90.95
+5	5	841	22.21	3788	3394	1.06	12670	0	0	0.02	8.01	70.19	3.92
+5	13	420	10.99	3821	3394	0.82	7691	0	0	0.01	10.75	78.55
+6	6	825	21.84	3778	3394	1.14	9905	0	0	0.02	13.55	65.00	3.37
+6	14	16	0.45	3651	3394	0.91	452	0	0	0.00	0.00	99.56
+7	7	1476	34.89	4232	3394	1.26	10219	1	0	0.03	16.53	49.09	5.97
+7	15	945	21.27	4444	3394	1.09	3685	0	0	0.02	9.75	69.24
+Core	CPU	Avg_MHz	Busy%	Bzy_MHz	TSC_MHz	IPC	IRQ	NMI	SMI	POLL%	C1%	C2%	CorWatt	PkgWatt
+-	-	574	14.48	3967	3394	1.10	109773	0	0	0.02	8.16	77.62	30.22	47.92
+0	0	321	8.65	3712	3394	1.06	6174	0	0	0.00	3.42	88.14	3.47	47.92
+0	8	537	14.46	3712	3394	1.10	10027	0	0	0.02	3.71	82.14
+1	1	970	23.56	4116	3394	1.02	8046	0	0	0.02	9.88	66.90	5.29
+1	9	1172	29.66	3951	3394	1.02	15081	0	0	0.03	16.73	54.20
+2	2	261	7.09	3677	3394	1.11	4112	0	0	0.00	2.73	90.31	3.03
+2	10	318	8.62	3687	3394	1.19	4662	0	0	0.01	3.85	87.68
+3	3	193	5.24	3675	3394	0.94	3234	0	0	0.06	3.52	91.34	2.17
+3	11	178	4.80	3711	3394	1.11	2703	0	0	0.00	3.42	91.88
+4	4	545	14.75	3695	3394	1.00	10071	0	0	0.02	10.44	75.14	2.76
+4	12	40	1.09	3676	3394	1.23	670	0	0	0.00	0.01	98.92
+5	5	872	22.44	3888	3394	1.01	11649	0	0	0.03	13.52	64.48	4.11
+5	13	482	11.56	4173	3394	0.97	4834	0	0	0.01	13.44	75.26
+6	6	695	18.87	3680	3394	1.08	11680	0	0	0.01	11.53	69.99	3.20
+6	14	39	1.07	3677	3394	0.87	589	0	0	0.00	0.07	98.87
+7	7	1938	45.24	4284	3394	1.39	9619	0	0	0.05	21.11	34.18	6.18
+7	15	630	14.58	4324	3394	0.85	6622	0	0	0.01	13.22	72.54
+Core	CPU	Avg_MHz	Busy%	Bzy_MHz	TSC_MHz	IPC	IRQ	NMI	SMI	POLL%	C1%	C2%	CorWatt	PkgWatt
+-	-	594	14.93	3979	3394	1.06	110411	1	0	0.02	7.56	77.77	30.79	48.40
+0	0	266	7.20	3697	3394	1.05	5682	0	0	0.00	2.08	90.89	3.32	48.40
+0	8	565	14.89	3792	3394	1.02	8651	0	0	0.01	10.37	75.04
+1	1	949	23.61	4021	3394	1.04	9569	0	0	0.01	7.46	69.24	5.63
+1	9	1321	31.70	4168	3394	1.06	11433	1	0	0.03	15.65	53.18
+2	2	243	6.63	3675	3394	1.05	3900	0	0	0.03	1.20	92.30	2.78
+2	10	303	8.27	3665	3394	1.11	4857	0	0	0.00	4.65	87.25
+3	3	272	7.39	3678	3394	1.13	4969	0	0	0.05	1.12	91.64	2.68
+3	11	214	5.85	3655	3394	0.96	5041	0	0	0.01	3.16	91.14
+4	4	547	14.88	3675	3394	1.09	9806	0	0	0.01	8.25	77.20	3.19
+4	12	203	5.53	3672	3394	0.99	2249	0	0	0.00	0.68	93.86
+5	5	847	22.36	3788	3394	1.07	12289	0	0	0.02	12.36	65.70	3.91
+5	13	465	12.39	3755	3394	0.82	9539	0	0	0.01	12.27	75.67
+6	6	490	13.26	3698	3394	1.17	9205	0	0	0.02	4.11	82.88	3.04
+6	14	158	4.30	3676	3394	0.89	1743	0	0	0.00	1.34	94.42
+7	7	1421	33.04	4302	3394	1.13	7912	0	0	0.02	21.84	45.67	6.24
+7	15	1237	27.52	4494	3394	1.08	3566	0	0	0.02	14.49	58.30
+Core	CPU	Avg_MHz	Busy%	Bzy_MHz	TSC_MHz	IPC	IRQ	NMI	SMI	POLL%	C1%	C2%	CorWatt	PkgWatt
+-	-	552	13.81	3997	3394	1.46	80550	0	0	0.01	5.00	81.37	27.06	46.74
+0	0	435	11.44	3800	3394	0.98	5985	0	0	0.00	6.33	82.45	2.82	46.74
+0	8	423	10.77	3930	3394	1.05	4244	0	0	0.02	3.39	85.94
+1	1	857	21.17	4048	3394	1.14	6326	0	0	0.01	4.66	74.38	4.68
+1	9	1114	25.83	4312	3394	1.35	7931	0	0	0.03	9.72	64.82
+2	2	230	6.23	3701	3394	1.07	3103	0	0	0.01	2.36	91.49	2.09
+2	10	191	5.23	3651	3394	1.00	2871	0	0	0.01	1.04	93.81
+3	3	313	8.20	3817	3394	1.07	4821	0	0	0.04	2.74	89.19	2.20
+3	11	148	3.86	3823	3394	0.82	3417	0	0	0.01	1.69	94.55
+4	4	558	15.03	3714	3394	1.29	7026	0	0	0.02	8.01	77.20	2.74
+4	12	220	5.86	3763	3394	1.07	2435	0	0	0.01	2.35	91.88
+5	5	713	18.51	3855	3394	1.14	6263	0	0	0.02	7.89	73.85	3.27
+5	13	519	12.76	4064	3394	0.94	4974	0	0	0.01	7.96	79.48
+6	6	354	9.36	3782	3394	0.99	4343	0	0	0.01	1.26	89.51	2.31
+6	14	228	6.05	3763	3394	0.87	4201	0	0	0.00	4.82	89.26
+7	7	2128	50.49	4215	3394	2.55	8022	0	0	0.02	12.58	37.27	6.95
+7	15	398	10.11	3942	3394	1.05	4588	0	0	0.01	3.21	86.85
+Core	CPU	Avg_MHz	Busy%	Bzy_MHz	TSC_MHz	IPC	IRQ	NMI	SMI	POLL%	C1%	C2%	CorWatt	PkgWatt
+-	-	667	16.60	4016	3394	1.09	114747	0	0	0.02	7.72	75.94	32.55	49.99
+0	0	440	11.63	3781	3394	1.00	6611	0	0	0.01	5.35	83.24	3.99	49.98
+0	8	838	22.10	3792	3394	1.12	11891	0	0	0.02	14.06	64.28
+1	1	1034	23.68	4369	3394	1.08	4810	0	0	0.02	12.37	64.24	6.49
+1	9	2020	45.65	4426	3394	1.09	8381	0	0	0.04	25.09	29.82
+2	2	201	5.44	3699	3394	0.88	3107	0	0	0.01	2.36	92.29	2.97
+2	10	396	10.65	3715	3394	1.06	8395	0	0	0.02	3.03	86.56
+3	3	233	6.19	3757	3394	0.84	4560	0	0	0.03	2.23	91.72	3.06
+3	11	405	10.86	3727	3394	0.96	6955	0	0	0.01	7.72	81.64
+4	4	676	17.66	3829	3394	1.11	8889	0	0	0.03	5.66	76.89	3.63
+4	12	301	8.15	3694	3394	0.92	7856	0	0	0.02	1.23	90.85
+5	5	835	21.90	3811	3394	1.35	12425	0	0	0.03	7.66	70.81	3.77
+5	13	201	5.17	3886	3394	0.90	2311	0	0	0.00	2.83	92.08
+6	6	728	19.55	3723	3394	1.00	10427	0	0	0.02	12.02	68.81	3.50
+6	14	216	5.86	3688	3394	0.87	3395	0	0	0.00	2.69	91.55
+7	7	1615	38.59	4184	3394	1.14	11488	0	0	0.03	15.53	46.34	5.14
+7	15	527	12.45	4229	3394	1.23	3246	0	0	0.01	3.73	83.95
+Core	CPU	Avg_MHz	Busy%	Bzy_MHz	TSC_MHz	IPC	IRQ	NMI	SMI	POLL%	C1%	C2%	CorWatt	PkgWatt
+-	-	598	15.02	3983	3394	1.06	107711	1	0	0.02	7.43	77.80	29.57	47.07
+0	0	616	16.41	3752	3394	0.86	11751	0	0	0.01	9.05	74.94	3.93	47.08
+0	8	698	18.56	3764	3394	1.03	8994	0	0	0.02	11.04	70.76
+1	1	1254	28.99	4325	3394	1.04	7445	1	0	0.02	13.32	58.04	6.25
+1	9	1618	36.66	4413	3394	1.04	10234	0	0	0.05	21.01	42.89
+2	2	257	6.93	3713	3394	1.09	3715	0	0	0.00	3.12	90.08	2.79
+2	10	274	7.40	3697	3394	1.04	6019	0	0	0.01	3.37	89.41
+3	3	134	3.65	3673	3394	0.90	2452	0	0	0.03	1.20	95.23	1.98
+3	11	198	5.37	3682	3394	1.04	3575	0	0	0.01	3.87	90.87
+4	4	541	14.46	3741	3394	1.21	6753	0	0	0.01	6.08	79.71	2.91
+4	12	157	4.13	3803	3394	0.83	3209	0	0	0.01	0.69	95.23
+5	5	1140	29.48	3868	3394	1.19	13838	0	0	0.03	20.29	50.79	4.06
+5	13	182	4.70	3872	3394	1.22	2032	0	0	0.00	0.88	94.49
+6	6	519	13.99	3709	3394	1.10	8772	0	0	0.02	7.64	78.65	2.63
+6	14	38	1.02	3703	3394	0.86	819	0	0	0.00	0.74	98.27
+7	7	1356	33.99	3989	3394	1.06	12853	0	0	0.04	13.81	52.74	5.03
+7	15	591	14.59	4049	3394	1.07	5250	0	0	0.02	2.79	82.80
+Core	CPU	Avg_MHz	Busy%	Bzy_MHz	TSC_MHz	IPC	IRQ	NMI	SMI	POLL%	C1%	C2%	CorWatt	PkgWatt
+-	-	593	14.82	3998	3394	1.07	106797	1	0	0.02	7.82	77.61	30.42	48.20
+0	0	448	11.79	3803	3394	1.08	6251	0	0	0.01	5.34	83.08	3.76	48.20
+0	8	650	16.77	3875	3394	1.00	9046	0	0	0.03	11.14	72.42
+1	1	837	19.49	4294	3394	1.33	8606	0	0	0.02	7.52	73.34	6.56
+1	9	2051	47.57	4311	3394	1.11	11004	0	0	0.04	18.04	34.95
+2	2	170	4.63	3667	3394	1.01	2961	0	0	0.00	2.87	92.59	2.21
+2	10	200	5.49	3644	3394	1.17	3926	0	0	0.01	2.02	92.60
+3	3	147	3.99	3683	3394	0.91	2585	0	0	0.06	2.21	93.89	2.26
+3	11	156	4.24	3668	3394	0.96	4892	0	0	0.01	0.70	95.20
+4	4	756	20.48	3693	3394	0.99	12141	0	0	0.03	12.08	67.87	3.38
+4	12	116	3.10	3739	3394	0.75	2781	0	0	0.01	0.24	96.74
+5	5	944	25.16	3751	3394	1.07	13348	0	0	0.02	19.99	55.37	3.76
+5	13	169	4.30	3932	3394	0.97	1675	0	0	0.00	0.29	95.45
+6	6	674	18.32	3680	3394	1.03	11627	1	0	0.03	14.38	67.70	3.15
+6	14	66	1.80	3640	3394	0.82	953	0	0	0.00	1.09	97.14
+7	7	1265	29.97	4219	3394	1.07	8458	0	0	0.03	17.61	52.90	5.34
+7	15	834	20.05	4162	3394	1.04	6543	0	0	0.02	9.64	70.61
+Core	CPU	Avg_MHz	Busy%	Bzy_MHz	TSC_MHz	IPC	IRQ	NMI	SMI	POLL%	C1%	C2%	CorWatt	PkgWatt
+-	-	558	13.91	4011	3394	1.11	103165	0	0	0.02	7.71	78.63	30.30	47.83
+0	0	508	13.24	3842	3394	1.01	8826	0	0	0.01	8.06	79.01	3.54	47.83
+0	8	355	9.17	3869	3394	1.24	5402	0	0	0.01	0.63	90.35
+1	1	922	22.94	4017	3394	1.09	13218	0	0	0.03	9.78	67.72	4.90
+1	9	1103	27.66	3987	3394	0.98	11291	0	0	0.03	27.99	44.99
+2	2	265	6.99	3787	3394	1.15	3544	0	0	0.01	3.50	89.60	3.18
+2	10	385	10.31	3732	3394	1.10	7056	0	0	0.02	8.58	81.33
+3	3	204	5.52	3700	3394	1.10	3536	0	0	0.05	2.24	92.35	2.02
+3	11	100	2.71	3673	3394	1.13	1575	0	0	0.00	1.78	95.57
+4	4	572	15.14	3775	3394	1.09	8567	0	0	0.01	8.87	76.26	3.14
+4	12	50	1.34	3714	3394	0.96	976	0	0	0.00	1.31	97.39
+5	5	986	25.88	3809	3394	1.26	13843	0	0	0.03	9.22	65.34	3.89
+5	13	7	0.19	3706	3394	0.79	129	0	0	0.00	0.00	99.81
+6	6	566	15.21	3722	3394	1.07	10813	0	0	0.02	8.90	76.22	2.85
+6	14	33	0.89	3711	3394	0.91	717	0	0	0.00	0.89	98.24
+7	7	705	16.20	4353	3394	0.98	6197	0	0	0.02	6.07	78.01	6.79
+7	15	2169	49.24	4405	3394	1.20	7475	0	0	0.04	25.53	25.83
+Core	CPU	Avg_MHz	Busy%	Bzy_MHz	TSC_MHz	IPC	IRQ	NMI	SMI	POLL%	C1%	C2%	CorWatt	PkgWatt
+-	-	552	13.81	4002	3394	1.32	90505	1	0	0.02	5.73	80.68	27.99	46.66
+0	0	553	14.58	3796	3394	1.12	8991	0	0	0.01	5.06	80.63	2.94	46.66
+0	8	255	6.63	3852	3394	1.10	3596	0	0	0.01	1.33	92.16
+1	1	1208	29.86	4045	3394	1.32	11361	0	0	0.04	12.20	58.37	4.62
+1	9	519	13.06	3970	3394	1.11	6798	0	0	0.02	3.66	83.51
+2	2	388	10.54	3681	3394	0.96	8310	0	0	0.02	6.02	83.68	2.57
+2	10	172	4.65	3688	3394	0.95	3351	0	0	0.00	2.15	93.29
+3	3	276	7.42	3715	3394	1.02	4017	0	0	0.05	2.43	90.28	1.99
+3	11	87	2.26	3829	3394	1.07	968	0	0	0.00	0.38	97.39
+4	4	740	19.87	3725	3394	0.96	13006	0	0	0.01	12.94	67.63	3.03
+4	12	117	2.92	4008	3394	1.24	824	0	0	0.00	0.05	97.06
+5	5	927	24.06	3852	3394	1.16	9940	1	0	0.03	10.00	66.30	3.37
+5	13	135	3.34	4042	3394	0.87	738	0	0	0.00	0.31	96.37
+6	6	422	11.36	3714	3394	1.15	5721	0	0	0.01	4.24	84.59	2.30
+6	14	44	1.23	3578	3394	0.80	867	0	0	0.00	0.08	98.69
+7	7	1710	39.37	4344	3394	2.22	5298	0	0	0.01	10.06	50.85	7.18
+7	15	1287	29.73	4329	3394	1.03	6719	0	0	0.03	20.73	50.02
+Core	CPU	Avg_MHz	Busy%	Bzy_MHz	TSC_MHz	IPC	IRQ	NMI	SMI	POLL%	C1%	C2%	CorWatt	PkgWatt
+-	-	606	15.40	3934	3394	1.04	115952	1	0	0.02	7.91	76.97	30.37	47.82
+0	0	508	13.56	3748	3394	0.92	9432	0	0	0.00	7.07	79.69	3.85	47.82
+0	8	719	18.98	3787	3394	1.04	8995	0	0	0.02	9.07	72.30
+1	1	832	19.56	4252	3394	1.02	5753	0	0	0.01	8.63	72.07	5.93
+1	9	1844	42.30	4361	3394	1.10	11802	0	0	0.05	25.80	32.56
+2	2	211	5.73	3686	3394	1.01	3081	0	0	0.01	1.88	92.49	2.88
+2	10	373	10.14	3679	3394	0.89	7506	0	0	0.01	3.39	86.70
+3	3	212	5.75	3678	3394	1.09	3375	0	0	0.07	1.18	93.16	2.59
+3	11	256	6.84	3742	3394	0.95	3621	0	0	0.01	4.51	88.80
+4	4	639	16.52	3867	3394	1.17	7202	0	0	0.03	6.52	77.23	3.41
+4	12	324	8.43	3842	3394	0.81	7199	0	0	0.02	6.19	85.63
+5	5	863	22.86	3776	3394	1.08	11446	0	0	0.01	7.06	70.46	3.85
+5	13	354	9.18	3856	3394	0.89	4695	0	0	0.00	10.19	80.86
+6	6	637	17.24	3692	3394	1.03	10105	0	0	0.02	10.75	72.36	3.28
+6	14	249	6.65	3738	3394	0.77	3273	0	0	0.01	2.45	91.00
+7	7	1413	35.92	3934	3394	1.19	15375	0	0	0.03	18.45	46.25	4.58
+7	15	262	6.78	3859	3394	0.85	3092	1	0	0.00	3.37	89.98
+Core	CPU	Avg_MHz	Busy%	Bzy_MHz	TSC_MHz	IPC	IRQ	NMI	SMI	POLL%	C1%	C2%	CorWatt	PkgWatt
+-	-	588	14.73	3994	3394	1.08	107827	0	0	0.02	7.87	77.67	30.54	48.16
+0	0	760	19.69	3860	3394	1.05	11070	0	0	0.02	12.40	68.29	3.96	48.16
+0	8	464	12.22	3794	3394	0.99	7475	0	0	0.01	7.42	80.64
+1	1	964	22.26	4332	3394	1.26	6267	0	0	0.02	7.62	70.37	6.05
+1	9	1588	36.43	4360	3394	1.10	13177	0	0	0.05	16.84	47.32
+2	2	375	10.09	3712	3394	0.97	5808	0	0	0.01	6.73	83.39	3.10
+2	10	285	7.75	3683	3394	1.01	6115	0	0	0.01	3.44	88.99
+3	3	253	6.85	3700	3394	1.19	4772	0	0	0.04	5.05	88.25	2.18
+3	11	71	1.87	3818	3394	1.09	1309	0	0	0.00	0.76	97.41
+4	4	715	19.22	3718	3394	1.13	11655	0	0	0.02	9.04	72.13	3.40
+4	12	121	3.29	3684	3394	0.80	2034	0	0	0.00	1.34	95.43
+5	5	913	24.26	3762	3394	1.14	11297	0	0	0.02	17.65	58.55	3.49
+5	13	29	0.78	3697	3394	1.33	188	0	0	0.00	0.03	99.20
+6	6	560	14.69	3815	3394	1.27	7382	0	0	0.01	10.95	74.62	2.86
+6	14	90	2.35	3832	3394	0.87	1221	0	0	0.00	0.98	96.72
+7	7	1331	31.77	4190	3394	1.05	9405	0	0	0.03	21.06	47.75	5.49
+7	15	893	22.17	4028	3394	0.83	8652	0	0	0.02	4.59	73.54
+Core	CPU	Avg_MHz	Busy%	Bzy_MHz	TSC_MHz	IPC	IRQ	NMI	SMI	POLL%	C1%	C2%	CorWatt	PkgWatt
+-	-	586	14.57	4021	3394	1.09	108821	0	0	0.02	7.74	77.95	29.53	47.41
+0	0	225	6.09	3701	3394	0.84	4721	0	0	0.00	1.70	92.36	3.53	47.41
+0	8	767	20.39	3760	3394	1.09	12161	0	0	0.01	11.72	68.33
+1	1	950	20.86	4555	3394	1.17	4880	0	0	0.01	10.18	69.27	7.24
+1	9	2446	53.74	4551	3394	1.13	6311	0	0	0.05	26.73	20.10
+2	2	116	3.16	3676	3394	0.95	1858	0	0	0.01	1.50	95.40	2.42
+2	10	356	9.62	3703	3394	0.91	9884	0	0	0.03	4.74	85.91
+3	3	108	2.93	3675	3394	0.91	2039	0	0	0.05	0.75	96.38	1.77
+3	11	172	4.66	3686	3394	1.04	3568	0	0	0.00	2.39	93.06
+4	4	664	17.89	3710	3394	1.06	11463	0	0	0.02	14.15	68.36	3.38
+4	12	271	7.32	3704	3394	0.92	5770	0	0	0.01	6.14	86.74
+5	5	964	25.70	3751	3394	1.07	15344	0	0	0.04	11.68	63.13	3.81
+5	13	154	4.13	3739	3394	2.05	311	0	0	0.00	0.00	95.88
+6	6	511	13.85	3691	3394	1.06	10441	0	0	0.03	8.06	78.41	2.83
+6	14	56	1.52	3707	3394	1.06	1199	0	0	0.00	1.33	97.20
+7	7	1267	32.47	3901	3394	1.11	14463	0	0	0.03	17.09	51.00	4.56
+7	15	347	8.80	3940	3394	0.94	4408	0	0	0.00	5.63	85.76
+Core	CPU	Avg_MHz	Busy%	Bzy_MHz	TSC_MHz	IPC	IRQ	NMI	SMI	POLL%	C1%	C2%	CorWatt	PkgWatt
+-	-	592	14.83	3989	3394	1.21	97224	1	0	0.02	6.56	78.84	28.76	46.67
+0	0	400	10.35	3862	3394	1.03	4452	0	0	0.01	4.51	85.31	3.45	46.67
+0	8	756	19.58	3862	3394	1.07	8534	0	0	0.02	8.99	71.76
+1	1	1321	30.44	4338	3394	1.02	8113	0	0	0.02	9.03	60.85	5.48
+1	9	1289	30.02	4292	3394	0.82	14020	0	0	0.04	16.55	54.02
+2	2	217	5.86	3699	3394	0.91	4147	0	0	0.01	2.41	91.86	2.66
+2	10	338	9.17	3685	3394	1.10	4242	0	0	0.01	2.50	88.48
+3	3	346	9.33	3708	3394	0.94	6309	0	0	0.05	6.87	84.00	2.40
+3	11	156	3.98	3918	3394	1.12	1508	0	0	0.00	0.21	95.85
+4	4	569	15.13	3759	3394	1.07	8449	0	0	0.02	8.32	76.84	2.88
+4	12	136	3.54	3832	3394	1.02	1310	0	0	0.00	1.69	94.82
+5	5	926	23.78	3896	3394	1.44	8926	0	0	0.03	13.47	63.11	3.48
+5	13	141	3.57	3948	3394	1.21	861	0	0	0.00	1.44	95.03
+6	6	672	17.91	3754	3394	1.02	10539	0	0	0.02	8.48	73.96	2.92
+6	14	97	2.60	3739	3394	0.90	1219	0	0	0.00	0.47	96.97
+7	7	1396	35.22	3964	3394	1.44	11948	1	0	0.04	16.06	49.25	5.49
+7	15	709	16.87	4203	3394	2.43	2647	0	0	0.01	3.93	79.30
+Core	CPU	Avg_MHz	Busy%	Bzy_MHz	TSC_MHz	IPC	IRQ	NMI	SMI	POLL%	C1%	C2%	CorWatt	PkgWatt
+-	-	593	14.81	4005	3394	1.03	108328	2	0	0.02	7.51	77.94	29.98	47.51
+0	0	533	14.12	3776	3394	0.87	9805	0	0	0.01	6.79	79.40	3.70	47.51
+0	8	554	14.72	3760	3394	1.02	8094	1	0	0.01	9.52	76.05
+1	1	1427	34.58	4127	3394	1.04	11845	0	0	0.04	15.88	50.08	5.83
+1	9	974	23.55	4135	3394	1.05	11886	1	0	0.02	4.18	72.65
+2	2	343	9.24	3715	3394	1.05	5966	0	0	0.02	4.00	86.94	2.90
+2	10	232	6.31	3672	3394	1.01	4190	0	0	0.00	4.07	89.75
+3	3	240	6.45	3723	3394	1.00	3597	0	0	0.04	1.99	91.68	2.00
+3	11	137	3.72	3674	3394	0.99	1977	0	0	0.00	0.31	96.03
+4	4	732	19.53	3745	3394	1.04	10857	0	0	0.02	9.02	71.81	3.39
+4	12	112	2.99	3745	3394	0.86	1849	0	0	0.00	0.70	96.36
+5	5	827	21.45	3857	3394	1.22	11110	0	0	0.02	7.15	71.77	3.84
+5	13	236	6.34	3724	3394	0.82	5563	0	0	0.00	6.46	87.37
+6	6	315	8.53	3692	3394	1.07	5013	0	0	0.01	2.35	89.28	2.27
+6	14	105	2.68	3898	3394	0.95	1592	0	0	0.00	2.34	95.04
+7	7	1078	25.57	4217	3394	0.92	9231	0	0	0.02	19.92	55.04	6.05
+7	15	1647	37.23	4425	3394	1.10	5753	0	0	0.04	25.47	37.76
+Core	CPU	Avg_MHz	Busy%	Bzy_MHz	TSC_MHz	IPC	IRQ	NMI	SMI	POLL%	C1%	C2%	CorWatt	PkgWatt
+-	-	584	14.60	3998	3394	1.10	107982	0	0	0.01	8.20	77.47	30.26	47.84
+0	0	245	6.55	3738	3394	0.97	5773	0	0	0.00	5.05	88.59	3.28	47.84
+0	8	548	14.69	3732	3394	1.08	7293	0	0	0.01	7.59	77.99
+1	1	911	21.16	4304	3394	1.19	6798	0	0	0.02	7.86	71.27	6.02
+1	9	1797	42.00	4278	3394	1.05	12839	0	0	0.05	29.98	28.75
+2	2	167	4.49	3721	3394	1.03	3693	0	0	0.00	1.25	94.38	2.95
+2	10	431	11.51	3741	3394	1.11	7751	0	0	0.02	4.04	84.69
+3	3	374	10.17	3682	3394	1.02	7064	0	0	0.05	6.99	83.05	2.44
+3	11	74	2.02	3663	3394	0.97	1556	0	0	0.00	0.31	97.71
+4	4	539	14.40	3744	3394	1.19	6765	0	0	0.01	6.07	79.79	3.25
+4	12	206	5.14	4003	3394	1.14	2213	0	0	0.01	2.15	92.78
+5	5	679	17.61	3856	3394	1.10	7829	0	0	0.01	3.55	79.11	3.94
+5	13	576	15.35	3752	3394	0.82	10866	0	0	0.00	18.97	66.13
+6	6	310	8.43	3682	3394	1.05	5958	0	0	0.01	4.13	87.63	2.90
+6	14	326	8.44	3860	3394	1.18	3799	0	0	0.01	4.56	87.15
+7	7	1372	33.75	4065	3394	1.23	13512	0	0	0.03	22.01	44.90	5.47
+7	15	786	17.92	4389	3394	1.08	4273	0	0	0.01	6.71	75.59
+Core	CPU	Avg_MHz	Busy%	Bzy_MHz	TSC_MHz	IPC	IRQ	NMI	SMI	POLL%	C1%	C2%	CorWatt	PkgWatt
+-	-	574	14.27	4024	3394	1.21	93321	0	0	0.01	6.96	79.00	29.69	47.61
+0	0	447	11.56	3866	3394	0.94	5900	0	0	0.01	7.84	80.84	3.44	47.62
+0	8	494	12.86	3843	3394	0.98	6352	0	0	0.02	3.96	83.38
+1	1	1676	40.06	4183	3394	1.89	10182	0	0	0.04	11.59	48.77	6.16
+1	9	806	20.66	3903	3394	0.88	11992	0	0	0.03	13.40	66.46
+2	2	292	7.63	3832	3394	1.02	5397	0	0	0.02	2.08	90.45	2.55
+2	10	226	5.79	3906	3394	0.98	3132	0	0	0.00	3.46	90.85
+3	3	303	8.23	3680	3394	0.95	6002	0	0	0.02	6.96	85.00	2.13
+3	11	55	1.47	3757	3394	1.21	538	0	0	0.00	0.01	98.54
+4	4	588	15.66	3757	3394	1.08	10093	0	0	0.02	8.22	76.44	2.87
+4	12	94	2.31	4062	3394	1.42	341	0	0	0.00	0.00	97.70
+5	5	931	24.73	3764	3394	1.28	10876	0	0	0.03	8.37	67.28	3.79
+5	13	101	2.61	3867	3394	1.00	1449	0	0	0.00	0.20	97.24
+6	6	497	12.93	3842	3394	1.14	5882	0	0	0.01	3.65	83.61	2.86
+6	14	163	4.32	3768	3394	0.87	4344	0	0	0.00	4.48	91.32
+7	7	1132	25.85	4380	3394	1.11	4371	0	0	0.02	13.16	61.31	5.89
+7	15	1379	31.57	4366	3394	1.07	6470	0	0	0.01	24.03	44.92
+Core	CPU	Avg_MHz	Busy%	Bzy_MHz	TSC_MHz	IPC	IRQ	NMI	SMI	POLL%	C1%	C2%	CorWatt	PkgWatt
+-	-	577	14.35	4021	3394	1.09	107690	0	0	0.02	7.23	78.68	29.72	47.28
+0	0	424	10.92	3887	3394	1.04	6440	0	0	0.01	6.64	82.67	3.59	47.28
+0	8	525	13.84	3793	3394	1.05	7690	0	0	0.00	9.11	77.34
+1	1	1289	30.40	4240	3394	1.04	12057	0	0	0.04	14.93	55.24	6.22
+1	9	1380	32.94	4188	3394	1.24	15458	0	0	0.06	7.77	59.82
+2	2	264	7.14	3699	3394	1.01	5124	0	0	0.01	3.13	89.88	2.64
+2	10	271	7.33	3696	3394	1.04	5059	0	0	0.01	6.04	86.80
+3	3	165	4.50	3671	3394	0.85	4525	0	0	0.04	3.25	92.38	1.50
+3	11	14	0.38	3648	3394	0.89	467	0	0	0.00	0.35	99.29
+4	4	807	20.78	3884	3394	1.07	10732	0	0	0.01	12.45	67.15	3.35
+4	12	35	0.91	3815	3394	1.08	578	0	0	0.00	0.02	99.09
+5	5	1319	32.88	4011	3394	1.21	12580	0	0	0.04	18.13	49.50	4.33
+5	13	2	0.06	3734	3394	0.45	89	0	0	0.00	0.11	99.83
+6	6	531	14.33	3706	3394	1.08	9461	0	0	0.02	8.02	77.96	2.60
+6	14	2	0.05	3700	3394	0.33	40	0	0	0.00	0.00	99.96
+7	7	1280	30.27	4227	3394	1.02	9173	0	0	0.02	14.87	55.36	5.49
+7	15	927	22.93	4042	3394	0.98	8217	0	0	0.01	10.82	66.62
+Core	CPU	Avg_MHz	Busy%	Bzy_MHz	TSC_MHz	IPC	IRQ	NMI	SMI	POLL%	C1%	C2%	CorWatt	PkgWatt
+-	-	569	14.24	3993	3394	1.11	106684	1	0	0.02	7.99	78.03	29.88	47.21
+0	0	488	13.03	3745	3394	1.17	7957	1	0	0.01	6.62	80.61	3.42	47.21
+0	8	388	10.60	3663	3394	1.06	6708	0	0	0.01	5.42	84.20
+1	1	539	12.40	4350	3394	1.52	2757	0	0	0.01	3.90	83.83	5.73
+1	9	1870	43.75	4274	3394	1.12	11856	0	0	0.04	32.28	24.65
+2	2	106	2.82	3759	3394	1.21	1168	0	0	0.00	0.75	96.47	2.63
+2	10	408	10.92	3733	3394	1.17	5754	0	0	0.01	6.97	82.31
+3	3	152	4.12	3696	3394	1.13	2347	0	0	0.07	1.64	94.30	2.83
+3	11	369	10.05	3669	3394	0.94	12100	0	0	0.03	2.41	87.87
+4	4	403	10.43	3868	3394	1.00	5198	0	0	0.02	4.36	85.39	3.34
+4	12	484	12.63	3832	3394	1.02	6473	0	0	0.02	4.81	82.78
+5	5	852	22.38	3809	3394	1.16	10791	0	0	0.03	11.11	66.90	3.80
+5	13	216	5.82	3716	3394	1.07	3883	0	0	0.00	2.76	91.53
+6	6	403	10.89	3699	3394	1.03	7858	0	0	0.01	5.90	83.46	2.65
+6	14	196	5.33	3669	3394	1.06	3889	0	0	0.00	3.06	91.74
+7	7	1328	30.64	4334	3394	1.16	6756	0	0	0.02	18.19	51.61	5.48
+7	15	895	21.99	4069	3394	0.90	11189	0	0	0.02	17.69	60.84
+Core	CPU	Avg_MHz	Busy%	Bzy_MHz	TSC_MHz	IPC	IRQ	NMI	SMI	POLL%	C1%	C2%	CorWatt	PkgWatt
+-	-	579	14.62	3959	3394	1.13	103735	0	0	0.02	7.11	78.53	28.52	46.24
+0	0	310	7.94	3905	3394	1.00	4970	0	0	0.01	3.73	88.50	3.68	46.24
+0	8	749	19.45	3848	3394	1.14	8187	0	0	0.02	7.57	73.27
+1	1	939	22.60	4152	3394	1.13	5976	0	0	0.01	9.41	68.30	5.10
+1	9	1086	26.83	4048	3394	1.12	9888	0	0	0.03	10.34	63.24
+2	2	148	3.89	3817	3394	1.00	2429	0	0	0.00	2.29	93.90	1.96
+2	10	297	7.73	3840	3394	1.13	3675	0	0	0.00	4.58	87.82
+3	3	144	3.80	3787	3394	1.07	1943	0	0	0.03	2.10	94.16	1.40
+3	11	132	3.46	3828	3394	1.08	1670	0	0	0.01	1.99	94.62
+4	4	759	19.70	3853	3394	1.12	10235	0	0	0.03	13.58	67.10	3.52
+4	12	306	8.08	3782	3394	0.78	9786	0	0	0.02	1.68	90.53
+5	5	1133	28.70	3948	3394	1.11	13191	0	0	0.04	20.37	51.47	3.90
+5	13	105	2.46	4277	3394	1.26	338	0	0	0.00	0.85	96.70
+6	6	671	18.15	3698	3394	0.95	12302	0	0	0.03	7.36	74.88	3.05
+6	14	71	1.90	3749	3394	0.82	1830	0	0	0.00	0.56	97.60
+7	7	935	22.76	4109	3394	0.98	7092	0	0	0.01	17.12	60.60	5.92
+7	15	1478	36.51	4049	3394	1.47	10223	0	0	0.04	10.17	53.75
+Core	CPU	Avg_MHz	Busy%	Bzy_MHz	TSC_MHz	IPC	IRQ	NMI	SMI	POLL%	C1%	C2%	CorWatt	PkgWatt
+-	-	562	13.87	4056	3394	1.17	100591	1	0	0.01	6.72	79.66	30.33	48.11
+0	0	311	8.43	3688	3394	0.98	7724	0	0	0.00	5.03	86.77	3.10	48.11
+0	8	336	9.11	3692	3394	1.08	5547	0	0	0.01	2.11	88.94
+1	1	773	18.64	4149	3394	0.97	7176	0	0	0.02	7.51	74.10	4.93
+1	9	1270	32.37	3924	3394	0.92	16225	0	0	0.03	28.46	39.91
+2	2	187	4.94	3775	3394	1.00	4333	0	0	0.00	1.57	93.61	2.65
+2	10	287	7.67	3741	3394	0.96	5654	0	0	0.01	8.07	84.45
+3	3	123	3.32	3691	3394	0.97	2234	0	0	0.04	2.21	94.54	1.97
+3	11	186	5.08	3661	3394	0.92	4050	1	0	0.00	1.86	93.18
+4	4	683	17.56	3890	3394	1.24	9934	0	0	0.03	5.18	77.58	3.46
+4	12	142	3.64	3904	3394	0.79	4004	0	0	0.01	0.53	95.95
+5	5	1069	27.40	3900	3394	1.15	11890	0	0	0.02	12.95	60.08	3.98
+5	13	3	0.08	3672	3394	0.39	126	0	0	0.00	0.00	99.93
+6	6	454	12.00	3780	3394	1.07	8922	0	0	0.01	6.64	81.64	2.60
+6	14	40	1.12	3616	3394	1.00	537	0	0	0.00	0.70	98.21
+7	7	1364	31.17	4378	3394	1.28	7434	0	0	0.02	12.72	56.53	7.63
+7	15	1769	39.32	4500	3394	1.53	4801	0	0	0.03	11.95	49.08
+Core	CPU	Avg_MHz	Busy%	Bzy_MHz	TSC_MHz	IPC	IRQ	NMI	SMI	POLL%	C1%	C2%	CorWatt	PkgWatt
+-	-	572	14.30	4000	3394	1.08	108223	0	0	0.02	7.47	78.50	28.91	46.52
+0	0	291	7.90	3685	3394	1.10	5564	0	0	0.00	2.51	89.77	3.45	46.52
+0	8	567	15.32	3702	3394	1.08	9932	0	0	0.02	6.71	78.29
+1	1	723	16.48	4385	3394	0.93	4842	0	0	0.01	9.07	74.70	6.07
+1	9	2038	47.12	4326	3394	1.22	12177	0	0	0.05	32.51	21.09
+2	2	136	3.58	3789	3394	1.26	1664	0	0	0.01	0.87	95.61	2.14
+2	10	291	7.75	3753	3394	1.17	4323	0	0	0.01	2.39	90.00
+3	3	116	3.12	3729	3394	0.96	1934	0	0	0.04	2.34	94.61	1.37
+3	11	118	3.17	3708	3394	1.19	2080	0	0	0.00	1.81	95.08
+4	4	737	19.43	3794	3394	1.04	14521	0	0	0.04	11.18	69.87	3.16
+4	12	70	1.89	3706	3394	1.12	921	0	0	0.00	1.17	96.98
+5	5	1117	28.60	3905	3394	1.16	13740	0	0	0.04	14.78	57.11	3.91
+5	13	3	0.07	3810	3394	0.41	111	0	0	0.00	0.00	99.94
+6	6	780	20.84	3742	3394	0.94	15661	0	0	0.03	12.03	67.60	3.33
+6	14	63	1.70	3723	3394	0.73	1223	0	0	0.00	2.95	95.42
+7	7	1427	34.80	4099	3394	1.03	13105	0	0	0.03	18.65	47.22	5.47
+7	15	677	17.05	3973	3394	1.00	6425	0	0	0.01	0.48	82.67
+Core	CPU	Avg_MHz	Busy%	Bzy_MHz	TSC_MHz	IPC	IRQ	NMI	SMI	POLL%	C1%	C2%	CorWatt	PkgWatt
+-	-	567	14.14	4008	3394	1.11	106308	0	0	0.02	7.51	78.61	28.67	46.37
+0	0	320	8.65	3700	3394	1.12	6010	0	0	0.01	4.15	87.37	3.31	46.38
+0	8	506	13.29	3805	3394	1.11	6559	0	0	0.01	7.30	79.67
+1	1	833	19.14	4351	3394	0.94	7482	0	0	0.02	7.77	73.38	5.91
+1	9	1947	44.87	4340	3394	1.03	13422	0	0	0.04	34.05	21.83
+2	2	99	2.70	3681	3394	1.17	1330	0	0	0.00	1.02	96.33	2.23
+2	10	336	9.07	3706	3394	1.08	5860	0	0	0.01	9.06	82.07
+3	3	250	6.73	3712	3394	1.10	4409	0	0	0.05	4.54	88.87	2.29
+3	11	174	4.69	3704	3394	0.93	5685	0	0	0.02	1.75	93.72
+4	4	704	18.38	3833	3394	1.17	7070	0	0	0.01	8.48	73.41	3.38
+4	12	254	6.64	3834	3394	1.20	5737	0	0	0.00	4.47	89.08
+5	5	653	16.80	3891	3394	1.00	12190	0	0	0.03	8.86	74.76	3.66
+5	13	385	10.17	3784	3394	1.15	6163	0	0	0.01	3.60	86.42
+6	6	381	10.34	3687	3394	1.20	5975	0	0	0.01	5.45	84.41	2.44
+6	14	116	3.15	3696	3394	1.39	1515	0	0	0.01	0.03	96.87
+7	7	1511	36.51	4137	3394	1.30	11205	0	0	0.03	19.56	44.52	5.45
+7	15	595	15.06	3951	3394	1.01	5696	0	0	0.01	0.08	85.03
+Core	CPU	Avg_MHz	Busy%	Bzy_MHz	TSC_MHz	IPC	IRQ	NMI	SMI	POLL%	C1%	C2%	CorWatt	PkgWatt
+-	-	577	14.22	4060	3394	1.20	96440	1	0	0.01	6.27	79.74	28.79	46.71
+0	0	448	11.85	3776	3394	0.93	10457	0	0	0.01	5.86	82.62	3.39	46.71
+0	8	532	14.01	3795	3394	1.09	7638	0	0	0.02	7.63	78.64
+1	1	889	20.73	4290	3394	0.96	5544	1	0	0.02	8.08	71.46	6.29
+1	9	1963	44.18	4443	3394	1.11	7448	0	0	0.03	21.71	34.64
+2	2	223	5.91	3769	3394	1.11	3167	0	0	0.00	2.73	91.46	2.34
+2	10	237	6.41	3700	3394	1.01	5823	0	0	0.02	2.56	91.19
+3	3	121	3.16	3819	3394	1.23	1403	0	0	0.04	0.42	96.46	2.08
+3	11	255	6.88	3709	3394	1.06	5578	0	0	0.01	4.10	89.20
+4	4	438	11.61	3776	3394	1.24	5329	0	0	0.00	5.36	83.21	2.46
+4	12	140	3.75	3745	3394	1.13	2115	0	0	0.00	1.02	95.30
+5	5	785	20.74	3784	3394	0.97	12875	0	0	0.02	12.52	67.19	3.04
+5	13	65	1.52	4284	3394	1.10	321	0	0	0.00	0.00	98.49
+6	6	663	17.67	3752	3394	1.11	9818	0	0	0.02	7.29	75.35	2.97
+6	14	80	1.89	4209	3394	1.14	190	0	0	0.00	0.00	98.12
+7	7	1463	35.01	4178	3394	1.88	12007	0	0	0.02	10.74	54.72	6.21
+7	15	933	22.15	4213	3394	1.08	6727	0	0	0.00	10.33	67.87
+Core	CPU	Avg_MHz	Busy%	Bzy_MHz	TSC_MHz	IPC	IRQ	NMI	SMI	POLL%	C1%	C2%	CorWatt	PkgWatt
+-	-	572	14.28	4006	3394	1.10	107850	0	0	0.02	7.89	78.10	29.23	46.72
+0	0	611	16.58	3688	3394	0.86	17265	0	0	0.01	7.99	75.97	3.46	46.72
+0	8	408	11.08	3681	3394	0.91	8911	0	0	0.01	5.98	83.20
+1	1	639	14.97	4267	3394	1.01	5207	0	0	0.01	6.20	79.05	5.94
+1	9	1998	46.97	4254	3394	1.07	12668	0	0	0.05	30.56	23.20
+2	2	214	5.80	3694	3394	1.09	3543	0	0	0.01	2.21	92.11	2.68
+2	10	301	8.07	3727	3394	0.97	6061	0	0	0.01	6.77	85.35
+3	3	169	4.56	3698	3394	1.04	2770	0	0	0.03	2.82	92.71	1.49
+3	11	45	1.21	3728	3394	1.53	453	0	0	0.00	0.13	98.68
+4	4	614	15.05	4078	3394	1.18	3996	0	0	0.03	10.13	75.04	3.21
+4	12	247	6.60	3739	3394	0.92	6663	0	0	0.00	8.41	85.18
+5	5	992	25.89	3833	3394	1.09	14941	0	0	0.04	13.10	61.53	3.72
+5	13	4	0.10	3654	3394	0.78	213	0	0	0.00	0.00	99.91
+6	6	501	13.57	3692	3394	1.10	6378	0	0	0.02	6.39	80.26	2.64
+6	14	22	0.58	3707	3394	1.14	296	0	0	0.00	0.00	99.43
+7	7	1158	27.14	4264	3394	1.15	6708	0	0	0.01	16.16	57.12	6.08
+7	15	1231	30.28	4066	3394	1.37	11777	0	0	0.03	9.32	60.88
+Core	CPU	Avg_MHz	Busy%	Bzy_MHz	TSC_MHz	IPC	IRQ	NMI	SMI	POLL%	C1%	C2%	CorWatt	PkgWatt
+-	-	565	14.25	3967	3394	1.11	108574	1	0	0.02	7.18	78.83	28.77	46.20
+0	0	306	8.04	3806	3394	1.06	4407	0	0	0.00	1.87	90.23	3.53	46.20
+0	8	671	17.75	3779	3394	0.96	13079	0	0	0.03	4.17	78.47
+1	1	769	17.94	4285	3394	0.98	5573	0	0	0.01	6.56	75.74	5.93
+1	9	1985	45.83	4331	3394	1.13	11626	1	0	0.04	30.73	24.11
+2	2	240	6.52	3683	3394	1.17	3861	0	0	0.01	1.10	92.50	3.08
+2	10	442	12.03	3671	3394	1.01	8725	0	0	0.03	5.60	82.64
+3	3	158	4.28	3686	3394	0.86	3424	0	0	0.06	2.02	93.80	2.19
+3	11	229	6.23	3670	3394	1.05	4610	0	0	0.01	3.68	90.23
+4	4	612	16.35	3744	3394	1.16	10134	0	0	0.02	5.90	78.07	2.85
+4	12	55	1.51	3656	3394	1.38	622	0	0	0.00	0.01	98.51
+5	5	873	22.92	3809	3394	1.23	11980	0	0	0.02	10.90	66.60	3.54
+5	13	138	3.64	3787	3394	0.99	1774	0	0	0.00	3.54	92.92
+6	6	451	12.23	3687	3394	1.15	7410	0	0	0.01	5.74	82.27	2.75
+6	14	182	4.88	3730	3394	0.96	3357	0	0	0.01	4.89	90.36
+7	7	1664	41.09	4048	3394	1.25	13421	0	0	0.04	21.31	38.18	4.89
+7	15	271	6.73	4024	3394	0.72	4571	0	0	0.01	6.78	86.68
+Core	CPU	Avg_MHz	Busy%	Bzy_MHz	TSC_MHz	IPC	IRQ	NMI	SMI	POLL%	C1%	C2%	CorWatt	PkgWatt
+-	-	571	14.11	4046	3394	1.21	96856	2	0	0.01	6.02	80.10	28.49	46.68
+0	0	252	6.46	3910	3394	1.00	5000	0	0	0.00	1.12	92.57	3.18	46.68
+0	8	521	13.65	3819	3394	1.28	6559	0	0	0.00	3.26	83.30
+1	1	802	18.76	4273	3394	1.03	6482	0	0	0.01	3.09	78.35	5.67
+1	9	1751	40.84	4288	3394	1.00	14171	0	0	0.03	32.61	27.33
+2	2	199	5.11	3897	3394	1.30	1415	0	0	0.00	0.04	94.89	2.73
+2	10	400	10.58	3778	3394	1.08	8874	1	0	0.01	2.45	87.22
+3	3	109	2.87	3795	3394	0.94	1478	0	0	0.03	0.47	96.71	1.31
+3	11	150	4.00	3751	3394	1.04	2522	0	0	0.01	2.09	94.00
+4	4	491	12.90	3804	3394	1.06	6756	0	0	0.02	4.74	82.55	3.04
+4	12	328	8.71	3766	3394	0.84	7865	0	0	0.02	1.29	90.24
+5	5	785	21.08	3724	3394	1.06	13143	0	0	0.02	10.06	69.31	3.64
+5	13	276	7.14	3864	3394	1.14	3520	0	0	0.01	2.87	90.11
+6	6	463	12.56	3686	3394	0.99	8569	0	0	0.02	7.36	80.35	2.41
+6	14	64	1.62	3972	3394	1.30	446	0	0	0.00	0.01	98.39
+7	7	1751	42.31	4138	3394	1.84	8483	1	0	0.01	14.81	43.30	6.52
+7	15	793	17.20	4610	3394	1.11	1573	0	0	0.01	10.00	72.99
+Core	CPU	Avg_MHz	Busy%	Bzy_MHz	TSC_MHz	IPC	IRQ	NMI	SMI	POLL%	C1%	C2%	CorWatt	PkgWatt
+-	-	580	14.28	4058	3394	1.10	107830	1	0	0.02	7.96	78.03	31.14	48.46
+0	0	504	13.52	3729	3394	0.95	10362	0	0	0.02	8.42	78.41	3.72	48.46
+0	8	441	11.78	3743	3394	1.13	6690	0	0	0.01	6.79	81.66
+1	1	1083	25.45	4255	3394	1.27	7494	0	0	0.02	10.78	64.11	6.16
+1	9	1479	34.45	4293	3394	1.01	10297	0	0	0.04	21.72	44.38
+2	2	297	8.00	3707	3394	1.11	7054	0	0	0.02	1.99	90.21	3.08
+2	10	279	7.52	3711	3394	0.86	8020	0	0	0.02	5.06	87.65
+3	3	163	4.37	3721	3394	1.12	2404	0	0	0.04	2.56	93.15	2.01
+3	11	133	3.60	3687	3394	0.90	3968	0	0	0.00	4.40	92.12
+4	4	475	12.81	3710	3394	0.97	10492	0	0	0.02	7.63	79.88	2.77
+4	12	98	2.40	4080	3394	2.38	846	0	0	0.00	0.34	97.29
+5	5	1079	28.36	3805	3394	1.04	17349	0	0	0.02	16.69	55.57	3.98
+5	13	4	0.11	3667	3394	0.67	214	0	0	0.00	0.07	99.83
+6	6	553	14.82	3734	3394	1.11	9207	0	0	0.01	8.55	76.94	2.83
+6	14	29	0.79	3638	3394	0.81	1243	0	0	0.00	0.05	99.19
+7	7	629	14.94	4211	3394	0.96	5401	0	0	0.01	8.30	77.05	6.60
+7	15	2026	45.56	4447	3394	1.18	6789	1	0	0.03	23.96	31.05
+Core	CPU	Avg_MHz	Busy%	Bzy_MHz	TSC_MHz	IPC	IRQ	NMI	SMI	POLL%	C1%	C2%	CorWatt	PkgWatt
+-	-	573	14.14	4049	3394	1.08	105557	2	0	0.02	7.49	78.64	31.21	48.79
+0	0	567	15.30	3708	3394	0.98	12579	0	0	0.01	2.67	82.39	3.28	48.79
+0	8	63	1.66	3759	3394	1.14	846	0	0	0.00	0.04	98.32
+1	1	710	16.74	4239	3394	1.07	7242	0	0	0.02	3.30	80.19	5.23
+1	9	1484	37.82	3924	3394	0.87	21216	0	0	0.02	39.72	23.47
+2	2	222	5.99	3698	3394	1.29	2810	0	0	0.00	0.13	93.97	3.02
+2	10	341	9.00	3794	3394	1.07	5044	0	0	0.01	7.46	83.72
+3	3	168	4.44	3778	3394	1.15	2129	0	0	0.04	0.90	94.73	2.11
+3	11	182	4.76	3823	3394	0.94	2989	0	0	0.01	2.52	92.82
+4	4	501	13.52	3705	3394	1.02	10515	1	0	0.02	4.32	82.46	3.21
+4	12	120	3.17	3798	3394	1.12	1692	0	0	0.01	0.47	96.42
+5	5	807	20.74	3891	3394	1.00	13922	1	0	0.04	9.93	69.79	3.95
+5	13	265	7.07	3743	3394	0.82	6324	0	0	0.00	7.49	85.65
+6	6	471	12.79	3679	3394	1.18	8191	0	0	0.02	2.47	84.98	2.97
+6	14	105	2.85	3695	3394	1.27	1102	0	0	0.00	0.30	96.89
+7	7	812	17.94	4525	3394	1.10	2694	0	0	0.01	13.69	68.71	7.45
+7	15	2344	52.47	4468	3394	1.25	6262	0	0	0.05	24.35	23.70
+Core	CPU	Avg_MHz	Busy%	Bzy_MHz	TSC_MHz	IPC	IRQ	NMI	SMI	POLL%	C1%	C2%	CorWatt	PkgWatt
+-	-	572	14.09	4060	3394	1.04	96874	0	0	0.02	8.29	77.89	28.09	45.95
+0	0	846	22.59	3743	3394	0.94	12133	0	0	0.01	18.14	59.76	3.97	45.95
+0	8	410	11.05	3712	3394	0.92	10998	0	0	0.04	0.29	88.97
+1	1	1320	30.57	4319	3394	0.91	9076	0	0	0.03	22.68	47.32	6.85
+1	9	1934	42.52	4549	3394	1.10	5272	0	0	0.03	21.03	36.90
+2	2	548	14.57	3758	3394	1.02	7952	0	0	0.02	9.38	76.33	3.25
+2	10	177	4.79	3696	3394	1.06	3660	0	0	0.01	1.80	93.52
+3	3	208	5.65	3682	3394	1.15	3622	0	0	0.02	2.21	92.25	1.79
+3	11	57	1.53	3743	3394	1.50	727	0	0	0.00	0.03	98.46
+4	4	496	13.32	3727	3394	1.23	8889	0	0	0.02	9.36	77.61	2.72
+4	12	3	0.08	3710	3394	1.14	86	0	0	0.00	0.00	99.92
+5	5	469	12.68	3700	3394	1.11	7679	0	0	0.02	6.68	80.89	2.69
+5	13	104	2.83	3690	3394	1.03	2377	0	0	0.01	3.65	93.60
+6	6	135	3.66	3676	3394	1.18	2044	0	0	0.01	2.08	94.32	1.17
+6	14	72	1.95	3689	3394	1.44	822	0	0	0.00	0.02	98.06
+7	7	860	20.35	4226	3394	1.21	8933	0	0	0.01	11.10	68.97	5.66
+7	15	1511	37.22	4059	3394	0.95	12604	0	0	0.06	24.15	39.31
+Core	CPU	Avg_MHz	Busy%	Bzy_MHz	TSC_MHz	IPC	IRQ	NMI	SMI	POLL%	C1%	C2%	CorWatt	PkgWatt
+-	-	592	14.42	4104	3394	1.20	95562	0	0	0.02	7.23	78.61	29.51	47.35
+0	0	661	17.39	3799	3394	1.05	10916	0	0	0.01	8.01	74.94	3.78	47.35
+0	8	471	12.19	3864	3394	0.98	6562	0	0	0.02	7.06	81.00
+1	1	1006	22.99	4375	3394	1.55	4505	0	0	0.02	15.20	62.43	7.07
+1	9	2046	45.10	4535	3394	1.49	4152	0	0	0.05	20.12	35.14
+2	2	339	8.88	3819	3394	1.36	4506	0	0	0.01	1.85	89.41	2.97
+2	10	331	8.68	3819	3394	1.10	5229	0	0	0.01	1.98	89.51
+3	3	249	6.51	3820	3394	1.06	5375	0	0	0.04	2.45	91.19	2.28
+3	11	120	3.24	3710	3394	0.97	3797	0	0	0.02	0.36	96.51
+4	4	446	11.83	3770	3394	1.14	6566	0	0	0.01	5.29	83.09	2.47
+4	12	115	2.96	3878	3394	0.96	1861	0	0	0.01	2.01	95.10
+5	5	796	21.05	3782	3394	1.16	11784	0	0	0.02	10.37	68.98	3.38
+5	13	91	2.32	3930	3394	0.83	1776	0	0	0.00	1.32	96.41
+6	6	327	8.56	3820	3394	1.06	4946	0	0	0.01	4.04	87.57	1.97
+6	14	81	2.17	3751	3394	1.04	1468	0	0	0.00	0.64	97.23
+7	7	1282	30.35	4225	3394	0.99	11012	0	0	0.02	22.86	47.47	5.59
+7	15	1110	26.58	4175	3394	0.94	11107	0	0	0.02	12.08	61.81
+Core	CPU	Avg_MHz	Busy%	Bzy_MHz	TSC_MHz	IPC	IRQ	NMI	SMI	POLL%	C1%	C2%	CorWatt	PkgWatt
+-	-	581	14.29	4062	3394	1.06	103116	0	0	0.02	8.32	77.66	29.62	47.21
+0	0	557	15.09	3690	3394	1.02	11070	0	0	0.01	10.35	74.92	3.33	47.21
+0	8	169	4.54	3725	3394	1.21	2234	0	0	0.00	1.78	93.75
+1	1	926	22.53	4109	3394	1.07	7125	0	0	0.02	11.52	66.29	5.74
+1	9	1345	31.63	4251	3394	1.07	15703	0	0	0.06	11.51	57.47
+2	2	287	7.81	3679	3394	1.08	5218	0	0	0.01	5.12	87.24	2.26
+2	10	107	2.89	3711	3394	1.20	1504	0	0	0.00	1.14	96.03
+3	3	106	2.87	3691	3394	0.97	1993	0	0	0.04	1.77	95.43	0.86
+3	11	40	1.05	3784	3394	1.17	540	0	0	0.00	0.02	98.95
+4	4	726	19.48	3726	3394	1.15	10365	0	0	0.01	9.08	71.80	3.68
+4	12	185	4.96	3737	3394	0.76	6141	0	0	0.01	1.31	93.92
+5	5	995	26.55	3747	3394	1.17	16419	0	0	0.03	22.11	51.95	3.72
+5	13	3	0.08	3714	3394	0.78	149	0	0	0.00	0.00	99.93
+6	6	513	13.89	3691	3394	1.02	10158	0	0	0.02	8.13	78.29	2.79
+6	14	8	0.22	3699	3394	1.25	193	0	0	0.00	0.01	99.77
+7	7	1346	30.53	4410	3394	1.06	5977	0	0	0.01	22.93	47.10	7.24
+7	15	1977	44.59	4433	3394	1.01	8327	0	0	0.05	26.36	29.71
+Core	CPU	Avg_MHz	Busy%	Bzy_MHz	TSC_MHz	IPC	IRQ	NMI	SMI	POLL%	C1%	C2%	CorWatt	PkgWatt
+-	-	564	14.16	3983	3394	1.13	106238	0	0	0.02	7.88	78.23	29.03	46.45
+0	0	394	10.69	3687	3394	0.99	9250	0	0	0.01	7.08	82.51	3.26	46.45
+0	8	456	12.37	3687	3394	0.99	9567	0	0	0.01	9.16	78.76
+1	1	558	13.31	4194	3394	0.98	5128	0	0	0.02	6.10	80.80	6.29
+1	9	2208	48.97	4509	3394	1.20	7248	0	0	0.05	25.92	25.67
+2	2	105	2.88	3656	3394	1.18	1625	0	0	0.01	1.51	95.66	2.73
+2	10	403	10.88	3701	3394	1.07	7658	0	0	0.02	6.13	83.25
+3	3	256	6.91	3712	3394	1.05	5813	0	0	0.04	3.85	89.40	2.05
+3	11	139	3.77	3699	3394	0.96	2234	0	0	0.00	3.70	92.64
+4	4	478	12.68	3767	3394	1.39	6819	0	0	0.01	7.46	80.09	2.73
+4	12	102	2.77	3698	3394	0.95	2558	0	0	0.00	4.57	92.75
+5	5	1185	31.26	3792	3394	1.17	15269	0	0	0.03	18.39	50.97	4.22
+5	13	176	4.17	4227	3394	1.21	1033	0	0	0.01	1.51	94.36
+6	6	601	16.13	3727	3394	1.15	9082	0	0	0.01	11.86	72.34	2.71
+6	14	16	0.44	3646	3394	0.86	523	0	0	0.00	0.49	99.09
+7	7	1145	28.93	3958	3394	1.22	10606	0	0	0.02	16.16	55.46	5.03
+7	15	796	20.33	3915	3394	0.88	11825	0	0	0.04	2.18	77.88
+Core	CPU	Avg_MHz	Busy%	Bzy_MHz	TSC_MHz	IPC	IRQ	NMI	SMI	POLL%	C1%	C2%	CorWatt	PkgWatt
+-	-	568	14.11	4025	3394	1.19	96313	0	0	0.01	5.95	80.16	28.07	46.14
+0	0	636	16.30	3900	3394	0.99	9394	0	0	0.01	6.33	77.68	3.44	46.14
+0	8	360	9.50	3784	3394	1.02	5604	0	0	0.01	3.62	87.07
+1	1	1272	29.50	4314	3394	1.82	7740	0	0	0.02	7.10	63.72	6.44
+1	9	1486	33.50	4436	3394	1.18	5483	0	0	0.03	13.31	53.52
+2	2	293	7.43	3939	3394	1.15	3764	0	0	0.00	2.32	90.37	2.13
+2	10	268	6.88	3900	3394	1.19	2811	0	0	0.01	1.18	92.04
+3	3	254	6.94	3661	3394	1.05	5291	0	0	0.03	2.08	91.14	2.05
+3	11	141	3.82	3686	3394	0.95	2841	0	0	0.00	2.42	93.85
+4	4	589	15.94	3694	3394	1.03	10297	0	0	0.01	9.09	75.30	3.01
+4	12	92	2.50	3675	3394	0.89	1916	0	0	0.00	0.60	96.96
+5	5	994	25.73	3863	3394	1.23	10885	0	0	0.03	12.09	62.59	3.66
+5	13	90	2.20	4102	3394	1.11	455	0	0	0.00	0.08	97.74
+6	6	522	13.96	3737	3394	0.98	8253	0	0	0.01	7.16	79.15	2.42
+6	14	151	3.91	3860	3394	0.95	2491	0	0	0.00	2.29	93.88
+7	7	740	18.11	4087	3394	1.03	7665	0	0	0.02	5.23	76.96	4.91
+7	15	1202	29.60	4059	3394	1.07	11423	0	0	0.02	20.35	50.63
+Core	CPU	Avg_MHz	Busy%	Bzy_MHz	TSC_MHz	IPC	IRQ	NMI	SMI	POLL%	C1%	C2%	CorWatt	PkgWatt
+-	-	575	14.29	4024	3394	1.09	106168	0	0	0.02	7.85	78.13	31.28	48.68
+0	0	407	10.66	3823	3394	0.86	10951	0	0	0.02	4.23	85.46	3.68	48.68
+0	8	516	13.61	3794	3394	1.06	7130	0	0	0.01	5.11	81.53
+1	1	963	24.18	3983	3394	1.36	11282	0	0	0.03	8.06	68.16	5.72
+1	9	1256	30.02	4182	3394	1.01	10681	0	0	0.03	24.13	46.41
+2	2	208	5.60	3710	3394	1.05	3322	0	0	0.00	2.65	91.87	2.91
+2	10	411	11.09	3704	3394	1.10	7608	0	0	0.02	5.80	83.36
+3	3	308	8.31	3703	3394	0.98	5872	0	0	0.03	2.95	88.92	2.28
+3	11	81	2.17	3718	3394	1.52	1305	0	0	0.00	1.06	96.82
+4	4	600	15.99	3754	3394	1.13	8497	0	0	0.02	9.41	74.90	3.14
+4	12	82	2.20	3736	3394	0.72	1555	0	0	0.00	0.71	97.14
+5	5	940	24.82	3787	3394	1.05	14957	0	0	0.04	13.52	62.17	3.81
+5	13	7	0.19	3677	3394	1.22	117	0	0	0.00	0.00	99.82
+6	6	605	16.24	3724	3394	0.96	9593	0	0	0.02	9.53	74.56	3.17
+6	14	76	1.96	3868	3394	1.25	761	0	0	0.00	0.76	97.32
+7	7	872	20.58	4236	3394	1.03	8262	0	0	0.02	13.45	66.42	6.57
+7	15	1870	41.01	4560	3394	1.17	4275	0	0	0.06	24.21	35.24
+Core	CPU	Avg_MHz	Busy%	Bzy_MHz	TSC_MHz	IPC	IRQ	NMI	SMI	POLL%	C1%	C2%	CorWatt	PkgWatt
+-	-	567	14.08	4025	3394	1.11	106751	1	0	0.02	7.55	78.63	30.56	47.88
+0	0	492	13.22	3723	3394	0.92	14519	0	0	0.01	5.54	81.66	3.16	47.88
+0	8	201	5.32	3777	3394	1.16	2816	0	0	0.01	1.26	93.51
+1	1	1021	24.10	4238	3394	1.17	10007	0	0	0.02	15.45	60.94	5.93
+1	9	1413	34.91	4049	3394	0.90	14792	1	0	0.03	17.17	48.53
+2	2	210	5.68	3689	3394	1.00	4784	0	0	0.01	1.52	92.94	2.69
+2	10	357	9.52	3754	3394	1.11	4893	0	0	0.02	5.38	85.27
+3	3	230	6.22	3700	3394	1.13	4064	0	0	0.02	4.51	89.40	2.55
+3	11	234	6.33	3697	3394	0.96	4629	0	0	0.01	4.16	89.66
+4	4	537	14.14	3799	3394	1.13	7808	0	0	0.02	8.36	77.77	3.09
+4	12	129	3.51	3679	3394	1.31	1774	0	0	0.00	0.16	96.39
+5	5	934	24.46	3817	3394	1.01	14339	0	0	0.03	16.69	59.34	3.83
+5	13	134	3.61	3708	3394	1.01	2283	0	0	0.00	3.50	92.99
+6	6	526	14.33	3668	3394	1.02	11628	0	0	0.02	5.38	80.63	2.72
+6	14	10	0.28	3716	3394	1.21	201	0	0	0.00	0.00	99.73
+7	7	1291	30.31	4258	3394	1.38	6037	0	0	0.04	13.91	56.14	6.58
+7	15	1348	29.37	4591	3394	1.21	2177	0	0	0.04	17.81	53.11
+Core	CPU	Avg_MHz	Busy%	Bzy_MHz	TSC_MHz	IPC	IRQ	NMI	SMI	POLL%	C1%	C2%	CorWatt	PkgWatt
+-	-	598	14.86	4027	3394	1.08	107488	0	0	0.02	7.36	78.04	31.07	48.60
+0	0	336	8.74	3841	3394	1.13	6324	0	0	0.01	3.50	87.95	3.27	48.60
+0	8	378	9.90	3820	3394	1.31	5683	0	0	0.01	2.29	87.99
+1	1	752	17.66	4259	3394	0.87	6632	0	0	0.02	10.63	72.07	6.17
+1	9	1870	43.62	4288	3394	1.24	10013	0	0	0.04	16.58	40.29
+2	2	345	9.31	3702	3394	0.97	8530	0	0	0.02	7.38	83.57	2.80
+2	10	242	6.44	3754	3394	1.17	3188	0	0	0.01	3.15	90.52
+3	3	331	8.76	3781	3394	1.04	5389	0	0	0.04	5.02	86.39	2.27
+3	11	83	2.25	3701	3394	1.08	1385	0	0	0.00	1.18	96.62
+4	4	828	21.69	3819	3394	1.10	12611	0	0	0.02	14.15	64.57	3.47
+4	12	54	1.39	3903	3394	0.83	1025	0	0	0.00	0.85	97.80
+5	5	781	20.17	3871	3394	1.14	10572	0	0	0.02	9.17	71.02	4.02
+5	13	455	11.68	3897	3394	0.94	6076	0	0	0.01	10.16	78.42
+6	6	552	14.82	3722	3394	0.93	11127	0	0	0.02	7.30	78.17	2.99
+6	14	75	2.02	3702	3394	0.88	2091	0	0	0.01	1.59	96.45
+7	7	1218	28.96	4205	3394	1.00	9364	0	0	0.02	12.40	59.11	6.07
+7	15	1273	30.31	4200	3394	1.08	7478	0	0	0.02	12.36	57.77
+Core	CPU	Avg_MHz	Busy%	Bzy_MHz	TSC_MHz	IPC	IRQ	NMI	SMI	POLL%	C1%	C2%	CorWatt	PkgWatt
+-	-	591	14.53	4067	3394	1.19	96321	0	0	0.02	7.20	78.51	29.28	47.27
+0	0	338	8.95	3775	3394	0.97	7184	0	0	0.00	2.06	89.20	3.24	47.27
+0	8	464	12.48	3721	3394	1.14	7112	0	0	0.01	1.51	86.23
+1	1	807	19.00	4246	3394	0.86	9298	0	0	0.04	7.62	73.73	5.81
+1	9	1922	44.66	4304	3394	1.05	11491	0	0	0.03	32.25	23.81
+2	2	88	2.18	4051	3394	1.17	391	0	0	0.00	0.22	97.62	2.53
+2	10	472	12.48	3784	3394	1.16	5579	0	0	0.01	7.51	80.20
+3	3	196	5.10	3845	3394	1.06	2879	0	0	0.04	1.65	93.33	2.22
+3	11	227	6.14	3700	3394	0.91	5718	0	0	0.01	1.79	92.24
+4	4	537	14.28	3763	3394	1.07	8677	0	0	0.01	6.38	79.59	2.71
+4	12	165	4.38	3756	3394	1.27	2831	0	0	0.01	3.39	92.34
+5	5	943	24.71	3815	3394	1.11	10967	0	0	0.03	20.15	55.64	3.41
+5	13	42	1.04	3988	3394	1.02	229	0	0	0.00	0.34	98.63
+6	6	481	12.77	3763	3394	1.04	10229	0	0	0.02	6.91	80.61	2.52
+6	14	39	1.05	3744	3394	0.72	903	0	0	0.00	0.60	98.37
+7	7	2016	45.84	4399	3394	1.71	6512	0	0	0.02	18.67	35.96	6.85
+7	15	720	17.46	4123	3394	1.09	6321	0	0	0.01	4.15	78.62
+Core	CPU	Avg_MHz	Busy%	Bzy_MHz	TSC_MHz	IPC	IRQ	NMI	SMI	POLL%	C1%	C2%	CorWatt	PkgWatt
+-	-	588	14.29	4116	3394	1.07	101268	0	0	0.01	8.78	77.21	30.82	48.49
+0	0	512	13.52	3789	3394	0.94	10422	0	0	0.01	7.91	78.90	3.58	48.49
+0	8	270	7.31	3692	3394	1.12	4579	0	0	0.01	1.60	91.24
+1	1	760	17.67	4303	3394	0.80	8294	0	0	0.03	14.36	68.39	5.77
+1	9	1475	35.99	4099	3394	1.12	16665	0	0	0.03	25.68	39.06
+2	2	242	6.51	3711	3394	0.95	5164	0	0	0.00	4.91	88.74	2.60
+2	10	214	5.77	3716	3394	1.13	3473	0	0	0.01	2.50	91.85
+3	3	51	1.37	3700	3394	0.77	1529	0	0	0.04	1.24	97.44	0.96
+3	11	89	2.42	3677	3394	0.89	2218	0	0	0.00	1.55	96.09
+4	4	622	16.64	3741	3394	1.05	8703	0	0	0.00	12.62	71.09	3.18
+4	12	118	2.98	3950	3394	1.04	1651	0	0	0.00	2.92	94.16
+5	5	1032	26.20	3940	3394	1.04	13384	0	0	0.04	11.09	63.20	4.66
+5	13	374	9.75	3837	3394	0.84	8743	0	0	0.02	7.00	83.62
+6	6	385	10.27	3746	3394	1.08	6159	0	0	0.01	5.90	84.04	2.34
+6	14	13	0.34	3729	3394	1.27	118	0	0	0.00	0.23	99.44
+7	7	905	20.24	4472	3394	1.26	4692	0	0	0.01	15.11	65.05	7.72
+7	15	2349	51.67	4546	3394	1.16	5474	0	0	0.03	25.82	23.11
+Core	CPU	Avg_MHz	Busy%	Bzy_MHz	TSC_MHz	IPC	IRQ	NMI	SMI	POLL%	C1%	C2%	CorWatt	PkgWatt
+-	-	579	14.11	4106	3394	1.10	105410	1	0	0.01	7.37	78.79	32.82	50.37
+0	0	202	5.26	3843	3394	0.98	4502	0	0	0.00	0.91	93.95	3.18	50.36
+0	8	377	10.02	3762	3394	0.96	6408	0	0	0.01	10.04	80.20
+1	1	928	22.61	4105	3394	0.86	14951	0	0	0.04	12.79	65.20	6.19
+1	9	1397	34.20	4085	3394	1.36	15551	0	0	0.02	11.47	54.91
+2	2	387	10.36	3732	3394	1.27	7280	0	0	0.02	1.42	88.43	2.83
+2	10	69	1.85	3707	3394	1.07	1512	0	0	0.00	1.53	96.66
+3	3	412	11.09	3714	3394	1.07	7289	0	0	0.00	4.56	84.58	2.72
+3	11	31	0.83	3713	3394	0.78	596	0	0	0.00	0.63	98.56
+4	4	466	12.45	3746	3394	1.09	8264	0	0	0.01	8.18	79.64	2.65
+4	12	2	0.05	3680	3394	0.51	61	0	0	0.00	0.00	99.95
+5	5	945	25.48	3709	3394	0.91	20010	0	0	0.03	13.44	61.74	3.93
+5	13	10	0.26	3712	3394	1.48	92	0	0	0.00	0.00	99.74
+6	6	647	17.44	3711	3394	1.01	11993	0	0	0.01	8.83	74.09	3.46
+6	14	39	1.04	3708	3394	1.07	322	0	0	0.00	0.09	98.88
+7	7	671	14.62	4588	3394	0.89	3279	0	0	0.01	11.53	74.15	7.86
+7	15	2685	58.17	4617	3394	1.20	3300	1	0	0.05	32.49	9.94
+Core	CPU	Avg_MHz	Busy%	Bzy_MHz	TSC_MHz	IPC	IRQ	NMI	SMI	POLL%	C1%	C2%	CorWatt	PkgWatt
+-	-	557	13.95	3995	3394	1.23	93258	1	0	0.01	6.05	80.22	27.79	45.82
+0	0	187	4.87	3829	3394	1.04	3894	0	0	0.01	1.88	93.37	2.72	45.82
+0	8	380	10.27	3696	3394	1.06	7996	0	0	0.01	3.98	86.00
+1	1	1240	29.35	4223	3394	1.31	8626	0	0	0.03	13.98	57.10	5.22
+1	9	853	21.37	3992	3394	0.96	10843	0	0	0.02	5.84	73.17
+2	2	271	7.34	3695	3394	1.06	5878	0	0	0.01	2.28	90.56	2.32
+2	10	159	4.13	3857	3394	1.39	1258	0	0	0.00	0.02	95.89
+3	3	134	3.45	3886	3394	1.06	1761	0	0	0.03	0.51	96.10	1.05
+3	11	72	1.86	3894	3394	1.12	566	0	0	0.00	0.64	97.53
+4	4	1094	28.08	3895	3394	1.16	11269	0	0	0.03	12.20	60.14	3.91
+4	12	167	4.27	3911	3394	0.74	2708	1	0	0.00	4.93	90.94
+5	5	1046	27.95	3743	3394	1.10	13705	0	0	0.02	10.42	62.11	4.01
+5	13	353	8.97	3930	3394	0.99	3441	0	0	0.01	6.62	84.58
+6	6	576	15.55	3704	3394	1.13	9238	0	0	0.02	7.56	77.19	2.49
+6	14	60	1.38	4316	3394	1.01	70	0	0	0.00	0.00	98.62
+7	7	1530	36.46	4196	3394	1.75	9533	0	0	0.02	17.10	46.91	6.06
+7	15	796	17.89	4452	3394	1.17	2472	0	0	0.02	8.91	73.40
+Core	CPU	Avg_MHz	Busy%	Bzy_MHz	TSC_MHz	IPC	IRQ	NMI	SMI	POLL%	C1%	C2%	CorWatt	PkgWatt
+-	-	561	14.25	3937	3394	1.08	108621	3	0	0.02	7.40	78.61	27.87	45.35
+0	0	369	10.01	3691	3394	0.94	9501	0	0	0.01	3.51	86.75	3.10	45.35
+0	8	355	9.59	3701	3394	1.11	4917	0	0	0.02	2.69	87.88
+1	1	1371	34.16	4013	3394	1.26	11960	1	0	0.03	18.91	47.47	4.89
+1	9	527	12.62	4171	3394	1.17	4203	0	0	0.01	5.31	82.25
+2	2	392	10.55	3711	3394	1.05	7536	0	0	0.01	7.26	82.43	2.38
+2	10	77	2.05	3751	3394	1.18	1039	0	0	0.00	0.03	97.95
+3	3	134	3.66	3650	3394	0.98	2752	0	0	0.03	1.54	94.88	1.14
+3	11	32	0.86	3666	3394	1.00	740	0	0	0.00	0.57	98.60
+4	4	1003	26.31	3811	3394	1.10	10565	0	0	0.03	15.97	58.16	3.73
+4	12	199	5.36	3714	3394	0.78	4507	0	0	0.01	3.97	90.82
+5	5	1044	26.39	3955	3394	1.13	12328	0	0	0.04	13.83	60.25	4.10
+5	13	418	10.90	3836	3394	0.90	5895	0	0	0.01	11.13	78.25
+6	6	653	17.75	3682	3394	0.98	12630	1	0	0.03	6.50	76.16	2.98
+6	14	91	2.46	3699	3394	1.03	1422	0	0	0.00	3.10	94.50
+7	7	1536	36.31	4229	3394	1.04	10316	1	0	0.02	19.98	44.35	5.54
+7	15	779	19.03	4091	3394	0.99	8310	0	0	0.02	4.16	77.08
+Core	CPU	Avg_MHz	Busy%	Bzy_MHz	TSC_MHz	IPC	IRQ	NMI	SMI	POLL%	C1%	C2%	CorWatt	PkgWatt
+-	-	564	14.09	4000	3394	1.08	102958	0	0	0.01	7.44	78.72	27.72	45.27
+0	0	440	11.28	3900	3394	1.04	8665	0	0	0.01	6.77	82.23	3.05	45.27
+0	8	249	6.74	3686	3394	1.02	4717	0	0	0.01	4.52	88.90
+1	1	1489	34.56	4310	3394	1.09	10814	0	0	0.05	17.31	48.65	6.20
+1	9	1154	27.49	4197	3394	1.19	12103	0	0	0.02	4.86	68.07
+2	2	245	6.67	3667	3394	0.97	5594	0	0	0.01	2.46	91.05	2.11
+2	10	132	3.60	3666	3394	1.15	2508	0	0	0.00	1.08	95.40
+3	3	91	2.49	3660	3394	0.99	1954	0	0	0.03	0.78	96.79	0.73
+3	11	9	0.27	3476	3394	1.04	168	0	0	0.00	0.00	99.74
+4	4	1135	29.69	3824	3394	1.09	10985	0	0	0.03	12.56	58.19	3.86
+4	12	2	0.06	3754	3394	0.62	73	0	0	0.00	0.00	99.94
+5	5	1280	32.80	3903	3394	1.21	13750	0	0	0.02	18.80	48.94	4.12
+5	13	3	0.07	4190	3394	1.18	85	0	0	0.00	0.03	99.90
+6	6	552	14.95	3693	3394	1.09	8657	0	0	0.01	9.66	75.71	2.58
+6	14	2	0.05	3612	3394	0.33	40	0	0	0.00	0.00	99.95
+7	7	981	23.95	4097	3394	1.02	8091	0	0	0.02	9.78	66.60	5.09
+7	15	1254	30.80	4070	3394	0.91	14754	0	0	0.03	30.53	39.43
+Core	CPU	Avg_MHz	Busy%	Bzy_MHz	TSC_MHz	IPC	IRQ	NMI	SMI	POLL%	C1%	C2%	CorWatt	PkgWatt
+-	-	566	14.07	4021	3394	1.10	104516	0	0	0.02	7.76	78.42	28.01	45.84
+0	0	579	15.52	3732	3394	0.97	13256	0	0	0.01	8.26	76.64	3.55	45.84
+0	8	402	10.41	3862	3394	1.10	5405	0	0	0.02	6.49	83.29
+1	1	1057	24.42	4329	3394	1.06	7983	0	0	0.02	10.67	65.28	6.40
+1	9	1641	39.02	4205	3394	1.29	13530	0	0	0.03	11.96	49.60
+2	2	279	7.63	3657	3394	1.04	6389	0	0	0.01	3.00	89.57	2.06
+2	10	102	2.81	3635	3394	1.18	2016	0	0	0.00	2.26	94.99
+3	3	171	4.68	3644	3394	0.96	3345	0	0	0.06	3.15	92.28	1.39
+3	11	101	2.75	3660	3394	0.85	2944	0	0	0.00	3.76	93.57
+4	4	607	16.23	3742	3394	1.12	8069	0	0	0.02	8.38	75.67	2.77
+4	12	3	0.09	3681	3394	0.78	75	0	0	0.00	0.00	99.92
+5	5	1270	32.41	3918	3394	1.21	13772	0	0	0.05	20.20	47.95	4.13
+5	13	12	0.27	4445	3394	0.80	218	0	0	0.00	0.00	99.73
+6	6	409	11.10	3687	3394	1.04	7485	0	0	0.01	8.97	80.17	2.13
+6	14	2	0.05	3710	3394	0.39	47	0	0	0.00	0.00	99.96
+7	7	1064	25.22	4219	3394	1.00	7643	0	0	0.02	16.84	58.37	5.56
+7	15	1354	32.52	4163	3394	0.99	12339	0	0	0.02	20.24	47.78
+Core	CPU	Avg_MHz	Busy%	Bzy_MHz	TSC_MHz	IPC	IRQ	NMI	SMI	POLL%	C1%	C2%	CorWatt	PkgWatt
+-	-	586	14.35	4081	3394	1.22	98560	0	0	0.01	6.57	79.32	28.69	46.62
+0	0	492	13.13	3747	3394	1.08	8542	0	0	0.00	6.36	80.79	3.28	46.62
+0	8	389	10.18	3817	3394	0.96	7396	0	0	0.01	7.24	82.80
+1	1	653	14.94	4374	3394	1.03	3647	0	0	0.01	5.53	79.73	6.59
+1	9	2286	50.19	4554	3394	1.22	3808	0	0	0.04	25.32	24.96
+2	2	155	4.10	3779	3394	1.00	3825	0	0	0.02	0.80	95.21	1.87
+2	10	157	4.21	3722	3394	0.87	5724	0	0	0.01	0.51	95.43
+3	3	171	4.37	3906	3394	1.14	2275	0	0	0.01	0.36	95.34	1.42
+3	11	138	3.64	3782	3394	1.10	2251	0	0	0.00	0.99	95.43
+4	4	650	16.90	3849	3394	1.07	8722	0	0	0.01	9.54	73.86	2.99
+4	12	89	2.35	3798	3394	1.05	1025	0	0	0.00	0.02	97.67
+5	5	481	12.60	3816	3394	1.27	7115	0	0	0.02	3.71	83.94	3.92
+5	13	788	21.27	3706	3394	0.94	12179	0	0	0.03	19.29	59.96
+6	6	341	8.98	3800	3394	1.10	4623	0	0	0.01	4.35	86.83	2.36
+6	14	221	5.74	3856	3394	1.08	3809	0	0	0.00	4.90	89.48
+7	7	999	23.23	4298	3394	1.92	8049	0	0	0.02	6.92	70.17	6.26
+7	15	1361	33.78	4030	3394	1.29	15570	0	0	0.03	9.20	57.56
+Core	CPU	Avg_MHz	Busy%	Bzy_MHz	TSC_MHz	IPC	IRQ	NMI	SMI	POLL%	C1%	C2%	CorWatt	PkgWatt
+-	-	595	14.59	4075	3394	1.03	107459	0	0	0.01	7.56	78.11	30.33	48.01
+0	0	539	14.36	3750	3394	0.97	11764	0	0	0.00	8.00	77.98	3.78	48.01
+0	8	411	10.89	3774	3394	1.05	7508	0	0	0.02	2.75	86.58
+1	1	917	21.88	4192	3394	0.98	7628	0	0	0.02	9.26	69.18	5.80
+1	9	1556	38.67	4023	3394	1.03	15868	0	0	0.03	25.73	36.33
+2	2	192	5.19	3703	3394	1.07	3414	0	0	0.01	2.01	92.91	2.41
+2	10	214	5.77	3714	3394	1.09	2937	0	0	0.00	3.62	90.71
+3	3	215	5.83	3687	3394	1.07	4003	0	0	0.02	3.49	90.81	1.80
+3	11	37	1.02	3659	3394	1.09	507	0	0	0.00	0.00	98.99
+4	4	419	10.83	3871	3394	1.29	4552	0	0	0.01	5.14	84.20	2.30
+4	12	16	0.43	3708	3394	1.06	215	0	0	0.00	0.00	99.58
+5	5	733	19.07	3841	3394	1.07	10256	0	0	0.02	11.46	69.85	3.76
+5	13	258	6.07	4258	3394	1.14	2108	0	0	0.01	4.28	89.75
+6	6	461	12.28	3751	3394	0.97	9677	0	0	0.02	8.17	79.86	2.96
+6	14	166	4.52	3680	3394	0.79	6126	0	0	0.01	0.90	94.76
+7	7	1288	29.14	4420	3394	0.83	9712	0	0	0.01	19.14	52.37	7.51
+7	15	2093	47.55	4401	3394	1.15	11184	0	0	0.03	17.08	36.00
+Core	CPU	Avg_MHz	Busy%	Bzy_MHz	TSC_MHz	IPC	IRQ	NMI	SMI	POLL%	C1%	C2%	CorWatt	PkgWatt
+-	-	579	13.98	4144	3394	1.10	104712	2	0	0.02	7.54	78.75	30.94	48.54
+0	0	537	14.48	3706	3394	0.84	19421	0	0	0.02	5.09	80.97	3.34	48.54
+0	8	280	7.50	3729	3394	0.95	4878	0	0	0.01	8.72	83.97
+1	1	1091	24.41	4469	3394	0.96	8562	0	0	0.03	6.74	69.16	7.17
+1	9	1790	40.74	4393	3394	1.30	13928	1	0	0.03	17.51	42.43
+2	2	177	4.65	3798	3394	1.29	2772	0	0	0.00	1.63	93.81	1.75
+2	10	114	2.95	3867	3394	1.24	1274	0	0	0.01	0.82	96.27
+3	3	305	8.24	3701	3394	1.07	6627	0	0	0.04	4.30	87.67	1.96
+3	11	5	0.13	3685	3394	0.87	104	0	0	0.00	0.00	99.87
+4	4	649	17.45	3719	3394	0.96	12954	0	0	0.02	17.67	65.33	2.93
+4	12	3	0.07	3707	3394	0.94	118	0	0	0.00	0.00	99.93
+5	5	874	23.44	3729	3394	0.97	13317	1	0	0.02	13.98	63.06	3.71
+5	13	4	0.12	3701	3394	1.31	176	0	0	0.00	0.00	99.89
+6	6	593	15.91	3725	3394	0.91	11818	0	0	0.01	10.30	74.16	3.05
+6	14	4	0.10	3703	3394	0.65	162	0	0	0.00	0.00	99.90
+7	7	1045	23.94	4367	3394	1.11	5038	0	0	0.02	13.22	63.20	7.03
+7	15	1799	39.52	4552	3394	1.22	3563	0	0	0.06	20.62	40.24
+Core	CPU	Avg_MHz	Busy%	Bzy_MHz	TSC_MHz	IPC	IRQ	NMI	SMI	POLL%	C1%	C2%	CorWatt	PkgWatt
+-	-	572	14.16	4041	3394	1.21	94609	1	0	0.01	6.43	79.64	28.41	46.47
+0	0	559	14.83	3770	3394	0.96	10676	0	0	0.01	8.12	77.39	3.20	46.47
+0	8	389	10.26	3786	3394	1.04	4789	0	0	0.02	6.14	83.77
+1	1	1413	32.93	4291	3394	1.08	8834	0	0	0.02	15.28	52.22	5.76
+1	9	1162	26.60	4368	3394	0.93	9570	0	0	0.04	12.55	61.27
+2	2	341	9.29	3675	3394	0.99	6911	0	0	0.01	4.74	86.19	2.71
+2	10	272	7.39	3684	3394	0.98	6273	0	0	0.01	4.26	88.53
+3	3	250	6.43	3883	3394	1.11	3415	1	0	0.04	3.26	90.42	2.01
+3	11	163	4.22	3858	3394	0.95	2396	0	0	0.00	2.08	93.79
+4	4	542	14.34	3778	3394	1.18	9096	0	0	0.02	7.23	78.72	2.48
+4	12	71	1.91	3712	3394	0.96	822	0	0	0.00	1.26	96.87
+5	5	1017	25.98	3916	3394	1.32	11161	0	0	0.03	11.75	62.69	3.69
+5	13	41	1.15	3596	3394	1.27	301	0	0	0.00	0.45	98.41
+6	6	480	12.69	3781	3394	1.26	5711	0	0	0.01	2.93	84.56	2.34
+6	14	27	0.64	4164	3394	0.78	359	0	0	0.00	0.00	99.37
+7	7	1240	29.36	4223	3394	1.08	7341	0	0	0.03	15.39	55.72	6.22
+7	15	1191	28.57	4169	3394	2.06	6954	0	0	0.02	7.41	64.29
+Core	CPU	Avg_MHz	Busy%	Bzy_MHz	TSC_MHz	IPC	IRQ	NMI	SMI	POLL%	C1%	C2%	CorWatt	PkgWatt
+-	-	563	14.21	3963	3394	1.10	105150	0	0	0.02	7.37	78.68	28.44	45.80
+0	0	510	13.47	3790	3394	1.06	9118	0	0	0.01	6.08	80.73	3.49	45.81
+0	8	538	14.32	3758	3394	0.99	7401	0	0	0.01	10.87	75.12
+1	1	1063	24.71	4303	3394	1.15	8484	0	0	0.01	11.22	64.45	6.00
+1	9	1618	37.44	4320	3394	1.03	12093	0	0	0.05	16.85	46.26
+2	2	308	8.32	3696	3394	1.07	7642	0	0	0.02	2.86	89.04	2.79
+2	10	256	6.96	3675	3394	0.93	5734	0	0	0.01	3.65	89.56
+3	3	244	6.73	3632	3394	1.08	5814	0	0	0.03	1.85	91.60	2.11
+3	11	148	4.04	3677	3394	1.20	2094	0	0	0.00	0.42	95.61
+4	4	817	21.25	3846	3394	1.14	9203	0	0	0.03	11.02	68.08	3.21
+4	12	5	0.13	3614	3394	0.76	159	0	0	0.00	0.00	99.88
+5	5	1019	27.34	3728	3394	1.26	15044	0	0	0.03	18.87	54.35	3.67
+5	13	78	2.06	3794	3394	1.19	889	0	0	0.00	0.11	97.86
+6	6	473	12.65	3740	3394	1.10	6839	0	0	0.01	5.30	82.27	2.35
+6	14	12	0.32	3678	3394	0.76	187	0	0	0.00	0.00	99.69
+7	7	1510	37.20	4060	3394	1.18	9791	0	0	0.04	18.78	44.50	4.84
+7	15	408	10.39	3921	3394	0.87	4658	0	0	0.01	10.07	79.80
+Core	CPU	Avg_MHz	Busy%	Bzy_MHz	TSC_MHz	IPC	IRQ	NMI	SMI	POLL%	C1%	C2%	CorWatt	PkgWatt
+-	-	579	14.46	4002	3394	1.10	112614	0	0	0.02	7.80	78.01	30.56	47.72
+0	0	257	6.68	3841	3394	1.01	5146	0	0	0.00	2.35	91.12	3.54	47.71
+0	8	679	18.04	3764	3394	1.02	10287	0	0	0.02	8.58	73.73
+1	1	1103	25.13	4388	3394	1.16	8953	0	0	0.02	11.07	64.17	6.06
+1	9	1539	35.68	4314	3394	1.08	10695	0	0	0.04	20.80	44.06
+2	2	182	4.94	3691	3394	1.12	2675	0	0	0.00	2.58	92.57	3.01
+2	10	440	11.95	3685	3394	1.06	8483	0	0	0.02	7.21	81.10
+3	3	269	7.23	3723	3394	1.21	5341	0	0	0.07	4.40	88.52	2.83
+3	11	275	7.50	3665	3394	0.89	7996	0	0	0.02	3.74	88.99
+4	4	744	19.42	3829	3394	1.18	10525	0	0	0.02	9.01	71.94	3.22
+4	12	5	0.14	3757	3394	1.03	122	0	0	0.00	0.00	99.87
+5	5	1109	28.72	3862	3394	1.15	12961	0	0	0.04	16.60	55.17	3.79
+5	13	6	0.16	3695	3394	2.03	106	0	0	0.00	0.00	99.85
+6	6	541	14.62	3704	3394	1.13	8218	0	0	0.02	9.96	75.70	2.82
+6	14	35	0.97	3670	3394	1.27	449	0	0	0.00	0.00	99.04
+7	7	1381	33.49	4124	3394	1.08	13070	0	0	0.03	20.98	46.14	5.27
+7	15	691	16.67	4145	3394	1.09	7587	0	0	0.01	7.51	76.11
+Core	CPU	Avg_MHz	Busy%	Bzy_MHz	TSC_MHz	IPC	IRQ	NMI	SMI	POLL%	C1%	C2%	CorWatt	PkgWatt
+-	-	563	14.05	4006	3394	1.10	104565	0	0	0.01	7.48	78.73	28.67	46.16
+0	0	257	6.69	3842	3394	1.12	4127	0	0	0.00	3.58	89.88	3.28	46.17
+0	8	552	14.85	3717	3394	1.00	9183	0	0	0.01	7.71	77.74
+1	1	978	22.81	4288	3394	0.97	6529	0	0	0.02	12.80	64.73	6.45
+1	9	1969	43.98	4478	3394	1.12	5228	0	0	0.03	24.72	31.85
+2	2	260	7.06	3683	3394	1.10	5235	0	0	0.01	3.38	89.73	2.53
+2	10	238	6.47	3674	3394	1.06	5798	0	0	0.01	3.25	90.45
+3	3	161	4.38	3675	3394	1.06	2825	0	0	0.02	2.38	93.32	1.59
+3	11	60	1.64	3677	3394	1.16	642	0	0	0.00	0.01	98.38
+4	4	672	18.05	3722	3394	0.99	12549	0	0	0.02	15.58	66.81	3.04
+4	12	96	2.44	3948	3394	1.13	1003	0	0	0.00	1.40	96.21
+5	5	939	24.69	3805	3394	1.05	12625	0	0	0.02	11.03	64.74	4.04
+5	13	371	9.88	3752	3394	0.96	5755	0	0	0.01	7.01	83.35
+6	6	471	12.58	3743	3394	1.08	8397	0	0	0.01	12.09	75.61	2.43
+6	14	13	0.36	3530	3394	1.24	179	0	0	0.00	0.00	99.64
+7	7	1173	29.61	3962	3394	1.13	16413	0	0	0.04	11.35	59.65	5.32
+7	15	794	19.29	4118	3394	1.43	8077	0	0	0.02	3.33	77.65
+Core	CPU	Avg_MHz	Busy%	Bzy_MHz	TSC_MHz	IPC	IRQ	NMI	SMI	POLL%	C1%	C2%	CorWatt	PkgWatt
+-	-	590	14.69	4015	3394	1.21	96602	0	0	0.01	7.56	77.99	28.83	46.76
+0	0	300	7.80	3847	3394	1.02	4180	0	0	0.00	1.19	91.14	3.02	46.76
+0	8	447	12.16	3672	3394	1.07	7284	0	0	0.01	6.77	81.32
+1	1	1672	38.84	4304	3394	1.98	6947	0	0	0.02	8.16	53.29	6.58
+1	9	1187	27.77	4275	3394	1.01	7449	0	0	0.02	20.02	52.68
+2	2	147	3.96	3702	3394	1.05	2459	0	0	0.00	1.52	94.60	2.25
+2	10	303	8.12	3737	3394	1.05	4041	0	0	0.00	3.93	88.09
+3	3	230	6.03	3825	3394	1.07	2920	0	0	0.02	2.48	91.58	2.06
+3	11	181	4.77	3787	3394	0.97	2897	0	0	0.00	3.55	91.77
+4	4	821	21.10	3891	3394	1.11	9390	0	0	0.01	10.00	69.24	3.44
+4	12	221	5.74	3840	3394	0.98	3869	0	0	0.01	2.92	91.47
+5	5	1051	26.47	3972	3394	1.17	9948	0	0	0.02	16.02	57.94	3.74
+5	13	125	3.18	3921	3394	0.87	1955	0	0	0.00	2.30	94.60
+6	6	484	12.83	3778	3394	1.04	7903	0	0	0.02	4.00	83.43	2.89
+6	14	267	6.91	3859	3394	0.95	4416	0	0	0.01	3.41	89.81
+7	7	1310	32.08	4084	3394	1.14	10698	0	0	0.02	9.62	58.70	4.85
+7	15	695	17.36	4004	3394	0.80	10246	0	0	0.03	25.07	58.13
+Core	CPU	Avg_MHz	Busy%	Bzy_MHz	TSC_MHz	IPC	IRQ	NMI	SMI	POLL%	C1%	C2%	CorWatt	PkgWatt
+-	-	573	14.32	4001	3394	1.08	103469	0	0	0.02	7.62	78.32	28.16	45.85
+0	0	371	10.08	3680	3394	1.00	7659	0	0	0.00	5.72	84.44	3.37	45.85
+0	8	524	13.97	3749	3394	1.03	6798	0	0	0.02	5.42	80.84
+1	1	1184	26.55	4461	3394	1.20	6766	0	0	0.02	10.48	63.28	6.35
+1	9	1824	42.24	4318	3394	0.98	10800	0	0	0.02	27.48	30.99
+2	2	122	3.28	3713	3394	1.07	1837	0	0	0.00	1.02	95.76	2.53
+2	10	412	11.06	3725	3394	1.06	6687	0	0	0.01	7.93	81.23
+3	3	119	3.09	3842	3394	1.05	1557	0	0	0.03	1.91	95.05	1.58
+3	11	182	4.93	3692	3394	1.06	3011	0	0	0.00	3.16	92.02
+4	4	453	12.21	3713	3394	1.03	7718	0	0	0.02	7.68	80.38	2.48
+4	12	84	2.30	3673	3394	0.89	1523	0	0	0.00	2.54	95.23
+5	5	956	25.37	3769	3394	1.12	11742	0	0	0.02	13.62	61.48	3.95
+5	13	353	9.07	3889	3394	0.83	8144	0	0	0.02	2.27	88.93
+6	6	490	13.38	3663	3394	1.03	9169	0	0	0.02	10.98	75.93	2.70
+6	14	67	1.82	3689	3394	0.89	2382	0	0	0.01	0.04	98.20
+7	7	1714	42.30	4053	3394	1.25	12465	0	0	0.03	19.02	39.24	5.20
+7	15	309	7.43	4158	3394	0.78	5211	0	0	0.02	2.68	90.10
+Core	CPU	Avg_MHz	Busy%	Bzy_MHz	TSC_MHz	IPC	IRQ	NMI	SMI	POLL%	C1%	C2%	CorWatt	PkgWatt
+-	-	581	14.40	4035	3394	1.06	105223	2	0	0.02	7.93	77.94	28.72	46.40
+0	0	270	7.32	3693	3394	1.10	6302	0	0	0.01	2.53	90.33	3.14	46.40
+0	8	422	11.37	3709	3394	1.05	7543	1	0	0.01	9.10	79.79
+1	1	1500	34.14	4395	3394	1.15	9596	0	0	0.04	14.28	51.99	6.43
+1	9	1478	34.32	4306	3394	0.89	12255	0	0	0.04	25.99	40.36
+2	2	270	6.95	3888	3394	1.15	3896	0	0	0.01	2.98	90.21	2.73
+2	10	297	8.02	3699	3394	1.08	4545	0	0	0.01	5.03	87.09
+3	3	140	3.84	3651	3394	1.00	3517	0	0	0.04	1.22	95.05	1.22
+3	11	24	0.61	3844	3394	1.25	103	0	0	0.00	0.47	98.93
+4	4	647	17.08	3791	3394	1.21	8756	0	0	0.02	7.43	75.78	3.06
+4	12	65	1.77	3687	3394	0.87	909	0	0	0.00	1.97	96.30
+5	5	1019	27.21	3743	3394	1.06	14482	0	0	0.05	17.87	55.50	4.07
+5	13	358	9.32	3837	3394	0.94	6025	0	0	0.01	6.97	83.91
+6	6	412	11.05	3731	3394	1.05	7704	0	0	0.01	7.27	81.92	2.16
+6	14	15	0.41	3689	3394	1.37	205	0	0	0.00	0.02	99.59
+7	7	997	24.68	4040	3394	1.05	8261	0	0	0.01	9.81	65.88	5.91
+7	15	1381	32.28	4280	3394	1.08	11124	1	0	0.04	13.95	54.34
+Core	CPU	Avg_MHz	Busy%	Bzy_MHz	TSC_MHz	IPC	IRQ	NMI	SMI	POLL%	C1%	C2%	CorWatt	PkgWatt
+-	-	572	14.12	4050	3394	1.25	92453	2	0	0.01	6.94	79.17	29.10	47.30
+0	0	493	12.86	3838	3394	1.03	7137	0	0	0.01	5.80	81.59	3.32	47.30
+0	8	385	10.12	3802	3394	0.98	7318	0	0	0.00	7.53	82.57
+1	1	1095	26.84	4080	3394	1.32	9647	0	0	0.03	11.91	61.66	5.11
+1	9	737	17.76	4152	3394	1.23	4710	0	0	0.02	4.70	77.73
+2	2	279	7.49	3719	3394	1.20	4395	0	0	0.00	1.48	91.17	1.84
+2	10	107	2.82	3776	3394	1.02	1911	0	0	0.00	1.14	96.10
+3	3	239	6.24	3827	3394	1.29	2652	0	0	0.03	1.36	92.49	1.75
+3	11	109	2.95	3684	3394	1.00	1693	0	0	0.00	1.69	95.42
+4	4	722	19.22	3755	3394	1.11	13086	1	0	0.03	9.23	71.98	3.22
+4	12	41	1.10	3721	3394	0.81	501	0	0	0.00	0.01	98.91
+5	5	807	20.61	3914	3394	1.38	8664	0	0	0.02	6.79	72.89	3.93
+5	13	426	11.10	3841	3394	0.74	8333	0	0	0.01	14.30	74.93
+6	6	288	7.74	3725	3394	0.97	6950	0	0	0.02	1.52	90.94	2.74
+6	14	280	7.36	3801	3394	1.44	2359	0	0	0.01	0.15	92.57
+7	7	1340	30.88	4340	3394	1.79	5649	1	0	0.01	15.81	53.75	7.19
+7	15	1805	40.90	4412	3394	1.09	7448	0	0	0.04	27.62	32.06
+Core	CPU	Avg_MHz	Busy%	Bzy_MHz	TSC_MHz	IPC	IRQ	NMI	SMI	POLL%	C1%	C2%	CorWatt	PkgWatt
+-	-	576	14.31	4022	3394	1.08	108851	1	0	0.01	7.11	78.85	30.17	47.69
+0	0	627	16.97	3696	3394	0.86	17428	0	0	0.01	7.36	76.15	3.70	47.69
+0	8	389	10.48	3711	3394	1.13	6326	0	0	0.00	3.76	85.96
+1	1	1335	32.39	4122	3394	1.15	12057	1	0	0.03	15.93	52.17	5.38
+1	9	690	16.89	4087	3394	1.10	7485	0	0	0.01	6.26	77.14
+2	2	276	7.46	3696	3394	1.10	5458	0	0	0.02	2.35	90.37	2.52
+2	10	146	3.93	3715	3394	1.50	1542	0	0	0.00	0.28	95.82
+3	3	229	6.13	3728	3394	1.08	3861	0	0	0.03	3.16	90.84	1.73
+3	11	12	0.33	3693	3394	0.71	346	0	0	0.00	0.08	99.61
+4	4	578	15.52	3723	3394	0.95	10827	0	0	0.01	9.63	75.22	2.60
+4	12	6	0.15	3701	3394	0.50	104	0	0	0.00	0.00	99.85
+5	5	980	25.14	3898	3394	1.09	11279	0	0	0.04	16.63	58.66	4.02
+5	13	189	4.88	3880	3394	0.92	2283	0	0	0.00	5.44	89.81
+6	6	696	18.69	3726	3394	1.06	13791	0	0	0.02	8.90	72.85	3.25
+6	14	4	0.12	3707	3394	0.87	178	0	0	0.00	0.05	99.84
+7	7	1411	32.78	4305	3394	0.93	9166	0	0	0.01	23.20	44.68	6.96
+7	15	1640	37.09	4422	3394	1.22	6720	0	0	0.02	10.72	52.57
+Core	CPU	Avg_MHz	Busy%	Bzy_MHz	TSC_MHz	IPC	IRQ	NMI	SMI	POLL%	C1%	C2%	CorWatt	PkgWatt
+-	-	574	14.23	4034	3394	1.10	104878	0	0	0.01	7.52	78.52	30.93	48.53
+0	0	493	12.97	3797	3394	1.03	11974	0	0	0.02	5.44	81.95	3.50	48.52
+0	8	274	7.34	3729	3394	1.30	3669	0	0	0.02	1.25	91.53
+1	1	1153	28.11	4103	3394	1.13	9288	0	0	0.01	9.28	62.98	5.63
+1	9	1289	32.50	3967	3394	0.81	16436	0	0	0.02	28.85	39.48
+2	2	267	7.05	3786	3394	1.16	3696	0	0	0.01	2.70	90.37	2.84
+2	10	244	6.52	3742	3394	0.98	4848	0	0	0.00	8.55	85.09
+3	3	178	4.81	3704	3394	0.99	3118	0	0	0.03	2.63	92.66	2.01
+3	11	166	4.40	3781	3394	1.21	1872	0	0	0.01	1.95	93.73
+4	4	598	15.88	3765	3394	1.16	8513	0	0	0.01	6.27	78.13	3.07
+4	12	31	0.84	3715	3394	0.96	551	0	0	0.00	0.00	99.16
+5	5	890	23.40	3802	3394	1.06	14825	0	0	0.02	10.49	66.58	3.75
+5	13	3	0.08	3810	3394	0.61	161	0	0	0.00	0.00	99.92
+6	6	602	16.15	3724	3394	1.14	9419	0	0	0.01	8.77	75.40	2.98
+6	14	3	0.08	3684	3394	1.03	176	0	0	0.00	0.00	99.93
+7	7	674	15.32	4402	3394	0.84	6523	0	0	0.01	11.55	73.50	7.15
+7	15	2316	52.15	4441	3394	1.31	9809	0	0	0.05	22.53	25.92
+Core	CPU	Avg_MHz	Busy%	Bzy_MHz	TSC_MHz	IPC	IRQ	NMI	SMI	POLL%	C1%	C2%	CorWatt	PkgWatt
+-	-	598	14.71	4067	3394	1.06	102515	1	0	0.02	7.93	77.62	29.97	47.54
+0	0	371	9.77	3798	3394	1.05	7002	1	0	0.01	4.06	86.38	3.66	47.55
+0	8	615	16.55	3715	3394	0.94	13008	0	0	0.03	6.73	77.15
+1	1	497	12.07	4114	3394	0.95	4630	0	0	0.01	3.35	84.75	5.48
+1	9	1744	42.34	4118	3394	1.12	12623	0	0	0.03	29.84	28.53
+2	2	101	2.62	3862	3394	1.18	601	0	0	0.01	1.43	95.97	2.06
+2	10	311	8.22	3785	3394	1.22	3741	0	0	0.01	4.00	87.91
+3	3	192	4.96	3867	3394	1.19	1582	0	0	0.04	1.70	93.40	1.45
+3	11	58	1.52	3846	3394	1.10	918	0	0	0.00	0.87	97.65
+4	4	618	16.33	3783	3394	1.03	10899	0	0	0.03	13.14	70.88	2.99
+4	12	43	1.03	4197	3394	0.70	178	0	0	0.00	0.38	98.61
+5	5	1114	28.30	3937	3394	1.07	13566	0	0	0.04	16.47	55.75	4.41
+5	13	280	6.27	4467	3394	1.12	1053	0	0	0.01	4.32	89.51
+6	6	566	15.24	3717	3394	0.98	9481	0	0	0.02	6.87	78.20	3.03
+6	14	101	2.55	3943	3394	1.13	831	0	0	0.00	1.18	96.30
+7	7	1186	27.03	4389	3394	0.88	8816	0	0	0.03	17.52	55.99	6.88
+7	15	1773	40.54	4375	3394	1.17	13586	0	0	0.03	15.01	45.03
+Core	CPU	Avg_MHz	Busy%	Bzy_MHz	TSC_MHz	IPC	IRQ	NMI	SMI	POLL%	C1%	C2%	CorWatt	PkgWatt
+-	-	546	13.85	3946	3394	1.22	95195	0	0	0.02	7.15	79.24	27.44	45.41
+0	0	349	9.07	3849	3394	1.14	4757	0	0	0.01	4.04	87.05	3.17	45.41
+0	8	506	12.93	3912	3394	1.08	4122	0	0	0.02	10.16	77.14
+1	1	1057	25.74	4107	3394	1.01	8021	0	0	0.03	14.16	60.49	5.21
+1	9	1091	27.09	4027	3394	1.22	12726	0	0	0.02	5.47	67.86
+2	2	341	9.08	3751	3394	1.06	4300	0	0	0.02	5.04	86.03	2.19
+2	10	115	3.12	3702	3394	0.81	2721	0	0	0.01	1.12	95.86
+3	3	249	6.77	3687	3394	1.12	3580	0	0	0.01	3.03	90.32	2.00
+3	11	81	2.23	3651	3394	1.12	1237	0	0	0.00	0.13	97.69
+4	4	796	20.38	3907	3394	1.19	6485	0	0	0.02	14.14	65.79	3.21
+4	12	98	2.70	3622	3394	1.06	1141	0	0	0.00	1.22	96.14
+5	5	705	17.52	4025	3394	1.06	4700	0	0	0.01	12.84	69.90	3.75
+5	13	618	15.76	3917	3394	0.88	14440	0	0	0.05	6.62	78.12
+6	6	417	10.99	3794	3394	1.12	5003	0	0	0.01	9.68	79.53	2.30
+6	14	56	1.50	3733	3394	1.45	651	0	0	0.00	0.02	98.50
+7	7	1691	41.84	4042	3394	1.88	9864	0	0	0.02	15.75	42.85	5.60
+7	15	573	14.86	3852	3394	0.72	11447	0	0	0.02	10.97	74.58
+Core	CPU	Avg_MHz	Busy%	Bzy_MHz	TSC_MHz	IPC	IRQ	NMI	SMI	POLL%	C1%	C2%	CorWatt	PkgWatt
+-	-	561	14.13	3966	3394	1.10	108636	1	0	0.02	7.11	79.01	27.90	45.25
+0	0	309	8.15	3793	3394	0.87	7343	0	0	0.01	3.23	88.85	3.39	45.25
+0	8	770	20.64	3734	3394	0.94	13556	0	0	0.02	15.70	64.14
+1	1	1224	28.18	4342	3394	1.31	5200	0	0	0.02	12.46	59.66	6.06
+1	9	1557	35.22	4421	3394	1.04	10875	1	0	0.04	19.76	45.57
+2	2	122	3.31	3676	3394	1.10	1725	0	0	0.00	1.91	94.85	2.46
+2	10	379	10.27	3688	3394	1.10	6406	0	0	0.02	2.60	87.32
+3	3	263	7.08	3721	3394	0.99	5143	0	0	0.04	4.78	88.31	2.16
+3	11	155	4.22	3683	3394	0.92	4734	0	0	0.01	1.57	94.35
+4	4	663	17.94	3695	3394	1.11	9773	0	0	0.02	10.25	72.17	2.73
+4	12	21	0.57	3681	3394	1.40	329	0	0	0.00	0.00	99.44
+5	5	1046	27.30	3831	3394	1.23	12038	0	0	0.03	11.75	61.39	3.67
+5	13	70	1.84	3806	3394	0.68	2318	0	0	0.01	0.19	98.04
+6	6	682	18.38	3712	3394	1.06	12066	0	0	0.03	11.08	70.93	2.95
+6	14	52	1.42	3705	3394	1.23	861	0	0	0.00	0.01	98.60
+7	7	1417	36.01	3936	3394	1.12	13710	0	0	0.03	14.35	50.16	4.49
+7	15	238	5.62	4231	3394	0.88	2559	0	0	0.01	4.15	90.35
+Core	CPU	Avg_MHz	Busy%	Bzy_MHz	TSC_MHz	IPC	IRQ	NMI	SMI	POLL%	C1%	C2%	CorWatt	PkgWatt
+-	-	577	14.08	4098	3394	1.11	103994	0	0	0.02	7.94	78.24	30.09	47.62
+0	0	466	12.55	3710	3394	0.99	9988	0	0	0.01	9.67	78.11	3.32	47.62
+0	8	323	8.67	3726	3394	1.14	6343	0	0	0.01	3.21	88.30
+1	1	436	9.63	4525	3394	1.46	3097	0	0	0.01	6.78	83.77	6.92
+1	9	2503	55.16	4538	3394	1.23	4087	0	0	0.06	32.26	13.13
+2	2	199	5.38	3706	3394	0.97	4224	0	0	0.00	4.85	89.90	2.19
+2	10	168	4.55	3691	3394	1.00	4827	0	0	0.01	0.35	95.24
+3	3	247	6.66	3699	3394	0.95	4882	0	0	0.03	4.31	89.19	1.71
+3	11	28	0.75	3708	3394	0.98	921	0	0	0.00	0.05	99.22
+4	4	556	14.93	3724	3394	1.03	10086	0	0	0.03	6.24	79.15	2.79
+4	12	53	1.43	3712	3394	1.49	531	0	0	0.00	0.02	98.57
+5	5	1143	29.87	3828	3394	1.06	16438	0	0	0.03	17.71	53.05	3.95
+5	13	3	0.08	3692	3394	0.50	99	0	0	0.00	0.00	99.92
+6	6	544	14.60	3725	3394	0.95	13923	0	0	0.04	8.50	77.30	2.91
+6	14	4	0.11	3712	3394	1.30	90	0	0	0.00	0.00	99.90
+7	7	947	22.27	4251	3394	0.89	7801	0	0	0.02	16.27	61.94	6.31
+7	15	1612	38.65	4171	3394	1.17	16657	0	0	0.04	16.88	45.20
+Core	CPU	Avg_MHz	Busy%	Bzy_MHz	TSC_MHz	IPC	IRQ	NMI	SMI	POLL%	C1%	C2%	CorWatt	PkgWatt
+-	-	606	15.06	4025	3394	1.18	101430	0	0	0.01	7.20	77.98	29.70	47.87
+0	0	393	10.40	3776	3394	1.06	7496	0	0	0.01	4.35	85.47	3.33	47.87
+0	8	583	15.66	3720	3394	0.93	12707	0	0	0.02	13.48	71.27
+1	1	814	18.16	4484	3394	1.08	4464	0	0	0.02	7.67	74.40	6.41
+1	9	2236	49.67	4502	3394	1.13	5237	0	0	0.04	30.92	20.00
+2	2	234	6.01	3892	3394	0.97	4181	0	0	0.01	2.07	92.05	2.26
+2	10	310	8.13	3813	3394	0.94	5498	0	0	0.01	2.24	89.80
+3	3	360	9.58	3757	3394	1.17	4659	0	0	0.01	3.62	86.95	2.67
+3	11	239	6.45	3709	3394	0.95	3948	0	0	0.01	2.13	91.56
+4	4	681	18.09	3763	3394	1.13	9933	0	0	0.01	7.11	75.11	3.45
+4	12	292	7.50	3894	3394	0.92	3391	0	0	0.01	5.57	87.07
+5	5	804	21.14	3804	3394	1.14	10169	0	0	0.02	9.75	69.49	3.44
+5	13	207	5.13	4030	3394	0.90	3283	0	0	0.01	1.63	93.35
+6	6	469	12.67	3701	3394	1.01	8083	0	0	0.02	6.14	81.42	2.71
+6	14	125	3.26	3833	3394	0.96	1328	0	0	0.00	0.04	96.74
+7	7	1451	36.33	3994	3394	1.87	10407	0	0	0.02	9.12	54.94	5.42
+7	15	503	12.84	3917	3394	0.96	6646	0	0	0.01	9.34	78.13
+Core	CPU	Avg_MHz	Busy%	Bzy_MHz	TSC_MHz	IPC	IRQ	NMI	SMI	POLL%	C1%	C2%	CorWatt	PkgWatt
+-	-	599	15.12	3961	3394	1.08	113755	0	0	0.02	7.44	77.71	30.47	48.09
+0	0	488	12.85	3797	3394	1.11	7311	0	0	0.01	3.15	84.22	3.55	48.10
+0	8	564	14.99	3762	3394	0.90	9504	0	0	0.02	8.20	77.17
+1	1	891	20.93	4258	3394	0.92	8023	0	0	0.02	9.29	70.12	5.97
+1	9	1846	42.25	4369	3394	1.05	10945	0	0	0.04	24.49	33.90
+2	2	234	6.36	3677	3394	1.04	4282	0	0	0.00	4.84	88.93	2.96
+2	10	351	9.29	3783	3394	1.10	5081	0	0	0.02	3.02	87.85
+3	3	204	5.56	3665	3394	0.99	4029	0	0	0.06	3.69	90.87	2.61
+3	11	207	5.66	3659	3394	0.95	4968	0	0	0.01	1.35	93.14
+4	4	700	18.65	3753	3394	1.07	11436	0	0	0.02	10.27	71.46	3.56
+4	12	373	10.08	3701	3394	0.87	6043	0	0	0.02	6.77	83.38
+5	5	1055	27.61	3822	3394	1.16	13596	0	0	0.03	15.25	57.62	3.81
+5	13	85	2.29	3712	3394	0.63	1158	0	0	0.00	0.26	97.50
+6	6	563	15.28	3683	3394	1.15	8884	0	0	0.02	5.35	79.64	3.04
+6	14	124	3.37	3671	3394	0.81	1713	0	0	0.01	0.76	95.91
+7	7	1569	38.48	4076	3394	1.34	13040	0	0	0.04	17.19	44.86	4.98
+7	15	328	8.24	3980	3394	1.00	3742	0	0	0.00	5.20	86.74
+Core	CPU	Avg_MHz	Busy%	Bzy_MHz	TSC_MHz	IPC	IRQ	NMI	SMI	POLL%	C1%	C2%	CorWatt	PkgWatt
+-	-	616	15.51	3970	3394	1.10	108042	1	0	0.02	7.02	77.72	29.95	47.64
+0	0	636	16.71	3806	3394	1.04	10276	0	0	0.01	10.18	73.45	3.68	47.64
+0	8	598	15.75	3797	3394	0.98	7413	0	0	0.01	10.13	74.43
+1	1	1064	24.76	4300	3394	0.98	6672	0	0	0.02	8.65	66.88	6.23
+1	9	1895	43.26	4380	3394	1.28	7550	0	0	0.03	21.23	36.03
+2	2	228	6.01	3792	3394	0.96	3995	0	0	0.01	2.53	91.58	2.89
+2	10	411	10.99	3742	3394	0.98	7313	0	0	0.01	6.31	82.93
+3	3	187	4.80	3908	3394	1.12	2048	0	0	0.05	1.48	93.78	2.48
+3	11	240	6.45	3721	3394	0.92	5438	0	0	0.01	2.74	90.98
+4	4	719	18.82	3822	3394	1.08	8275	0	0	0.01	8.55	72.92	3.41
+4	12	320	8.57	3731	3394	0.83	6340	0	0	0.01	3.11	88.52
+5	5	943	24.70	3817	3394	1.14	12595	1	0	0.03	10.39	65.36	3.91
+5	13	308	7.68	4010	3394	1.29	2248	0	0	0.01	1.22	91.18
+6	6	624	16.67	3743	3394	1.11	8542	0	0	0.02	7.72	75.88	3.12
+6	14	145	3.95	3677	3394	0.88	2260	0	0	0.00	0.66	95.42
+7	7	1274	32.53	3917	3394	1.16	11857	0	0	0.02	13.70	54.23	4.22
+7	15	261	6.58	3963	3394	0.78	5220	0	0	0.01	3.76	89.84
+Core	CPU	Avg_MHz	Busy%	Bzy_MHz	TSC_MHz	IPC	IRQ	NMI	SMI	POLL%	C1%	C2%	CorWatt	PkgWatt
+-	-	583	14.93	3908	3394	1.10	110436	0	0	0.02	7.85	77.49	29.60	46.97
+0	0	558	14.91	3740	3394	0.93	10797	0	0	0.00	8.36	77.09	3.55	46.97
+0	8	566	15.06	3761	3394	1.12	8039	0	0	0.01	7.31	77.93
+1	1	1133	28.61	3960	3394	1.06	10766	0	0	0.02	13.18	58.67	4.90
+1	9	874	21.68	4032	3394	0.95	8209	0	0	0.02	11.83	66.90
+2	2	476	12.54	3798	3394	1.09	5565	0	0	0.01	8.36	79.32	3.12
+2	10	288	7.80	3687	3394	1.01	4963	0	0	0.00	3.82	88.54
+3	3	330	9.03	3659	3394	1.04	6004	0	0	0.05	4.04	87.12	2.56
+3	11	92	2.51	3664	3394	0.90	1723	0	0	0.00	0.55	97.00
+4	4	504	13.52	3730	3394	1.08	6186	0	0	0.01	4.77	81.92	3.29
+4	12	378	10.24	3692	3394	0.87	8088	0	0	0.01	5.79	84.22
+5	5	925	23.80	3888	3394	1.12	10259	0	0	0.02	12.95	63.65	3.79
+5	13	292	7.65	3815	3394	1.01	2939	0	0	0.01	5.66	86.83
+6	6	541	13.99	3869	3394	1.08	6834	0	0	0.01	8.81	77.46	2.97
+6	14	235	6.33	3711	3394	0.87	5064	0	0	0.00	6.07	87.76
+7	7	1914	45.66	4191	3394	1.43	9618	0	0	0.04	18.96	35.87	5.41
+7	15	227	5.50	4122	3394	0.55	5382	0	0	0.02	5.16	89.58
+Core	CPU	Avg_MHz	Busy%	Bzy_MHz	TSC_MHz	IPC	IRQ	NMI	SMI	POLL%	C1%	C2%	CorWatt	PkgWatt
+-	-	580	14.95	3879	3394	1.08	110887	0	0	0.02	7.32	77.99	28.53	46.23
+0	0	430	11.12	3868	3394	1.44	4926	0	0	0.01	3.33	85.65	3.61	46.23
+0	8	690	18.41	3750	3394	1.04	10067	0	0	0.03	7.83	74.11
+1	1	745	18.48	4033	3394	1.21	6013	0	0	0.01	4.63	77.12	4.58
+1	9	1200	29.72	4039	3394	0.97	13306	0	0	0.03	21.32	49.57
+2	2	485	12.79	3791	3394	0.98	6498	0	0	0.01	8.37	79.06	3.05
+2	10	328	8.77	3738	3394	1.01	4307	0	0	0.01	4.40	86.98
+3	3	353	9.39	3754	3394	1.10	4716	0	0	0.05	5.46	85.30	2.61
+3	11	193	5.28	3659	3394	0.83	4118	0	0	0.00	3.12	91.74
+4	4	678	17.67	3837	3394	1.08	7146	0	0	0.01	6.24	76.35	3.50
+4	12	417	10.55	3957	3394	0.97	4355	0	0	0.01	4.57	85.06
+5	5	924	23.96	3858	3394	1.27	9110	0	0	0.01	13.59	62.85	3.69
+5	13	282	7.47	3772	3394	0.80	6990	0	0	0.01	2.36	90.41
+6	6	683	18.21	3753	3394	1.11	10167	0	0	0.01	11.62	70.52	3.03
+6	14	126	3.47	3642	3394	0.86	2876	0	0	0.01	1.41	95.22
+7	7	1224	31.05	3941	3394	1.14	10370	0	0	0.04	14.69	54.72	4.46
+7	15	519	12.88	4029	3394	0.95	5922	0	0	0.02	4.19	83.16
+Core	CPU	Avg_MHz	Busy%	Bzy_MHz	TSC_MHz	IPC	IRQ	NMI	SMI	POLL%	C1%	C2%	CorWatt	PkgWatt
+-	-	590	15.12	3899	3394	1.20	103496	1	0	0.01	6.69	78.43	28.67	46.69
+0	0	485	12.62	3841	3394	1.12	7115	0	0	0.01	4.81	82.80	3.50	46.69
+0	8	610	15.83	3857	3394	1.16	6466	0	0	0.02	6.38	78.03
+1	1	1108	26.04	4253	3394	1.42	6310	0	0	0.02	8.67	65.55	5.22
+1	9	970	24.72	3922	3394	1.97	9805	0	0	0.02	4.39	71.20
+2	2	469	12.19	3849	3394	1.01	6027	1	0	0.02	7.57	80.48	3.04
+2	10	359	9.54	3762	3394	1.03	4315	0	0	0.01	3.42	87.19
+3	3	327	8.83	3699	3394	0.95	6303	0	0	0.02	4.26	87.11	2.78
+3	11	348	9.27	3758	3394	1.04	4239	0	0	0.01	3.48	87.40
+4	4	514	13.41	3834	3394	1.03	6797	0	0	0.01	6.92	79.93	3.26
+4	12	494	13.31	3713	3394	1.08	6450	0	0	0.01	7.75	79.18
+5	5	1052	26.87	3915	3394	1.07	9962	0	0	0.02	13.90	59.65	3.79
+5	13	268	7.02	3811	3394	1.04	3505	0	0	0.00	3.34	89.78
+6	6	626	16.64	3761	3394	0.96	10028	0	0	0.01	11.09	72.64	3.00
+6	14	228	5.95	3825	3394	1.06	2842	0	0	0.00	2.16	91.98
+7	7	1319	33.17	3978	3394	1.22	10019	0	0	0.02	13.67	53.58	4.09
+7	15	257	6.51	3946	3394	0.74	3313	0	0	0.00	5.29	88.35
+^CCore	CPU	Avg_MHz	Busy%	Bzy_MHz	TSC_MHz	IPC	IRQ	NMI	SMI	POLL%	C1%	C2%	CorWatt	PkgWatt
+-	-	584	14.78	3949	3394	1.01	31507	0	0	0.02	8.88	76.63	28.87	46.69
+0	0	809	22.10	3662	3394	1.01	3895	0	0	0.01	22.40	56.08	3.52	46.70
+0	8	247	6.73	3671	3394	1.25	757	0	0	0.01	2.31	91.04
+1	1	1186	29.92	3963	3394	1.00	3643	0	0	0.03	13.34	57.19	5.59
+1	9	1242	29.21	4251	3394	0.90	5100	0	0	0.06	8.68	62.75
+2	2	482	12.93	3724	3394	1.18	1626	0	0	0.01	5.80	81.47	2.92
+2	10	116	3.10	3730	3394	0.90	1056	0	0	0.01	0.10	96.90
+3	3	332	9.12	3642	3394	1.12	1266	0	0	0.05	4.59	86.45	2.17
+3	11	9	0.25	3703	3394	0.30	21	0	0	0.00	0.00	99.76
+4	4	425	10.89	3901	3394	1.11	1101	0	0	0.01	6.69	82.60	2.43
+4	12	84	2.14	3927	3394	0.91	228	0	0	0.00	0.04	97.85
+5	5	1235	30.48	4051	3394	1.09	2540	0	0	0.06	11.04	58.84	4.65
+5	13	483	12.26	3937	3394	0.72	2273	0	0	0.03	16.01	72.15
+6	6	260	6.98	3728	3394	1.09	990	0	0	0.03	1.54	91.59	2.20
+6	14	163	4.43	3671	3394	0.90	1187	0	0	0.00	3.76	91.93
+7	7	1647	40.28	4090	3394	1.15	3162	0	0	0.03	13.79	46.40	5.39
+7	15	620	15.68	3953	3394	0.65	2662	0	0	0.01	32.01	52.98
+davidminder@MINDER-PC:~/Escritorio/pp3_arqui_davidminder$ 
